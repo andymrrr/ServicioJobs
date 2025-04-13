@@ -9,6 +9,7 @@ using ServicioJobs.Aplicacion.Mapeo;
 using ServicioJobs.Aplicacion.Middleware;
 using ServicioJobs.Aplicacion.Servicios.Implementacion;
 using ServicioJobs.Aplicacion.Servicios.Interfaz;
+using ServicioJobs.Aplicacion.Servicios.Wolker;
 using System.Reflection;
 
 namespace ServicioJobs.Aplicacion
@@ -22,6 +23,7 @@ namespace ServicioJobs.Aplicacion
             servicio.AddConfigFluentValidation();
             servicio.AddMediatr();
             servicio.AddAutoMapper();
+            servicio.AddHFire(config);
         }
 
         private static void AddMediatr(this IServiceCollection servicio)

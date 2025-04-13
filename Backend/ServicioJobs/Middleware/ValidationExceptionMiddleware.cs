@@ -1,5 +1,5 @@
 ﻿using FluentValidation;
-using ServicioJobs.Aplicacion.Model;
+using ServicioJobs.Modelos.Utilitarios;
 using System.Text.Json;
 
 namespace ServicioJobs.Middleware
