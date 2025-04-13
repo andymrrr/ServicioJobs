@@ -1,16 +1,13 @@
 ﻿
 
+using ServicioJobs.Aplicacion.Feature.Parametros.Dto;
+using ServicioJobs.Modelos;
 using ServicioJobs.Modelos.Enums;
 
-namespace ServicioJobs.Modelos
+namespace ServicioJobs.Aplicacion.Feature.Programados.Dtos
 {
-    public class Programado
+    public class ProgramadoDto
     {
-        public Programado()
-        {
-            Parametros = new HashSet<Parametro>();
-            Historicos = new HashSet<Historico>();
-        }
         public Guid IdProgramado { get; set; }
         public Guid IdMetodo { get; set; }
         public string Nombre { get; set; }
@@ -30,9 +27,9 @@ namespace ServicioJobs.Modelos
         public bool Habilitado { get; set; }
         public MetodoHttp MetodoHttp { get; set; }
 
-        public Metodo Metodo { get; set; }
-        public ICollection<Parametro> Parametros { get; set; }
-        public virtual ICollection<Historico> Historicos { get; set; }
 
+        public string? UrlFormateada { get; set; }
+
+        public ICollection<ParametroDto> Parametros { get; set; }
     }
 }

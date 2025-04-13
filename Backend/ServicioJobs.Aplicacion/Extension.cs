@@ -1,5 +1,7 @@
 ﻿using AutoMapper;
 using FluentValidation;
+using Hangfire;
+using Hangfire.PostgreSql;
 using MediatR;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -40,6 +42,36 @@ namespace ServicioJobs.Aplicacion
         {
             services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
             services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehavior<,>));
+        }
+        public static void AddHFire(this IServiceCollection services, IConfiguration configuration)
+        {
+           
+            var connectionString = configuration.GetConnectionString("ServicioJobs");
+
+            services.AddScoped<JobExecutor>();
+            services.AddHangfire(config =>
+            {
+                config.SetDataCompatibilityLevel(CompatibilityLevel.Version_170) 
+                      .UseSimpleAssemblyNameTypeSerializer()
+                      .UseRecommendedSerializerSettings()
+                      .UsePostgreSqlStorage(
+                                            options => options.UseNpgsqlConnection(connectionString),
+                                            new PostgreSqlStorageOptions
+                                            {
+                                                SchemaName = "hangfire",
+                                                PrepareSchemaIfNecessary = true
+                                            }
+                            );
+                      });
+
+            
+            services.AddHangfireServer();
+            RecurringJob.AddOrUpdate<JobExecutor>(
+                "ejecutar-jobs-programados",
+                x => x.EjecutarJobs(),
+                "* * * * *" // Cada minuto
+            );
+
         }
     }
 

@@ -7,6 +7,7 @@ namespace ServicioJobs.Dal.Nucleo.Interfaces
     {
 
         IRepositorio<Libro> Libros { get; set; }
+        IRepositorioProgramado Programado { get; set; }
        
 
 

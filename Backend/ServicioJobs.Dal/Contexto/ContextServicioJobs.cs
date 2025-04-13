@@ -14,6 +14,7 @@ namespace ServicioJobs.Dal.Contexto
         public ContextServicioJobs(DbContextOptions<ContextServicioJobs> options) : base(options) { }
 
         public DbSet<Libro> Libros { get; set; }
+        public DbSet<Historico> Historico { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());

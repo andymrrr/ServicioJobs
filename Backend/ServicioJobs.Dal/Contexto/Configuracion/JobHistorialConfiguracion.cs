@@ -12,9 +12,9 @@ namespace ServicioJobs.Dal.Contexto.Configuracion
         {
             entity.ToTable("historico");
 
-            entity.HasKey(j => j.Id);
+            entity.HasKey(j => j.IdHistorico);
 
-            entity.Property(j => j.JobId)
+            entity.Property(j => j.IdProgramado)
                 .IsRequired();
 
             entity.Property(j => j.Estado)
@@ -32,9 +32,9 @@ namespace ServicioJobs.Dal.Contexto.Configuracion
                 .HasMaxLength(1000); 
 
             
-            entity.HasOne(j => j.Job)
+            entity.HasOne(j => j.Programado)
                 .WithMany(jp => jp.Historicos) 
-                .HasForeignKey(j => j.JobId)
+                .HasForeignKey(j => j.IdHistorico)
                 .OnDelete(DeleteBehavior.Cascade);
         }
     }

@@ -14,9 +14,10 @@ namespace ServicioJobs.Dal.Nucleo.Repositorios
     {
         private ContextServicioJobs _context { get; }
 
-        // Repositorios
-        public IRepositorio<Libro> Libros { get; set; }
       
+        public IRepositorio<Libro> Libros { get; set; }
+        public IRepositorioProgramado Programado { get; set; }
+
 
 
 
@@ -25,6 +26,7 @@ namespace ServicioJobs.Dal.Nucleo.Repositorios
             _context = context;
 
             Libros = new Repositorio<Libro>(context);
+            Programado = new RepositorioProgramado(context);
           
         }
 

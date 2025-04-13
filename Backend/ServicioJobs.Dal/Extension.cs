@@ -13,25 +13,18 @@ namespace ServicioJobs.Dal
 {
     public static class Extension
     {
-        public static IServiceCollection AddServicioDatos(this IServiceCollection servicio, IConfiguration configuracion)
+        public static void  AddServicioDatos(this IServiceCollection servicio, IConfiguration configuracion)
         {
             servicio.AddHttpContextAccessor();
-            servicio.AddJWT(configuracion);
-            servicio.AddSQL(configuracion);
-                
             servicio.AddScoped<IServicioJobsUoW, ServicioJobsUoW>();
             servicio.AddScoped(typeof(IRepositorio<>), typeof(Repositorio<>));
             servicio.AddScoped<IAutenticacion, Autenticacion>();
-
-            return servicio;
+            servicio.AddJWT(configuracion);
+            servicio.AddPostgres(configuracion);
+          ;
         }
 
-        private static void AddSQL(this IServiceCollection servicio, IConfiguration configuracion)
-        {
-            servicio.AddDbContext<ContextServicioJobs>(options =>
-                options.UseSqlServer(configuracion.GetConnectionString("ServicioJobs"),
-                    sqlOptions => sqlOptions.MigrationsAssembly(typeof(ContextServicioJobs).Assembly.FullName)));
-        }
+       
 
         private static void AddPostgres(this IServiceCollection servicio, IConfiguration configuracion)
         {

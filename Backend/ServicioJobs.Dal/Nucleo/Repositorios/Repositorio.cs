@@ -2,12 +2,7 @@
 using ServicioJobs.Dal.Nucleo.Interfaces;
 using ServicioJobs.Dal.Nucleo.Paginacion.Interfaces;
 using ServicioJobs.Dal.Nucleo.Paginacion;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Linq.Expressions;
-using System.Text;
-using System.Threading.Tasks;
 using ServicioJobs.Dal.Contexto;
 
 namespace ServicioJobs.Dal.Nucleo.Repositorios

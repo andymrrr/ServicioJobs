@@ -1,11 +1,19 @@
-import './App.css';
+// src/App.tsx
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { Layout } from './Layout';
+
 
 function App() {
-	return (
-		<>
-			<div className='p-4 bg-blue-500 text-white rounded-xl'>¡Hola!</div>
-		</>
-	);
+  return (
+    <BrowserRouter>
+      <Routes>
+       
+
+        <Route path="/" element={<Layout>""</Layout>} />
+        
+      </Routes>
+    </BrowserRouter>
+  );
 }
 
 export default App;
