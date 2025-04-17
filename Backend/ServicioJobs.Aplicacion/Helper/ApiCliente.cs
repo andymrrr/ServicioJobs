@@ -1,50 +1,41 @@
-﻿
-
-namespace ServicioJobs.Aplicacion.Helper
+﻿namespace ServicioJobs.Aplicacion.Helper
 {
-    public partial class ApiClient
+    public class ApiClient
     {
-        private readonly HttpClient _httpClient;
-
-        public ApiClient()
+        public HttpClient CreateClient(TimeSpan timeout)
         {
-            _httpClient = new HttpClient(new HttpClientHandler { UseDefaultCredentials = true });
+            return new HttpClient(new HttpClientHandler { UseDefaultCredentials = true })
+            {
+                Timeout = timeout
+            };
         }
 
-        public async Task<HttpResponseMessage> GetAsync(string requestUrl)
-        {
-            var response = await _httpClient.GetAsync(requestUrl, HttpCompletionOption.ResponseHeadersRead);
-
-            return response;
-        }
-
-        public async Task<HttpResponseMessage> PosAsync(string requestUrl, List<(string, string)> parametros)
-        {
-            var keyValuePairs = parametros.Select(p => new KeyValuePair<string, string>(p.Item1, p.Item2));
-            var jsonParametros = new FormUrlEncodedContent(keyValuePairs);
-            var response = await _httpClient.PostAsync(requestUrl, jsonParametros);
-
-            return response;
-        }
-        public async Task<HttpResponseMessage> PutAsync(string requestUrl, List<(string, string)> parametros)
-        {
-            var keyValuePairs = parametros.Select(p => new KeyValuePair<string, string>(p.Item1, p.Item2));
-            var jsonParametros = new FormUrlEncodedContent(keyValuePairs);
-            var response = await _httpClient.PutAsync(requestUrl, jsonParametros);
-
-            return response;
-        }
-
-        public void AddOrUpdateHeader(string name, string value)
+        public void AddOrUpdateHeader(HttpClient client, string name, string value)
         {
             if (!string.IsNullOrEmpty(name) && !string.IsNullOrEmpty(value))
             {
-                if (_httpClient.DefaultRequestHeaders.Contains(name))
-                    _httpClient.DefaultRequestHeaders.Remove(name);
+                if (client.DefaultRequestHeaders.Contains(name))
+                    client.DefaultRequestHeaders.Remove(name);
 
-                _httpClient.DefaultRequestHeaders.Add(name, value);
+                client.DefaultRequestHeaders.Add(name, value);
             }
+        }
 
+        public async Task<HttpResponseMessage> GetAsync(HttpClient client, string requestUrl)
+        {
+            return await client.GetAsync(requestUrl, HttpCompletionOption.ResponseHeadersRead);
+        }
+
+        public async Task<HttpResponseMessage> PostAsync(HttpClient client, string requestUrl, List<(string, string)> parametros)
+        {
+            var content = new FormUrlEncodedContent(parametros.Select(p => new KeyValuePair<string, string>(p.Item1, p.Item2)));
+            return await client.PostAsync(requestUrl, content);
+        }
+
+        public async Task<HttpResponseMessage> PutAsync(HttpClient client, string requestUrl, List<(string, string)> parametros)
+        {
+            var content = new FormUrlEncodedContent(parametros.Select(p => new KeyValuePair<string, string>(p.Item1, p.Item2)));
+            return await client.PutAsync(requestUrl, content);
         }
     }
 }
