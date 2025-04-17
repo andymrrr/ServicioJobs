@@ -1,9 +1,8 @@
 ﻿using ServicioJobs.Aplicacion.Helper;
 using ServicioJobs.Modelos;
 using ServicioJobs.Modelos.Enums;
-using System.Net.Http;
 
-namespace ServicioJobs.Aplicacion.Servicios.Wolker
+namespace ServicioJobs.Aplicacion.Servicios.Worker
 {
     public class JobHttpService
     {

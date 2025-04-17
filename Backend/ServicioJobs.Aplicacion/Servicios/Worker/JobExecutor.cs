@@ -1,13 +1,9 @@
-﻿using Cronos;
-using Hangfire;
-using Microsoft.Extensions.Configuration;
-using ServicioJobs.Aplicacion.Helper;
+﻿using Hangfire;
 using ServicioJobs.Dal.Nucleo.Interfaces;
 using ServicioJobs.Modelos;
 using ServicioJobs.Modelos.Dto;
-using ServicioJobs.Modelos.Enums;
 
-namespace ServicioJobs.Aplicacion.Servicios.Wolker
+namespace ServicioJobs.Aplicacion.Servicios.Worker
 {
     public class JobExecutor
     {

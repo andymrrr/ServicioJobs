@@ -1,7 +1,7 @@
 ﻿using Cronos;
 
 
-namespace ServicioJobs.Aplicacion.Servicios.Wolker
+namespace ServicioJobs.Aplicacion.Servicios.Worker
 {
     public static class JobScheduleService
     {
