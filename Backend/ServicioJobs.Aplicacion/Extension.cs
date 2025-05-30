@@ -5,6 +5,7 @@ using Hangfire.PostgreSql;
 using MediatR;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using ServicioJobs.Aplicacion.Helper;
 using ServicioJobs.Aplicacion.Mapeo;
 using ServicioJobs.Aplicacion.Middleware;
 using ServicioJobs.Aplicacion.Servicios.Implementacion;
@@ -50,6 +51,8 @@ namespace ServicioJobs.Aplicacion
            
             var connectionString = configuration.GetConnectionString("ServicioJobs");
 
+            services.AddScoped<ApiClient>();
+            services.AddScoped<JobHttpService>();
             services.AddScoped<JobExecutor>();
             services.AddHangfire(config =>
             {
@@ -68,11 +71,7 @@ namespace ServicioJobs.Aplicacion
 
             
             services.AddHangfireServer();
-            RecurringJob.AddOrUpdate<JobExecutor>(
-                "ejecutar-jobs-programados",
-                x => x.EjecutarJobs(),
-                "* * * * *" // Cada minuto
-            );
+            
 
         }
     }

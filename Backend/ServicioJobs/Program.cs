@@ -4,6 +4,8 @@ using ServicioJobs.Aplicacion;
 using ServicioJobs.Dal;
 using ServicioJobs.Middleware;
 using Serilog;
+using ServicioJobs.Aplicacion.Servicios.Wolker;
+using Hangfire;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -32,10 +34,22 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
-
+app.UseHangfireDashboard(); // Opcional, solo si quieres el dashboard web
+app.UseHangfireServer();
 app.UseAuthorization();
 app.UseSerilogRequestLogging();
 app.MapControllers();
 app.UseMiddleware<ValidationExceptionMiddleware>();
+
+
+using (var scope = app.Services.CreateScope())
+{
+    var jobExecutor = scope.ServiceProvider.GetRequiredService<JobExecutor>();
+    Hangfire.RecurringJob.AddOrUpdate<JobExecutor>(
+        "ejecutar-jobs-programados",
+        x => x.EjecutarJobs(),
+        "* * * * *"
+    );
+}
 
 app.Run();
