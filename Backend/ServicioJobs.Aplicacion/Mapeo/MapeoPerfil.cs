@@ -1,8 +1,6 @@
 ﻿
 
 using AutoMapper;
-using ServicioJobs.Aplicacion.Funcionalidad.Libros.Vm;
-using ServicioJobs.Modelos;
 
 namespace ServicioJobs.Aplicacion.Mapeo
 {
@@ -10,7 +8,6 @@ namespace ServicioJobs.Aplicacion.Mapeo
     {
         public MapeoPerfil()
         {
-            CreateMap<Libro,LibroVm>().ReverseMap();
         }
     }
 }

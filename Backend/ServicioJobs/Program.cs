@@ -12,6 +12,8 @@ var builder = WebApplication.CreateBuilder(args);
 
 ConfiguracionLogger.AgregarLogging(builder);
 
+builder.Logging.AddConsole();
+
 builder.Services.AddControllers(opcion =>
 {
     var politica = new AuthorizationPolicyBuilder().RequireAuthenticatedUser().Build();
@@ -26,6 +28,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddServicioDatos(builder.Configuration);
 builder.Services.AddServicioAplicacion(builder.Configuration);
+builder.Services.AddHangfireServer(); // <-- Agrega esto aquí
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -34,22 +37,24 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
-app.UseHangfireDashboard(); // Opcional, solo si quieres el dashboard web
-app.UseHangfireServer();
+app.UseHangfireDashboard();
 app.UseAuthorization();
 app.UseSerilogRequestLogging();
 app.MapControllers();
 app.UseMiddleware<ValidationExceptionMiddleware>();
 
+await app.AplicarMigracion();
 
 using (var scope = app.Services.CreateScope())
 {
     var jobExecutor = scope.ServiceProvider.GetRequiredService<JobExecutor>();
-    Hangfire.RecurringJob.AddOrUpdate<JobExecutor>(
-        "ejecutar-jobs-programados",
-        x => x.EjecutarJobs(),
-        "* * * * *"
-    );
+    RecurringJob.AddOrUpdate<JobExecutor>(
+       "ejecutar-jobs-programados",
+       x => x.EjecutarJobs(),
+       "* * * * *"
+   );
 }
+
+
 
 app.Run();

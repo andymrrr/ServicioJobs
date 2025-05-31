@@ -6,7 +6,7 @@ namespace ServicioJobs.Dal.Nucleo.Interfaces
     public interface IServicioJobsUoW : IDisposable
     {
 
-        IRepositorio<Libro> Libros { get; set; }
+        
         IRepositorioProgramado Programado { get; set; }
        
 

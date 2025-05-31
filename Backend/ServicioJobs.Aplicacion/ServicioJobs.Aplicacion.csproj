@@ -27,4 +27,8 @@
     <ProjectReference Include="..\ServicioJobs.Modelos\ServicioJobs.Modelos.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Paginacion\" />
+  </ItemGroup>
+
 </Project>

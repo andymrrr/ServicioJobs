@@ -1,6 +1,4 @@
-﻿
-
-using Microsoft.EntityFrameworkCore.Metadata.Builders;
+﻿using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Microsoft.EntityFrameworkCore;
 using ServicioJobs.Modelos;
 
@@ -29,12 +27,12 @@ namespace ServicioJobs.Dal.Contexto.Configuracion
                 .IsRequired();
 
             entity.Property(j => j.MensajeError)
-                .HasMaxLength(1000); 
+                .HasMaxLength(1000);
 
-            
+
             entity.HasOne(j => j.Programado)
-                .WithMany(jp => jp.Historicos) 
-                .HasForeignKey(j => j.IdHistorico)
+                .WithMany(jp => jp.Historicos)
+                .HasForeignKey(j => j.IdProgramado)
                 .OnDelete(DeleteBehavior.Cascade);
         }
     }
