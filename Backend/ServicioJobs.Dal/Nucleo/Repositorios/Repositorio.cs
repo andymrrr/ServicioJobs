@@ -104,7 +104,7 @@ namespace ServicioJobs.Dal.Nucleo.Repositorios
         #endregion
 
         #region Paginacion
-        public async Task<IReadOnlyList<T>> BuscarTodaEspecificificaciones(IPaginacion<T> especificacion)
+        public async Task<IReadOnlyList<T>> BuscarTodaEspecificaciones(IPaginacion<T> especificacion)
         {
             return await AplicarEspecificaciones(especificacion).ToListAsync();
         }

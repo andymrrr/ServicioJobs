@@ -1,12 +1,13 @@
-﻿
-
-using ServicioJobs.Aplicacion.Feature.Parametros.Dto;
-using ServicioJobs.Modelos;
-using ServicioJobs.Modelos.Enums;
+﻿using ServicioJobs.Modelos.Enums;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace ServicioJobs.Aplicacion.Feature.Programados.Dtos
 {
-    public class ProgramadoDto
+    public class ProgramadoPaginado
     {
         public Guid IdProgramado { get; set; }
         public Guid IdMetodo { get; set; }

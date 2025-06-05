@@ -28,7 +28,7 @@ namespace ServicioJobs.Dal.Nucleo.Interfaces
         #endregion
 
         #region Paginacion
-        Task<IReadOnlyList<T>> BuscarTodaEspecificificaciones(IPaginacion<T> especificacion);
+        Task<IReadOnlyList<T>> BuscarTodaEspecificaciones(IPaginacion<T> especificacion);
         Task<int> CantidadAsincrona(IPaginacion<T> especificacion);
         #endregion
     }

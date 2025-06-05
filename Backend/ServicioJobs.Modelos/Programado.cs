@@ -1,6 +1,4 @@
-﻿
-
-using ServicioJobs.Modelos.Enums;
+﻿using ServicioJobs.Modelos.Enums;
 
 namespace ServicioJobs.Modelos
 {
