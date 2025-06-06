@@ -16,6 +16,5 @@ namespace ServicioJobs.Aplicacion.Feature.Parametros.Dto
         public string Valor { get; set; } = string.Empty;
         public TipoParametro Tipo { get; set; }
 
-        public ProgramadoDto Programado { get; set; }
     }
 }

@@ -30,8 +30,4 @@
     <ProjectReference Include="..\ServicioJobs.Aplicacion\ServicioJobs.Aplicacion.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Controllers\" />
-  </ItemGroup>
-
 </Project>
