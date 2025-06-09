@@ -72,9 +72,17 @@ namespace ServicioJobs.Dal.Nucleo.Repositorios
         public async Task ActualizarAsincrono(T entidad)
         {
             _context.Set<T>().Update(entidad);
-
         }
 
+        public async Task EliminarAsincrono(T entidad)
+        {
+            var entry = _context.Entry(entidad);
+            if (entry.State == EntityState.Detached)
+            {
+                _context.Set<T>().Attach(entidad);
+            }
+            _context.Set<T>().Remove(entidad);
+        }
 
         public async Task<IQueryable<T>> BuscarAsincrono(Expression<Func<T, bool>> accion)
         {

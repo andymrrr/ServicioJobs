@@ -8,7 +8,9 @@ namespace ServicioJobs.Dal.Nucleo.Interfaces
 
         
         IRepositorioProgramado Programado { get; set; }
-       
+        IRepositorio<Metodo> Metodo { get; set; }
+        IRepositorio<Parametro> Parametro { get; set; }
+
 
 
         void GuardarCambios();

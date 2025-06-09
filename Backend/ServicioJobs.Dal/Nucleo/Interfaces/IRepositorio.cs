@@ -19,6 +19,7 @@ namespace ServicioJobs.Dal.Nucleo.Interfaces
         #region Metodos Asincrono
         Task AgregarAsincrono(T entidad);
         Task ActualizarAsincrono(T entidad);
+        Task EliminarAsincrono(T entidad);
         Task<bool> ExisteAsincrono(Expression<Func<T, bool>> accion);
         Task<T> BuscarUnicoAsincrono(Expression<Func<T, bool>> accion);
         Task<IQueryable<T>> BuscarAsincrono(Expression<Func<T, bool>> accion);
