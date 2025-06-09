@@ -25,6 +25,7 @@ interface InputFieldProps<T extends FieldValues> {
     value: number;
     message: string;
   };
+  colSpan?: '1' | '2' | '3' | '4' | '5' | '6' | '7' | '8' | '9' | '10' | '11' | '12';
 }
 
 const HookFormInput = <T extends FieldValues>({
@@ -40,6 +41,7 @@ const HookFormInput = <T extends FieldValues>({
   pattern,
   minLength,
   maxLength,
+  colSpan = '6'
 }: InputFieldProps<T>) => {
   const registerOptions = {
     ...(required && { required }),
@@ -48,8 +50,23 @@ const HookFormInput = <T extends FieldValues>({
     ...(maxLength && { maxLength }),
   };
 
+  const colSpanClass = {
+    '1': 'col-span-1',
+    '2': 'col-span-2',
+    '3': 'col-span-3',
+    '4': 'col-span-4',
+    '5': 'col-span-5',
+    '6': 'col-span-6',
+    '7': 'col-span-7',
+    '8': 'col-span-8',
+    '9': 'col-span-9',
+    '10': 'col-span-10',
+    '11': 'col-span-11',
+    '12': 'col-span-12',
+  }[colSpan] || 'col-span-6';
+
   return (
-    <div>
+    <div className={clsx(colSpanClass)}>
       <label className="mb-2.5 block text-black dark:text-white">
         {label}
         {tooltipMessage && (

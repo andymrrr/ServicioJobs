@@ -5,6 +5,7 @@ import { FaChevronDown } from 'react-icons/fa';
 interface LinkItem {
   to: string;
   label: string;
+  icon?: React.ElementType;
 }
 
 interface SidebarAccordionItemProps {
@@ -46,19 +47,25 @@ const SidebarAccordionItem: React.FC<SidebarAccordionItemProps> = ({
 
       <div className={`overflow-hidden transition-all ${!open ? 'hidden' : ''}`}>
         <ul className="mt-4 mb-5.5 flex flex-col gap-2.5 pl-6">
-          {links.map((link) => (
-            <li key={link.to}>
-              <NavLink
-                to={link.to}
-                className={({ isActive }) =>
-                  'group relative flex items-center gap-2.5 rounded-md px-4 font-medium text-bodydark2 duration-300 ease-in-out hover:text-white ' +
-                  (isActive && '!text-white')
-                }
-              >
-                {link.label}
-              </NavLink>
-            </li>
-          ))}
+          {links.map((link) => {
+            const LinkIcon = link.icon;
+            return (
+              <li key={link.to}>
+                <NavLink
+                  to={link.to}
+                  className={({ isActive }) =>
+                    'group relative flex items-center gap-2.5 rounded-md px-4 py-2 font-medium text-bodydark2 duration-300 ease-in-out hover:text-white ' +
+                    (isActive && '!text-white')
+                  }
+                >
+                  {LinkIcon && (
+                    <LinkIcon className="h-4 w-4 text-current opacity-75" />
+                  )}
+                  <span>{link.label}</span>
+                </NavLink>
+              </li>
+            );
+          })}
         </ul>
       </div>
     </>
