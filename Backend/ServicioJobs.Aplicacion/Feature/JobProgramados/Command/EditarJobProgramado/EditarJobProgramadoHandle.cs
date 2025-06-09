@@ -39,7 +39,7 @@ namespace ServicioJobs.Aplicacion.Feature.Programados.Command.EditarJobProgramad
 
                 if (programadoExistente == null)
                 {
-                    return RespuestaServicio<Unit>.Fallo("El job programado especificado no existe");
+                    return RespuestaServicio<Unit>.NoEncontrado("El job programado especificado no existe");
                 }
 
                 // 2. Verificar que el método existe
@@ -48,7 +48,7 @@ namespace ServicioJobs.Aplicacion.Feature.Programados.Command.EditarJobProgramad
 
                 if (!metodoExiste)
                 {
-                    return RespuestaServicio<Unit>.Fallo("El método especificado no existe");
+                    return RespuestaServicio<Unit>.ErrorValidacion("El método especificado no existe");
                 }
 
                 // 3. Verificar que el nombre no esté duplicado (excluyendo el actual)
@@ -58,7 +58,7 @@ namespace ServicioJobs.Aplicacion.Feature.Programados.Command.EditarJobProgramad
 
                 if (nombreExiste)
                 {
-                    return RespuestaServicio<Unit>.Fallo($"Ya existe otro job programado con el nombre '{request.Nombre}'");
+                    return RespuestaServicio<Unit>.Conflicto($"Ya existe otro job programado con el nombre '{request.Nombre}'");
                 }
 
                 // 4. Validar y calcular próxima ejecución
@@ -69,7 +69,7 @@ namespace ServicioJobs.Aplicacion.Feature.Programados.Command.EditarJobProgramad
                 }
                 catch (Exception ex)
                 {
-                    return RespuestaServicio<Unit>.Fallo($"Error al procesar el crontab: {ex.Message}");
+                    return RespuestaServicio<Unit>.ErrorValidacion($"Error al procesar el crontab: {ex.Message}");
                 }
 
                 // 5. Actualizar el job programado

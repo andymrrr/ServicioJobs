@@ -8,13 +8,12 @@ using ServicioJobs.Aplicacion.Feature.Programados.Query.BuscarProgramadosGuid;
 using ServicioJobs.Aplicacion.Feature.Programados.Query.PaginacionProgramados;
 using ServicioJobs.Dal.Nucleo.Paginacion.Modelos;
 using ServicioJobs.Modelos.Utilitarios;
+using ServicioJobs.Extensions;
 using System.Net;
 
 namespace ServicioJobs.Controllers
 {
-    /// <summary>
-    /// Controlador para la gestión de jobs programados
-    /// </summary>
+    
     [Route("api/v1/[controller]")]
     [ApiController]
     [Produces("application/json")]
@@ -22,10 +21,7 @@ namespace ServicioJobs.Controllers
     {
         private readonly IMediator _mediador;
 
-        /// <summary>
-        /// Constructor del controlador de jobs programados
-        /// </summary>
-        /// <param name="mediador">Instancia de MediatR para CQRS</param>
+        
         public ProgramadosController(IMediator mediador)
         {
             _mediador = mediador ?? throw new ArgumentNullException(nameof(mediador));
@@ -61,12 +57,7 @@ namespace ServicioJobs.Controllers
             var consulta = new BuscarProgramadosGuidQuery { Guid = id };
             var respuesta = await _mediador.Send(consulta);
 
-            if (!respuesta.Completado)
-            {
-                return BadRequest(respuesta);
-            }
-
-            return Ok(respuesta);
+            return this.ToActionResult(respuesta);
         }
 
         /// <summary>
@@ -85,12 +76,7 @@ namespace ServicioJobs.Controllers
         {
             var respuesta = await _mediador.Send(comando);
 
-            if (!respuesta.Completado)
-            {
-                return BadRequest(respuesta);
-            }
-
-            return CreatedAtAction(nameof(ObtenerJobPorId), new { id = Guid.NewGuid() }, respuesta);
+            return this.ToCreatedResult(respuesta, nameof(ObtenerJobPorId), new { id = Guid.NewGuid() });
         }
 
         /// <summary>
@@ -110,15 +96,10 @@ namespace ServicioJobs.Controllers
         [ProducesResponseType((int)HttpStatusCode.Conflict)]
         public async Task<ActionResult<RespuestaServicio<Unit>>> ActualizarJobProgramado(Guid id, [FromBody] EditarJobProgramadoCommand comando)
         {
-            comando.IdProgramado = id; // Asegurar consistencia entre ruta y body
+            comando.IdProgramado = id; 
             var respuesta = await _mediador.Send(comando);
 
-            if (!respuesta.Completado)
-            {
-                return BadRequest(respuesta);
-            }
-
-            return Ok(respuesta);
+            return this.ToActionResult(respuesta);
         }
 
         /// <summary>
@@ -139,12 +120,7 @@ namespace ServicioJobs.Controllers
             comando.IdProgramado = id; // Asegurar consistencia entre ruta y body
             var respuesta = await _mediador.Send(comando);
 
-            if (!respuesta.Completado)
-            {
-                return BadRequest(respuesta);
-            }
-
-            return Accepted(respuesta); // 202 es más apropiado para operaciones asíncronas
+            return this.ToAcceptedResult(respuesta);
         }
     }
 }
