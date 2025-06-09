@@ -54,6 +54,7 @@ namespace ServicioJobs.Aplicacion
             services.AddScoped<ApiClient>();
             services.AddScoped<JobHttpService>();
             services.AddScoped<JobExecutor>();
+            services.AddScoped<HangfireJobService>();
             services.AddHangfire(config =>
             {
                 config.SetDataCompatibilityLevel(CompatibilityLevel.Version_170) 
