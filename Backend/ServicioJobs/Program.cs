@@ -44,6 +44,7 @@ app.MapControllers();
 app.UseMiddleware<ValidationExceptionMiddleware>();
 
 await app.AplicarMigracion();
+await app.InicializarBaseDeDatosAsync();
 
 using (var scope = app.Services.CreateScope())
 {

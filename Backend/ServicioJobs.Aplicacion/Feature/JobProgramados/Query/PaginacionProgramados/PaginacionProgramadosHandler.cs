@@ -1,10 +1,10 @@
 ﻿using AutoMapper;
 using MediatR;
+using Microsoft.Extensions.Logging;
 using ServicioJobs.Aplicacion.Feature.Programados.Dtos;
 using ServicioJobs.Aplicacion.Paginacion.Programados;
 using ServicioJobs.Dal.Nucleo.Interfaces;
 using ServicioJobs.Dal.Nucleo.Paginacion.Modelos;
-using ServicioJobs.Dal.Nucleo.Repositorios;
 
 namespace ServicioJobs.Aplicacion.Feature.Programados.Query.PaginacionProgramados
 {
@@ -12,10 +12,13 @@ namespace ServicioJobs.Aplicacion.Feature.Programados.Query.PaginacionProgramado
     {
         private readonly IServicioJobsUoW _servicioJobs;
         private readonly IMapper _mapper;
-        public PaginacionProgramadosHandler( IServicioJobsUoW servicioJobs, IMapper mapper)
+        private readonly ILogger<PaginacionProgramadosHandler> _logger;
+        
+        public PaginacionProgramadosHandler(IServicioJobsUoW servicioJobs, IMapper mapper, ILogger<PaginacionProgramadosHandler> logger)
         {
             _servicioJobs = servicioJobs;
             _mapper = mapper;
+            _logger = logger;
         }
         public async Task<PaginacionVm<ProgramadoPaginado>> Handle(PaginacionProgramadosQuery request, CancellationToken cancellationToken)
         {
@@ -30,7 +33,6 @@ namespace ServicioJobs.Aplicacion.Feature.Programados.Query.PaginacionProgramado
                 IdMetodo = request.IdMetodo,
                 EstadoEjecucion = request.EstadoEjecucion,
                 Nombre = request.Nombre,
-
             };
 
             var especificaciones = new PaginacionProgramadores(ProgramadoParametro);
@@ -40,6 +42,7 @@ namespace ServicioJobs.Aplicacion.Feature.Programados.Query.PaginacionProgramado
             var total = await _servicioJobs.Programado.CantidadAsincrona(cantidadEspecificaciones);
 
             var programadoVm = _mapper.Map<IReadOnlyList<ProgramadoPaginado>>(programados);
+
 
             return new PaginacionVm<ProgramadoPaginado>
             {

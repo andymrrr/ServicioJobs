@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using ServicioJobs.Dal.Contexto;
+using ServicioJobs.Dal.Helpers;
 using ServicioJobs.Dal.Nucleo.Interfaces;
 using ServicioJobs.Modelos;
 using ServicioJobs.Modelos.Dto;
@@ -14,7 +15,7 @@ namespace ServicioJobs.Dal.Nucleo.Repositorios
 
         public IQueryable<Programado> BuscarPendientes()
         {
-            var fechaActual = DateTime.Now;
+            var fechaActual = FechaHelper.AhoraUtc;
 
             return Consultar(j => j.Habilitado &&
                                   (j.FechaEjecucion < fechaActual || j.FechaReintento < fechaActual) &&
@@ -33,7 +34,7 @@ namespace ServicioJobs.Dal.Nucleo.Repositorios
             {
                 IdHistorico = Guid.NewGuid(),
                 Estado = ValoresEstaticos.Estados.Iniciada,
-                FechaEjecucion = DateTime.Now,
+                FechaEjecucion = FechaHelper.AhoraUtc,
                 IdProgramado = job.IdProgramado
             };
 
@@ -49,7 +50,7 @@ namespace ServicioJobs.Dal.Nucleo.Repositorios
             if (jobHistorial is null)
                 throw new InvalidOperationException("Historial no encontrado");
 
-            var fechaActual = DateTime.Now;
+            var fechaActual = FechaHelper.AhoraUtc;
 
             jobHistorial.Estado = ValoresEstaticos.Estados.Completada;
             jobHistorial.FechaEjecucionFin = fechaActual;

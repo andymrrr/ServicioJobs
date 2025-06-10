@@ -1,0 +1,30 @@
+[
+  {
+    "IdMetodo": "550e8400-e29b-41d4-a716-446655440001",
+    "Nombre": "GET"
+  },
+  {
+    "IdMetodo": "550e8400-e29b-41d4-a716-446655440002",
+    "Nombre": "POST"
+  },
+  {
+    "IdMetodo": "550e8400-e29b-41d4-a716-446655440003",
+    "Nombre": "PUT"
+  },
+  {
+    "IdMetodo": "550e8400-e29b-41d4-a716-446655440004",
+    "Nombre": "DELETE"
+  },
+  {
+    "IdMetodo": "550e8400-e29b-41d4-a716-446655440005",
+    "Nombre": "PATCH"
+  },
+  {
+    "IdMetodo": "550e8400-e29b-41d4-a716-446655440006",
+    "Nombre": "HEAD"
+  },
+  {
+    "IdMetodo": "550e8400-e29b-41d4-a716-446655440007",
+    "Nombre": "OPTIONS"
+  }
+]

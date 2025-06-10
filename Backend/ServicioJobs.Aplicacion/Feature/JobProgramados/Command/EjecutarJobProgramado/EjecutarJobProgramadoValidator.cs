@@ -11,7 +11,7 @@ namespace ServicioJobs.Aplicacion.Feature.Programados.Command.EjecutarJobProgram
                 .WithMessage("El IdProgramado es obligatorio");
 
             RuleFor(x => x.FechaEjecucionProgramada)
-                .GreaterThan(DateTime.Now)
+                .GreaterThan(DateTime.UtcNow)
                 .When(x => !x.EjecutarInmediatamente && x.FechaEjecucionProgramada.HasValue)
                 .WithMessage("La fecha de ejecución programada debe ser mayor a la fecha actual");
 

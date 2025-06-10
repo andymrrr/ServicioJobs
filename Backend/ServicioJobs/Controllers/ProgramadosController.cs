@@ -10,10 +10,11 @@ using ServicioJobs.Dal.Nucleo.Paginacion.Modelos;
 using ServicioJobs.Modelos.Utilitarios;
 using ServicioJobs.Extensions;
 using System.Net;
+using Microsoft.AspNetCore.Authorization;
 
 namespace ServicioJobs.Controllers
 {
-    
+    [AllowAnonymous]
     [Route("api/v1/[controller]")]
     [ApiController]
     [Produces("application/json")]
@@ -117,7 +118,7 @@ namespace ServicioJobs.Controllers
         [ProducesResponseType((int)HttpStatusCode.NotFound)]
         public async Task<ActionResult<RespuestaServicio<string>>> EjecutarJobProgramado(Guid id, [FromBody] EjecutarJobProgramadoCommand comando)
         {
-            comando.IdProgramado = id; // Asegurar consistencia entre ruta y body
+            comando.IdProgramado = id; 
             var respuesta = await _mediador.Send(comando);
 
             return this.ToAcceptedResult(respuesta);

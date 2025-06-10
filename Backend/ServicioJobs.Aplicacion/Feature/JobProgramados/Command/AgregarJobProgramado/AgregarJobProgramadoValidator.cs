@@ -97,7 +97,7 @@ namespace ServicioJobs.Aplicacion.Feature.Programados.Command.JobProgramados
             {
                 var cronExpression = CronExpression.Parse(crontab);
                 // Verificar que la próxima ejecución sea válida
-                var nextExecution = cronExpression.GetNextOccurrence(DateTimeOffset.Now, TimeZoneInfo.Local);
+                var nextExecution = cronExpression.GetNextOccurrence(DateTimeOffset.UtcNow, TimeZoneInfo.Utc);
                 return nextExecution.HasValue;
             }
             catch

@@ -17,7 +17,7 @@ namespace ServicioJobs.Aplicacion.Paginacion.Programados
 
             // Configurar paginación
             AplicarPaginacion(parametro.Pagina, parametro.CantidadRegistroPorPagina);
-
+            
             // Aplicar ordenamiento
             AplicarOrdenamiento(parametro.Ordenar);
         }

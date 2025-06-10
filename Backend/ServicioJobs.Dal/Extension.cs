@@ -55,6 +55,26 @@ namespace ServicioJobs.Dal
                 }
             }
         }
+        public static async Task InicializarBaseDeDatosAsync(this IApplicationBuilder app)
+        {
+            using (var scope = app.ApplicationServices.CreateScope())
+            {
+                var services = scope.ServiceProvider;
+                var loggerFactory = services.GetRequiredService<ILoggerFactory>();
+
+                try
+                {
+                    var context = services.GetRequiredService<ContextServicioJobs>();
+                    await ContextServiciosJobDatos.CargardatosAsincronos(context, loggerFactory);
+                }
+                catch (Exception ex)
+                {
+                    var logger = loggerFactory.CreateLogger("ServicioJobs.Dal.Extension");
+                    logger.LogError(ex, "Ocurrió un error durante la migración de la base de datos.");
+                }
+            }
+        }
+
         private static void AddJWT(this IServiceCollection servicio, IConfiguration configuracion)
         {
             servicio.Configure<ConfiguracionJWT>(configuracion.GetSection("ConfiguracionJwt"));
