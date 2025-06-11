@@ -15,7 +15,7 @@ import Tables from "../../pages/Tables";
 import Alerts from "../../pages/UiElements/Alerts";
 import Buttons from "../../pages/UiElements/Buttons";
 import { RouteConfig } from "./RouteConfig";
-import { PaginaListarProgramado } from "../../pages";
+import { PaginaAgregarJob, PaginaListarProgramado } from "../../pages";
 
 export const routes: RouteConfig[] = [
   {
@@ -29,10 +29,11 @@ export const routes: RouteConfig[] = [
     element: <PaginaListarProgramado />,
   },
   {
-    path: '/calendar',
-    title: 'Calendar | TailAdmin - Tailwind CSS Admin Dashboard Template',
-    element: <Calendar />,
+    path: '/JobProgramado/Agregar',
+    title: 'Job Programado Agregar',
+    element: <PaginaAgregarJob />,
   },
+
   {
     path: '/profile',
     title: 'Profile | TailAdmin - Tailwind CSS Admin Dashboard Template',

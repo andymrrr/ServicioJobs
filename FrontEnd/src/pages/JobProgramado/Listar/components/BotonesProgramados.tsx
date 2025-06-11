@@ -17,7 +17,7 @@ export const crearBotonesProgramados = (
   const {
     onRefrescar,
     cargandoRefresh,
-    urlCrear = "/jobs/crear",
+    urlCrear = "/JobProgramado/Agregar",
     mostrarAgregar = true,
     mostrarRefrescar = true,
   } = acciones;

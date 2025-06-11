@@ -22,7 +22,7 @@ export const PaginaListarProgramado = () => {
   const botonesTabla = crearBotonesProgramados({
     onRefrescar: () => vm.refetch(),
     cargandoRefresh: vm.isLoading,
-    urlCrear: "/jobs/Agregar",
+    urlCrear: "/JobProgramado/Agregar",
     mostrarAgregar: true,
     mostrarRefrescar: true,
   });
