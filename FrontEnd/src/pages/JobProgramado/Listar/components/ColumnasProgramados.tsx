@@ -1,4 +1,3 @@
-import React from 'react';
 import { ColumnsType } from 'antd/es/table';
 import { Tag, Button, Space, Tooltip } from 'antd';
 import { EditOutlined, DeleteOutlined, PlayCircleOutlined } from '@ant-design/icons';
@@ -66,17 +65,7 @@ export const crearColumnasProgramados = (acciones: AccionesProgramadosProps): Co
       );
     },
   },
-  {
-    title: 'Crontab',
-    dataIndex: 'crontab',
-    key: 'crontab',
-    width: 120,
-    render: (crontab: string) => (
-      <code className="bg-gray-100 px-2 py-1 rounded text-sm">
-        {crontab}
-      </code>
-    ),
-  },
+  
   {
     title: 'Estado',
     key: 'estado',

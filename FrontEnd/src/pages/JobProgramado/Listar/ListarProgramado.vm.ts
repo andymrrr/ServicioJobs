@@ -1,112 +1,49 @@
-import { useState } from 'react';
+import { useState, useCallback } from 'react';
 import { useBusquedaPaginada, ParametrosBusquedaPaginada } from "../../../hooks";
 
+// Valores por defecto para los parámetros
+const PARAMETROS_INICIALES: ParametrosBusquedaPaginada = {
+  pagina: 1,
+  cantidadPorPagina: 10,
+  busqueda: '',
+  nombre: '',
+  ordenar: 'nombre',
+};
+
 export function useListarProgramadoVM() {
-  // Estados para filtros
-  const [parametros, setParametros] = useState<ParametrosBusquedaPaginada>({
-    pagina: 1,
-    cantidadPorPagina: 10,
-    busqueda: '',
-    nombre: '',
-    ordenar: 'nombre',
-  });
+  const [parametros, setParametros] = useState<ParametrosBusquedaPaginada>(PARAMETROS_INICIALES);
+  const busquedaQuery = useBusquedaPaginada(parametros);
 
-  // Hook de datos
-  const { 
-    cantidadRegistroPorPagina, 
-    paginaActual, 
-    totalPaginas,
-    totalRegistros, 
-    datos, 
-    isLoading, 
-    isError, 
-    isSuccess, 
-    error, 
-    refetch,
-    tienePaginaAnterior,
-    tienePaginaSiguiente
-  } = useBusquedaPaginada(parametros);
-
-  // Funciones para actualizar filtros
-  const actualizarFiltros = (nuevosParametros: Partial<ParametrosBusquedaPaginada>) => {
+  const actualizarFiltros = useCallback((nuevosParametros: Partial<ParametrosBusquedaPaginada>) => {
     setParametros(prev => ({
       ...prev,
       ...nuevosParametros,
-      pagina: nuevosParametros.pagina ?? 1, // Resetear a página 1 cuando se cambian filtros
+      pagina: nuevosParametros.pagina ?? 1,
     }));
-  };
+  }, []);
 
-  const cambiarPagina = (pagina: number, cantidadPorPagina: number) => {
+  const cambiarPagina = useCallback((pagina: number, cantidadPorPagina?: number) => {
     setParametros(prev => ({
       ...prev,
       pagina,
-      cantidadPorPagina
+      ...(cantidadPorPagina && { cantidadPorPagina })
     }));
-  };
+  }, []);
 
-  const limpiarFiltros = () => {
-    setParametros({
-      pagina: 1,
-      cantidadPorPagina: 10,
-      busqueda: '',
-      nombre: '',
-      ordenar: 'nombre',
-    });
-  };
-
-  const buscar = (textoBusqueda: string) => {
-    actualizarFiltros({
-      busqueda: textoBusqueda,
-      pagina: 1
-    });
-  };
-
-  const filtrarPorNombre = (nombre: string) => {
-    actualizarFiltros({
-      nombre,
-      pagina: 1
-    });
-  };
-
-  const filtrarPorMetodoHttp = (metodoHttps: number | undefined) => {
-    actualizarFiltros({
-      metodoHttps,
-      pagina: 1
-    });
-  };
-
-  const filtrarPorEstadoEjecucion = (estadoEjecucion: number | undefined) => {
-    actualizarFiltros({
-      estadoEjecucion,
-      pagina: 1
-    });
-  };
+  // Función para limpiar todos los filtros
+  const limpiarFiltros = useCallback(() => {
+    setParametros(PARAMETROS_INICIALES);
+  }, []);
 
   return {
-    // Datos de la tabla
-    cantidadRegistroPorPagina,
-    paginaActual,
-    totalPaginas,
-    totalRegistros,
-    datos,
-    isLoading,
-    isError,
-    isSuccess,
-    error,
-    refetch,
-    tienePaginaAnterior,
-    tienePaginaSiguiente,
-    
-    // Parámetros actuales
+    ...busquedaQuery,
     parametros,
-    
-    // Funciones de control
-    cambiarPagina,
-    limpiarFiltros,
-    buscar,
-    filtrarPorNombre,
-    filtrarPorMetodoHttp,
-    filtrarPorEstadoEjecucion,
     actualizarFiltros,
+    cambiarPagina,
+    limpiarFiltros,    
+    buscar: useCallback((busqueda: string) => actualizarFiltros({ busqueda }), [actualizarFiltros]),
+    filtrarPorNombre: useCallback((nombre: string) => actualizarFiltros({ nombre }), [actualizarFiltros]),
+    filtrarPorMetodoHttp: useCallback((metodoHttps: number | undefined) => actualizarFiltros({ metodoHttps }), [actualizarFiltros]),
+    filtrarPorEstadoEjecucion: useCallback((estadoEjecucion: number | undefined) => actualizarFiltros({ estadoEjecucion }), [actualizarFiltros]),
   };
 }
