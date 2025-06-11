@@ -1,17 +1,15 @@
 import { Button, Alert } from 'antd';
-import { PlusOutlined, ReloadOutlined, DownloadOutlined, SettingOutlined } from '@ant-design/icons';
-import TablaPaginada, { ConfiguracionBotonTabla, PosicionBotonTabla } from "../../../components/Tables/TablaPaginada";
+import TablaPaginada from "../../../components/Tables/TablaPaginada";
 import { Contenedor } from "../../../components/UI/Contenedor";
 import Tarjeta from "../../../components/UI/Tarjeta";
-import BotonRedirect from "../../../components/UI/Botones/BotonRedirect";
-import BotonPrimario from "../../../components/UI/Botones/BotonPrimario";
-import { useListarProgramadoVM } from "./ListarProgramado.vm";
 import FiltrosProgramados from './components/FiltrosProgramados';
 import { crearColumnasProgramados } from './components/ColumnasProgramados';
+import { crearBotonesProgramados } from './components/BotonesProgramados';
 import { JobProgramado } from '../../../Nucleo/Dominio/Model';
+import { usePaginacionProgramadoVM } from './PaginacionProgramado.vm';
 
 export const PaginaListarProgramado = () => {
-  const vm = useListarProgramadoVM();
+  const vm = usePaginacionProgramadoVM();
 
   const handleEditar = (job: JobProgramado) => {
     console.log('Editar job:', job);
@@ -31,46 +29,13 @@ export const PaginaListarProgramado = () => {
     onEjecutar: handleEjecutar,
   });
 
-  // Configuración de botones para la tabla con tipado mejorado
-  const botonesTabla: ConfiguracionBotonTabla[] = [
-    {
-      key: 'agregar-job',
-      posicion: PosicionBotonTabla.ARRIBA_DERECHA,
-      orden: 1,
-      visible: true,
-      contenido: (
-        <BotonRedirect 
-          href="/jobs/crear"
-          texto="Agregar Job"
-          icono={<PlusOutlined />}
-          tipo="primary"
-          variante="solido"
-          tamaño="mediano"
-          ajustarAlTexto
-          aria-label="Agregar nuevo job programado"
-        />
-      ),
-    },
-    {
-      key: 'refrescar-datos',
-      posicion: PosicionBotonTabla.ARRIBA_DERECHA,
-      orden: 2,
-      visible: true,
-      contenido: (
-        <BotonPrimario
-          texto="Refrescar"
-          icono={<ReloadOutlined />}
-          onClick={() => vm.refetch()}
-          cargando={vm.isLoading}
-          color="lightBlue"
-          variante="outline"
-          tamaño="mediano"
-          ajustarAlTexto
-          aria-label="Refrescar lista de jobs programados"
-        />
-      ),
-    },
-  ];
+  const botonesTabla = crearBotonesProgramados({
+    onRefrescar: () => vm.refetch(),
+    cargandoRefresh: vm.isLoading,
+    urlCrear: "/jobs/crear",
+    mostrarAgregar: true,
+    mostrarRefrescar: true,
+  });
 
   return (
     <Contenedor>
@@ -129,7 +94,7 @@ export const PaginaListarProgramado = () => {
           claveFila="idProgramado"
           opcionesTamanioPagina={['10', '25', '50', '100']}
           
-          // Configuración de botones tipada
+          // Configuración de botones usando la función externa
           botones={botonesTabla}
           espaciadoBotones="middle"
           clasesPersonalizadas={{
