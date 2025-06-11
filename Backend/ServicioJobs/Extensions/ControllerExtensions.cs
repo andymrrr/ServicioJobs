@@ -7,8 +7,9 @@ namespace ServicioJobs.Extensions
 {
     public static class ControllerExtensions
     {
-        public static ActionResult<RespuestaServicio<T>> ToActionResult<T>(
-            this ControllerBase controller, 
+
+        public static ActionResult<RespuestaServicio<T>> ConvertirAResultadoAccion<T>(
+            this ControllerBase controller,
             RespuestaServicio<T> respuesta)
         {
             if (respuesta.Completado)
@@ -16,7 +17,6 @@ namespace ServicioJobs.Extensions
                 return controller.Ok(respuesta);
             }
 
-        
             return respuesta.TipoError switch
             {
                 TipoError.NoEncontrado => controller.NotFound(respuesta),
@@ -25,27 +25,27 @@ namespace ServicioJobs.Extensions
                 TipoError.NoAutorizado => controller.Unauthorized(respuesta),
                 TipoError.Prohibido => controller.StatusCode((int)HttpStatusCode.Forbidden, respuesta),
                 TipoError.ErrorInterno => controller.StatusCode((int)HttpStatusCode.InternalServerError, respuesta),
-                _ => controller.BadRequest(respuesta) 
+                _ => controller.BadRequest(respuesta)
             };
         }
 
-        
-        public static ActionResult<RespuestaServicio<T>> ToCreatedResult<T>(
+
+        public static ActionResult<RespuestaServicio<T>> ConvertirAResultadoCreado<T>(
             this ControllerBase controller,
             RespuestaServicio<T> respuesta,
-            string actionName,
-            object routeValues)
+            string nombreAccion,
+            object valoresRuta)
         {
             if (respuesta.Completado)
             {
-                return controller.CreatedAtAction(actionName, routeValues, respuesta);
+                return controller.CreatedAtAction(nombreAccion, valoresRuta, respuesta);
             }
 
-            return controller.ToActionResult(respuesta);
+            return controller.ConvertirAResultadoAccion(respuesta);
         }
 
-       
-        public static ActionResult<RespuestaServicio<T>> ToAcceptedResult<T>(
+
+        public static ActionResult<RespuestaServicio<T>> ConvertirAResultadoAceptado<T>(
             this ControllerBase controller,
             RespuestaServicio<T> respuesta)
         {
@@ -54,7 +54,7 @@ namespace ServicioJobs.Extensions
                 return controller.Accepted(respuesta);
             }
 
-            return controller.ToActionResult(respuesta);
+            return controller.ConvertirAResultadoAccion(respuesta);
         }
     }
-} 
+}

@@ -1,17 +1,46 @@
-import { JobProgramado, Respuesta, RespuestaPaginada } from "../../Model";
+import { JobProgramado, Respuesta, RespuestaPaginada, PaginacionProgramadosQuery } from "../../Dominio/Model";
+import { ApiSinAuth } from "../configuracion/Api";
 import { IJobProgramadoImplementacion } from "../Interfaz/IJobProgramadoImplementacion";
+import { Utilitarios } from "../Utilitario";
 
 export class JobProgramadoImplementacion implements IJobProgramadoImplementacion {
-    ObtenerPaginacion(request: FormData): Promise<RespuestaPaginada<JobProgramado>> {
-        throw new Error("Method not implemented.");
+    async ObtenerPaginacion(request: PaginacionProgramadosQuery): Promise<RespuestaPaginada<JobProgramado>> {
+        try {
+            const url = "/api/v1/Programados/paginacion";
+            const queryParams = Utilitarios.ConstruirQueryParams(request);
+            const urlConParametros = `${url}?${queryParams.toString()}`;
+            
+            const respuesta = await ApiSinAuth.get<RespuestaPaginada<JobProgramado>>(urlConParametros);
+            return respuesta.data;
+        } catch (error) {
+            return Utilitarios.ManejarError<RespuestaPaginada<JobProgramado>>(error);
+        }
     }
-    CrearJobProgramado(request: FormData): Promise<Respuesta> {
-        throw new Error("Method not implemented.");
+   async CrearJobProgramado(request: FormData): Promise<Respuesta> {
+        try {
+            const url ="/api/v1/Programados/crearjob";
+            const respuesta = await ApiSinAuth.post<Respuesta<JobProgramado>>(url, request);
+            return respuesta.data;
+        } catch (error) {
+            return Utilitarios.ManejarError<Respuesta<JobProgramado>>(error);
+        }
     }
-    ObtenerJobPorId(id: number): Promise<Respuesta> {
-        throw new Error("Method not implemented.");
+    async ObtenerJobPorId(id: number): Promise<Respuesta> {
+        try {
+            const url ="/binance/binary-momentum-catboost/entrenar";
+            const respuesta = await ApiSinAuth.post<Respuesta<JobProgramado>>(url,id);
+            return respuesta.data;
+        } catch (error) {
+            return Utilitarios.ManejarError<Respuesta<JobProgramado>>(error);
+        }
     }
-    ActualizarJobProgramado(request: FormData): Promise<Respuesta> {
-        throw new Error("Method not implemented.");
+    async ActualizarJobProgramado(request: FormData): Promise<Respuesta> {
+        try {
+            const url ="/binance/binary-momentum-catboost/entrenar";
+            const respuesta = await ApiSinAuth.post<Respuesta<JobProgramado>>(url, request);
+            return respuesta.data;
+        } catch (error) {
+            return Utilitarios.ManejarError<Respuesta<JobProgramado>>(error);
+        }
     }
 }

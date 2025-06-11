@@ -1,0 +1,7 @@
+export * from './Comun/RespuestaPaginada';
+export * from './JobProgramado/JobProgramado';
+export * from './Comun/Respuesta';
+export * from './JobProgramado/AgregarJobProgramadoComand';
+export * from './JobProgramado/JobParametro';
+export * from './JobProgramado/PaginacionProgramadosQuery';
+export * from './enum/MethodoHTTP';
