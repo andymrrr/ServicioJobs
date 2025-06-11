@@ -79,11 +79,11 @@ export const PaginaAgregarJob = () => {
                 tamano={12}
             >
                 <form onSubmit={handleSubmit(onSubmit)}>
-                    <div className="grid grid-cols-12 gap-4 mb-6">
+                    <div className="grid grid-cols-12 gap-6 mb-8">
                         
                         {/* Información Básica */}
                         <div className="col-span-12">
-                            <h5 className="text-lg font-medium text-black dark:text-white mb-4 border-b border-gray-200 dark:border-strokedark pb-2">
+                            <h5 className="text-lg font-semibold text-black dark:text-white mb-4 border-b border-gray-200 dark:border-strokedark pb-3">
                                 📋 Información Básica
                             </h5>
                         </div>
@@ -119,8 +119,8 @@ export const PaginaAgregarJob = () => {
                         />
 
                         {/* Configuración del Endpoint */}
-                        <div className="col-span-12 mt-4">
-                            <h5 className="text-lg font-medium text-black dark:text-white mb-4 border-b border-gray-200 dark:border-strokedark pb-2">
+                        <div className="col-span-12 mt-6">
+                            <h5 className="text-lg font-semibold text-black dark:text-white mb-4 border-b border-gray-200 dark:border-strokedark pb-3">
                                 🌐 Configuración del Endpoint
                             </h5>
                         </div>
@@ -148,8 +148,8 @@ export const PaginaAgregarJob = () => {
                         />
 
                         {/* Programación y Notificaciones */}
-                        <div className="col-span-12 mt-4">
-                            <h5 className="text-lg font-medium text-black dark:text-white mb-4 border-b border-gray-200 dark:border-strokedark pb-2">
+                        <div className="col-span-12 mt-6">
+                            <h5 className="text-lg font-semibold text-black dark:text-white mb-4 border-b border-gray-200 dark:border-strokedark pb-3">
                                 ⏰ Programación y Notificaciones
                             </h5>
                         </div>
@@ -177,8 +177,8 @@ export const PaginaAgregarJob = () => {
                         />
 
                         {/* Configuración Avanzada */}
-                        <div className="col-span-12 mt-4">
-                            <h5 className="text-lg font-medium text-black dark:text-white mb-4 border-b border-gray-200 dark:border-strokedark pb-2">
+                        <div className="col-span-12 mt-6">
+                            <h5 className="text-lg font-semibold text-black dark:text-white mb-4 border-b border-gray-200 dark:border-strokedark pb-3">
                                 ⚙️ Configuración Avanzada
                             </h5>
                         </div>
@@ -215,9 +215,9 @@ export const PaginaAgregarJob = () => {
                     </div>
 
                     {/* Parámetros Dinámicos - Headers, Query Params, Body */}
-                    <div className="mb-6">
-                        <div className="mb-4">
-                            <h5 className="text-lg font-medium text-black dark:text-white mb-2 border-b border-gray-200 dark:border-strokedark pb-2">
+                    <div className="mb-8">
+                        <div className="mb-6">
+                            <h5 className="text-lg font-semibold text-black dark:text-white mb-2 border-b border-gray-200 dark:border-strokedark pb-3">
                                 🔧 Parámetros y Configuración HTTP
                             </h5>
                             <p className="text-sm text-gray-600 dark:text-gray-400">
@@ -244,7 +244,7 @@ export const PaginaAgregarJob = () => {
                             description={error.message || 'Ha ocurrido un error inesperado'}
                             type="error"
                             showIcon
-                            className="mb-4"
+                            className="mb-6"
                         />
                     )}
 
@@ -254,19 +254,19 @@ export const PaginaAgregarJob = () => {
                             description="El job programado ha sido configurado correctamente"
                             type="success"
                             showIcon
-                            className="mb-4"
+                            className="mb-6"
                         />
                     )}
 
                     {/* Botones de Acción */}
-                    <div className="flex justify-end gap-4 pt-4 border-t border-gray-200 dark:border-strokedark">
+                    <div className="flex justify-end gap-4 pt-6 border-t border-gray-200 dark:border-strokedark">
                         <button
                             type="button"
                             onClick={() => {
                                 reset();
                                 setMetodoHttpSeleccionado("");
                             }}
-                            className="flex justify-center rounded border border-stroke py-2 px-6 font-medium text-black hover:shadow-1 dark:border-strokedark dark:text-white hover:border-primary transition-colors"
+                            className="flex justify-center rounded border border-stroke py-3 px-6 font-medium text-black hover:shadow-1 dark:border-strokedark dark:text-white hover:border-primary transition-colors"
                             disabled={isPending}
                         >
                             Cancelar
@@ -275,7 +275,7 @@ export const PaginaAgregarJob = () => {
                         <button
                             type="submit"
                             disabled={isPending}
-                            className="flex justify-center rounded bg-primary py-2 px-6 font-medium text-gray hover:bg-opacity-95 disabled:opacity-50 transition-colors"
+                            className="flex justify-center rounded bg-primary py-3 px-6 font-medium text-gray hover:bg-opacity-95 disabled:opacity-50 transition-colors"
                         >
                             {isPending ? "Guardando..." : "💾 Guardar Job"}
                         </button>
