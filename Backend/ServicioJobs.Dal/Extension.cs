@@ -17,6 +17,7 @@ namespace ServicioJobs.Dal
     {
         public static void AddServicioDatos(this IServiceCollection servicio, IConfiguration configuracion)
         {
+            servicio.AddCors(configuracion);
             servicio.AddHttpContextAccessor();
             servicio.AddScoped<IServicioJobsUoW, ServicioJobsUoW>();
             servicio.AddScoped(typeof(IRepositorio<>), typeof(Repositorio<>));

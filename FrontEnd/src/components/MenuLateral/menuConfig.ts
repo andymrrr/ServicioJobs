@@ -51,6 +51,13 @@ export const menuConfig: MenuSection[] = [
         type: "link",
       },
       {
+        id: "JobProgramado",
+        to: "/JobProgramado",
+        icon: FaCalendarAlt,
+        label: "JobProgramado",
+        type: "link",
+      },
+      {
         id: "calendar",
         to: "/calendar",
         icon: FaCalendarAlt,

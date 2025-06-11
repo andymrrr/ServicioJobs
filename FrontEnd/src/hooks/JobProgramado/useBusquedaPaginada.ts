@@ -39,33 +39,30 @@ export const useBusquedaPaginada = (parametros: ParametrosBusquedaPaginada = {})
         estadoEjecucion,
         nombre
       };
-
-      // El caso de uso se encarga de toda la lógica de negocio
       return await JobProgramadoPaginadoCasoUso(consulta);
     },
-    staleTime: 5 * 60 * 1000, // 5 minutos
-    gcTime: 10 * 60 * 1000, // 10 minutos (anteriormente cacheTime)
+    staleTime: 5 * 60 * 1000, 
+    gcTime: 10 * 60 * 1000, 
   });
 
   return {
-    // Datos
+    
     datos: query.data?.datos || [],
     totalRegistros: query.data?.totalRegistros || 0,
     paginaActual: query.data?.paginaActual || 1,
     cantidadRegistroPorPagina: query.data?.cantidadRegistroPorPagina || 10,
     totalPaginas: query.data?.totalPaginas || 0,
     
-    // Estados
+   
     isLoading: query.isLoading,
     isFetching: query.isFetching,
     isError: query.isError,
     isSuccess: query.isSuccess,
     
-    // Funciones de control
+   
     error: query.error,
     refetch: query.refetch,
     
-    // Información de paginación útil
     tienePaginaAnterior: pagina > 1,
     tienePaginaSiguiente: pagina < (query.data?.totalPaginas || 0),
     paginaAnterior: pagina > 1 ? pagina - 1 : null,

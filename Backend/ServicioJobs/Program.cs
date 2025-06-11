@@ -9,10 +9,21 @@ using Hangfire;
 
 var builder = WebApplication.CreateBuilder(args);
 
-
 ConfiguracionLogger.AgregarLogging(builder);
 
 builder.Logging.AddConsole();
+
+// Configuración de CORS
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowFrontend", policy =>
+    {
+        policy.WithOrigins("http://localhost:3000", "http://localhost:5173", "http://localhost:4173") // Puertos comunes de Vite/React
+              .AllowAnyMethod()
+              .AllowAnyHeader()
+              .AllowCredentials();
+    });
+});
 
 builder.Services.AddControllers(opcion =>
 {
@@ -22,7 +33,6 @@ builder.Services.AddControllers(opcion =>
 {
     options.JsonSerializerOptions.ReferenceHandler = System.Text.Json.Serialization.ReferenceHandler.IgnoreCycles;
 });
-
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -37,6 +47,10 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+// Usar CORS antes de autorización
+app.UseCors("AllowFrontend");
+
 app.UseHangfireDashboard();
 app.UseAuthorization();
 app.UseSerilogRequestLogging();
@@ -55,7 +69,5 @@ using (var scope = app.Services.CreateScope())
        "* * * * *"
    );
 }
-
-
 
 app.Run();

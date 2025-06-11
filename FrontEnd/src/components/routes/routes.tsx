@@ -15,12 +15,18 @@ import Tables from "../../pages/Tables";
 import Alerts from "../../pages/UiElements/Alerts";
 import Buttons from "../../pages/UiElements/Buttons";
 import { RouteConfig } from "./RouteConfig";
+import { PaginaListarProgramado } from "../../pages";
 
 export const routes: RouteConfig[] = [
   {
     path: '/',
     title: 'eCommerce Dashboard | TailAdmin - Tailwind CSS Admin Dashboard Template',
     element: <ECommerce />,
+  },
+  {
+    path: '/JobProgramado',
+    title: 'Job Programado ',
+    element: <PaginaListarProgramado />,
   },
   {
     path: '/calendar',

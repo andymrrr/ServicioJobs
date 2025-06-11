@@ -1,7 +1,7 @@
 export enum MetodoHttp {
-    GET = 'GET',
-    POST = 'POST',
-    PUT = 'PUT',
-    DELETE = 'DELETE',
-    PATCH = 'PATCH',
+    GET = 1,
+    POST = 2,
+    PUT = 3,
+    DELETE = 4,
+    PATCH = 5,
   }
