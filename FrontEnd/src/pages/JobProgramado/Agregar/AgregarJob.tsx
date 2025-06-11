@@ -1,5 +1,6 @@
 import { Contenedor } from "../../../components/UI/Contenedor"
 import Tarjeta from "../../../components/UI/Tarjeta";
+import BotonPrimario from "../../../components/UI/Botones/BotonPrimario";
 import { useAgregarJobVM } from "./AgregarJob.Vm";
 import { useForm } from "react-hook-form";
 import { AgregarJobProgramadoComand } from "../../../Nucleo/Dominio/Model";
@@ -9,6 +10,7 @@ import HookFormDinamico, { FormularioDatos } from "../../../components/Formulari
 import { MetodoHttp } from "../../../Nucleo/Dominio/Model/enum/MethodoHTTP";
 import { useState } from "react";
 import { Alert } from 'antd';
+import Titulo from "../../../components/UI/Titulo";
 
 // Extender el comando para incluir parámetros dinámicos
 interface AgregarJobExtendido extends AgregarJobProgramadoComand {
@@ -81,11 +83,20 @@ export const PaginaAgregarJob = () => {
                 <form onSubmit={handleSubmit(onSubmit)}>
                     <div className="grid grid-cols-12 gap-6 mb-8">
                         
-                        {/* Información Básica */}
+                                                {/* Información Básica */}
                         <div className="col-span-12">
-                            <h5 className="text-lg font-semibold text-black dark:text-white mb-4 border-b border-gray-200 dark:border-strokedark pb-3">
-                                📋 Información Básica
-                            </h5>
+                            <Titulo 
+                                level="h3" 
+                                tamaño="grande"
+                                color="primary"
+                                separador={true}
+                                tipoSeparador="linea"
+                                colorSeparador="primary"
+                                espacioInferior="grande"
+                                icono="📋"
+                            >
+                                Información Básica
+                            </Titulo>
                         </div>
 
                         <HookFormInput
@@ -119,10 +130,19 @@ export const PaginaAgregarJob = () => {
                         />
 
                         {/* Configuración del Endpoint */}
-                        <div className="col-span-12 mt-6">
-                            <h5 className="text-lg font-semibold text-black dark:text-white mb-4 border-b border-gray-200 dark:border-strokedark pb-3">
-                                🌐 Configuración del Endpoint
-                            </h5>
+                        <div className="col-span-12 mt-8">
+                            <Titulo 
+                                level="h3" 
+                                tamaño="grande"
+                                color="success"
+                                separador={true}
+                                tipoSeparador="linea"
+                                colorSeparador="secondary"
+                                espacioInferior="grande"
+                                icono="🌐"
+                            >
+                                Configuración del Endpoint
+                            </Titulo>
                         </div>
 
                         <HookFormInput
@@ -148,10 +168,19 @@ export const PaginaAgregarJob = () => {
                         />
 
                         {/* Programación y Notificaciones */}
-                        <div className="col-span-12 mt-6">
-                            <h5 className="text-lg font-semibold text-black dark:text-white mb-4 border-b border-gray-200 dark:border-strokedark pb-3">
-                                ⏰ Programación y Notificaciones
-                            </h5>
+                        <div className="col-span-12 mt-8">
+                            <Titulo 
+                                level="h3" 
+                                tamaño="grande"
+                                color="warning"
+                                separador={true}
+                                tipoSeparador="degradado"
+                                colorSeparador="secondary"
+                                espacioInferior="grande"
+                                icono="⏰"
+                            >
+                                Programación y Notificaciones
+                            </Titulo>
                         </div>
 
                         <HookFormInput
@@ -177,10 +206,19 @@ export const PaginaAgregarJob = () => {
                         />
 
                         {/* Configuración Avanzada */}
-                        <div className="col-span-12 mt-6">
-                            <h5 className="text-lg font-semibold text-black dark:text-white mb-4 border-b border-gray-200 dark:border-strokedark pb-3">
-                                ⚙️ Configuración Avanzada
-                            </h5>
+                        <div className="col-span-12 mt-8">
+                            <Titulo 
+                                level="h3" 
+                                tamaño="grande"
+                                color="secondary"
+                                separador={true}
+                                tipoSeparador="degradado"
+                                espacioInferior="grande"
+                                icono="⚙️"
+                                subtitulo="Configuraciones opcionales para optimizar el rendimiento"
+                            >
+                                Configuración Avanzada
+                            </Titulo>
                         </div>
 
                         <HookFormInput
@@ -217,19 +255,26 @@ export const PaginaAgregarJob = () => {
                     {/* Parámetros Dinámicos - Headers, Query Params, Body */}
                     <div className="mb-8">
                         <div className="mb-6">
-                            <h5 className="text-lg font-semibold text-black dark:text-white mb-2 border-b border-gray-200 dark:border-strokedark pb-3">
-                                🔧 Parámetros y Configuración HTTP
-                            </h5>
-                            <p className="text-sm text-gray-600 dark:text-gray-400">
-                                Configura headers, query parameters y body parameters para personalizar las peticiones HTTP
-                            </p>
+                            <Titulo 
+                                level="h3" 
+                                tamaño="grande"
+                                color="primary"
+                                separador={true}
+                                tipoSeparador="linea"
+                                colorSeparador="primary"
+                                espacioInferior="grande"
+                                icono="🔧"
+                                subtitulo="Configura headers, query parameters y body parameters para personalizar las peticiones HTTP"
+                            >
+                                Parámetros y Configuración HTTP
+                            </Titulo>
                         </div>
                         
                         <HookFormDinamico
                             name="parametrosDinamicos"
                             control={control}
-                            pestañas={['Headers', 'Query Params', 'Body Params']}
-                            tiposCamposPermitidos={[]} // Se usan las configuraciones predefinidas
+                            pestañas={['Headers', 'Query Params']}
+                            tiposCamposPermitidos={[]}
                             cantidadMaximaCampos={20}
                             titulo="Configuración de Parámetros HTTP"
                             subtitulo="Define headers personalizados, query parameters y body parameters para tu endpoint"
@@ -260,25 +305,28 @@ export const PaginaAgregarJob = () => {
 
                     {/* Botones de Acción */}
                     <div className="flex justify-end gap-4 pt-6 border-t border-gray-200 dark:border-strokedark">
-                        <button
-                            type="button"
+                        <BotonPrimario
+                            texto="Cancelar"
+                            color="gray"
+                            variante="outline"
+                            tamaño="mediano"
+                            ajustarAlTexto={true}
                             onClick={() => {
                                 reset();
                                 setMetodoHttpSeleccionado("");
                             }}
-                            className="flex justify-center rounded border border-stroke py-3 px-6 font-medium text-black hover:shadow-1 dark:border-strokedark dark:text-white hover:border-primary transition-colors"
-                            disabled={isPending}
-                        >
-                            Cancelar
-                        </button>
+                            deshabilitar={isPending}
+                        />
                         
-                        <button
-                            type="submit"
-                            disabled={isPending}
-                            className="flex justify-center rounded bg-primary py-3 px-6 font-medium text-gray hover:bg-opacity-95 disabled:opacity-50 transition-colors"
-                        >
-                            {isPending ? "Guardando..." : "💾 Guardar Job"}
-                        </button>
+                        <BotonPrimario
+                            texto={isPending ? "Guardando..." : "💾 Guardar Job"}
+                            color="primary"
+                            tipo="submit"
+                            tamaño="mediano"
+                            ajustarAlTexto={true}
+                            deshabilitar={isPending}
+                            cargando={isPending}
+                        />
                     </div>
                 </form>
             </Tarjeta>
