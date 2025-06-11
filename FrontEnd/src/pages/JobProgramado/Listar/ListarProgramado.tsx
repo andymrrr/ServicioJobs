@@ -34,7 +34,6 @@ export const PaginaListarProgramado = () => {
         subtitulo="Gestión y monitoreo de tareas programadas"
         lineaHeader={{ mostrar: true, color: "blue", grosor: "1px" }}
       >
-        {/* Filtros de búsqueda */}
         <FiltrosProgramados
           busqueda={vm.parametros.busqueda || ''}
           nombre={vm.parametros.nombre || ''}
@@ -62,9 +61,6 @@ export const PaginaListarProgramado = () => {
             }
           />
         )}
-
-       
-        
         <TablaPaginada
           datos={vm.datos}
           columnas={columnas}
@@ -74,8 +70,6 @@ export const PaginaListarProgramado = () => {
           onPageChange={vm.cambiarPagina}
           claveFila="idProgramado"
           opcionesTamanioPagina={['10', '25', '50', '100']}
-          
-          // Configuración de botones usando la función externa
           botones={botonesTabla}
           espaciadoBotones="middle"
           clasesPersonalizadas={{
