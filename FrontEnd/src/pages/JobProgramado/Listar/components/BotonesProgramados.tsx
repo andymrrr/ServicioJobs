@@ -28,7 +28,7 @@ export const crearBotonesProgramados = (
   if (mostrarAgregar) {
     botones.push({
       key: 'agregar-job',
-      posicion: PosicionBotonTabla.ARRIBA_DERECHA,
+      posicion: PosicionBotonTabla.ABAJO_DERECHA,
       orden: 1,
       visible: true,
       contenido: (
@@ -50,7 +50,7 @@ export const crearBotonesProgramados = (
   if (mostrarRefrescar) {
     botones.push({
       key: 'refrescar-datos',
-      posicion: PosicionBotonTabla.ARRIBA_DERECHA,
+      posicion: PosicionBotonTabla.ABAJO_DERECHA,
       orden: 2,
       visible: true,
       contenido: (

@@ -5,23 +5,13 @@ import Tarjeta from "../../../components/UI/Tarjeta";
 import FiltrosProgramados from './components/FiltrosProgramados';
 import { crearColumnasProgramados } from './components/ColumnasProgramados';
 import { crearBotonesProgramados } from './components/BotonesProgramados';
-import { JobProgramado } from '../../../Nucleo/Dominio/Model';
 import { usePaginacionProgramadoVM } from './PaginacionProgramado.vm';
+import { useListarProgramadoVM } from './ListarProgramado.Vm';
 
 export const PaginaListarProgramado = () => {
   const vm = usePaginacionProgramadoVM();
-
-  const handleEditar = (job: JobProgramado) => {
-    console.log('Editar job:', job);
-  };
-
-  const handleEliminar = (job: JobProgramado) => {
-    console.log('Eliminar job:', job);
-  };
-
-  const handleEjecutar = (job: JobProgramado) => {
-    console.log('Ejecutar job:', job);
-  };
+  const { handleEditar, handleEliminar, handleEjecutar } = useListarProgramadoVM();
+ 
 
   const columnas = crearColumnasProgramados({
     onEditar: handleEditar,
@@ -32,7 +22,7 @@ export const PaginaListarProgramado = () => {
   const botonesTabla = crearBotonesProgramados({
     onRefrescar: () => vm.refetch(),
     cargandoRefresh: vm.isLoading,
-    urlCrear: "/jobs/crear",
+    urlCrear: "/jobs/Agregar",
     mostrarAgregar: true,
     mostrarRefrescar: true,
   });
@@ -73,16 +63,7 @@ export const PaginaListarProgramado = () => {
           />
         )}
 
-        <div className="mb-4 flex justify-between items-center">
-          <span className="text-sm text-gray-600">
-            Mostrando {vm.datos.length} de {vm.totalRegistros} registros
-          </span>
-          {vm.isLoading && (
-            <span className="text-sm text-blue-600">
-              Cargando...
-            </span>
-          )}
-        </div>
+       
         
         <TablaPaginada
           datos={vm.datos}
