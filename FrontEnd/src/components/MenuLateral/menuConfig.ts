@@ -82,6 +82,8 @@ export const menuConfig: MenuSection[] = [
           { to: "/forms/form-step-by-step", label: "Step by Step", icon: FaStepForward },
           { to: "/forms/dynamic-form", label: "Dynamic Fields", icon: FaPlus },
           { to: "/forms/dynamic-form-hook", label: "Dynamic Hook Form", icon: FaCode },
+          { to: "/forms/dynamic-form-hook-improved", label: "Form Hook Mejorado", icon: FaCode },
+          { to: "/forms/dynamic-form-examples", label: "Dynamic Examples", icon: FaLayerGroup },
         ],
       },
       {

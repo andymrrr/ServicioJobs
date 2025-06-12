@@ -57,7 +57,6 @@ const HookFormDinamico = <T extends FieldValues>({
   tiposCamposPermitidos,
   cantidadMaximaCampos = 15,
   onSubmit,
-  onChange,
   valoresIniciales = {},
   className = '',
   textoBotonEnvio = 'Guardar',

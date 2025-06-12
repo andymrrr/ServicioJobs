@@ -8,6 +8,8 @@ import FormLayout from "../../pages/Form/FormLayout";
 import FormStepByStep from "../../pages/Form/FormStepByStep";
 import DynamicFormExample from "../../pages/Form/DynamicFormExample";
 import DynamicFormHookExample from "../../pages/Form/DynamicFormHookExample";
+import EjemploDynamicFieldFormHookImproved from "../../components/UI/EjemploDynamicFieldFormHookImproved";
+import DynamicFormExamples from "../../components/UI/DynamicFormExamples";
 import Graficas from "../../pages/Graficas/Graficas";
 import Profile from "../../pages/Profile";
 import Settings from "../../pages/Settings";
@@ -63,6 +65,16 @@ export const routes: RouteConfig[] = [
     path: '/forms/dynamic-form-hook',
     title: 'Formularios Dinámicos Hook Form | TailAdmin - Tailwind CSS Admin Dashboard Template',
     element: <DynamicFormHookExample />,
+  },
+  {
+    path: '/forms/dynamic-form-hook-improved',
+    title: 'Formulario Dinámico Mejorado | TailAdmin - Tailwind CSS Admin Dashboard Template',
+    element: <EjemploDynamicFieldFormHookImproved />,
+  },
+  {
+    path: '/forms/dynamic-form-examples',
+    title: 'Dynamic Form Examples | TailAdmin - Tailwind CSS Admin Dashboard Template',
+    element: <DynamicFormExamples />,
   },
   {
     path: '/tables',
