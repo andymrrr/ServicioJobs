@@ -10,12 +10,11 @@ import SelectFormHook from "../../../components/FormulariosControles/React-Hook-
 import { MetodoHttp } from "../../../Nucleo/Dominio/Model/enum/MethodoHTTP";
 import { useState, useEffect } from "react";
 import { Alert } from 'antd';
-import Titulo from "../../../components/UI/Titulo";
+
 import HookFormDinamico, { 
     ConfiguracionCampoHook, 
     FormularioTabData,
     procesarConfiguracionAPI,
-    paresAObjeto,
     obtenerEstadisticasConfiguracion
 } from "../../../components/FormulariosControles/React-Hook-Form/HookFormDinamico";
 import Collapsible from "../../../components/UI/Collapsible";

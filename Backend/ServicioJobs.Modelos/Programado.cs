@@ -25,8 +25,7 @@ namespace ServicioJobs.Modelos
         public int? ReintentosPermitidos { get; set; }
         public int? PeriodoReintento { get; set; }
         public int? Reintentos { get; set; }
-        public bool Habilitado { get; set; }
-        public MetodoHttp MetodoHttp { get; set; }
+        public bool Habilitado { get; set; }   
 
         public Metodo Metodo { get; set; }
         public ICollection<Parametro> Parametros { get; set; }

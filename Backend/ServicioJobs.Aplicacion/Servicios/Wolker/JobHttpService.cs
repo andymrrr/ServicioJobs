@@ -24,7 +24,7 @@ namespace ServicioJobs.Aplicacion.Servicios.Wolker
             foreach (var header in job.Parametros.Where(x => x.Tipo == TipoParametro.Header))
                 _apiClient.AddOrUpdateHeader(header.Propiedad, header.Valor);
 
-            return job.MetodoHttp switch
+            return job.Metodo.CodigoHttp switch
             {
                 MetodoHttp.GET => await _apiClient.GetAsync(JobProgramadoFormatter.FormarUrlGet(job)),
                 MetodoHttp.POST => await _apiClient.PosAsync(job.Url, JobProgramadoFormatter.GenerarParametro(job)),

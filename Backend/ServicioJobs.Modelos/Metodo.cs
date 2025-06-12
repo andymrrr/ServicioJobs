@@ -1,4 +1,6 @@
 ﻿
+using ServicioJobs.Modelos.Enums;
+
 namespace ServicioJobs.Modelos
 {
     public class Metodo
@@ -9,6 +11,7 @@ namespace ServicioJobs.Modelos
         }
         public Guid IdMetodo { get; set; }
         public string Nombre { get; set; }
+        public MetodoHttp CodigoHttp { get; set; }
         public ICollection<Programado> Programados { get; set; }
     }
 }

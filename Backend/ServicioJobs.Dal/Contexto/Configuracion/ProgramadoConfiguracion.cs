@@ -50,8 +50,7 @@ namespace ServicioJobs.Dal.Contexto.Configuracion
             entity.Property(p => p.Habilitado)
                 .IsRequired();
 
-            entity.Property(p => p.MetodoHttp)
-                .IsRequired();
+           
 
           
             entity.HasOne(p => p.Metodo)

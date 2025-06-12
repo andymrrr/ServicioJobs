@@ -17,7 +17,7 @@ namespace ServicioJobs.Aplicacion.Paginacion.Programados
         public Expression<Func<Programado, bool>> ConstruirFiltro()
         {
             return c =>
-                (!MetodoHttps.HasValue || c.MetodoHttp == MetodoHttps) && 
+                (!MetodoHttps.HasValue || c.Metodo.CodigoHttp == MetodoHttps) && 
                 (!IdMetodo.HasValue || c.IdMetodo == IdMetodo) &&
                 (!EstadoEjecucion.HasValue || c.EstadoEjecucion == EstadoEjecucion) &&
                 (string.IsNullOrEmpty(Nombre) || c.Nombre!.Contains(Nombre)) &&

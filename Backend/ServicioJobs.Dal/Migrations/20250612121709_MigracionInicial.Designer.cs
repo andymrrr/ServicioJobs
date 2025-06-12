@@ -12,8 +12,8 @@ using ServicioJobs.Dal.Contexto;
 namespace ServicioJobs.Dal.Migrations
 {
     [DbContext(typeof(ContextServicioJobs))]
-    [Migration("20250531102511_initMigration")]
-    partial class initMigration
+    [Migration("20250612121709_MigracionInicial")]
+    partial class MigracionInicial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -62,6 +62,9 @@ namespace ServicioJobs.Dal.Migrations
                     b.Property<Guid>("IdMetodo")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
+
+                    b.Property<int>("CodigoHttp")
+                        .HasColumnType("integer");
 
                     b.Property<string>("Nombre")
                         .IsRequired()
@@ -137,9 +140,6 @@ namespace ServicioJobs.Dal.Migrations
 
                     b.Property<Guid>("IdMetodo")
                         .HasColumnType("uuid");
-
-                    b.Property<int>("MetodoHttp")
-                        .HasColumnType("integer");
 
                     b.Property<string>("Nombre")
                         .IsRequired()

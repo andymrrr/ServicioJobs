@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace ServicioJobs.Dal.Migrations
 {
     /// <inheritdoc />
-    public partial class initMigration : Migration
+    public partial class MigracionInicial : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -16,7 +16,8 @@ namespace ServicioJobs.Dal.Migrations
                 columns: table => new
                 {
                     IdMetodo = table.Column<Guid>(type: "uuid", nullable: false),
-                    Nombre = table.Column<string>(type: "character varying(200)", maxLength: 200, nullable: false)
+                    Nombre = table.Column<string>(type: "character varying(200)", maxLength: 200, nullable: false),
+                    CodigoHttp = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -43,8 +44,7 @@ namespace ServicioJobs.Dal.Migrations
                     ReintentosPermitidos = table.Column<int>(type: "integer", nullable: true),
                     PeriodoReintento = table.Column<int>(type: "integer", nullable: true),
                     Reintentos = table.Column<int>(type: "integer", nullable: true),
-                    Habilitado = table.Column<bool>(type: "boolean", nullable: false),
-                    MetodoHttp = table.Column<int>(type: "integer", nullable: false)
+                    Habilitado = table.Column<bool>(type: "boolean", nullable: false)
                 },
                 constraints: table =>
                 {

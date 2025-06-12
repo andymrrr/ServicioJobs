@@ -67,7 +67,6 @@ namespace ServicioJobs.Aplicacion.Feature.Programados.Command.JobProgramados
                     EstadoEjecucion = ValoresEstaticos.Estados.Pendiente,
                     Reintentos = 0,
                     Habilitado = true,
-                    MetodoHttp = request.MetodoHttp,
                     UltimaEjecucionExitosa = null,
                     FechaReintento = null,
                     UltimaEjecucion = null

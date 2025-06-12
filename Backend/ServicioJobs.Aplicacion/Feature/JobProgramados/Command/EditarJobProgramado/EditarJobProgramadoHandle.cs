@@ -82,7 +82,6 @@ namespace ServicioJobs.Aplicacion.Feature.Programados.Command.EditarJobProgramad
                 programadoExistente.ReintentosPermitidos = request.ReintentosPermitidos;
                 programadoExistente.PeriodoReintento = request.PeriodoReintento;
                 programadoExistente.Timeout = request.Timeout;
-                programadoExistente.MetodoHttp = request.MetodoHttp;
                 programadoExistente.Habilitado = request.Habilitado;
                 
                 // Solo actualizar la próxima ejecución si cambió el crontab

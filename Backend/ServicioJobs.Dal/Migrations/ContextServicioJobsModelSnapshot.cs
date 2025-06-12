@@ -60,6 +60,9 @@ namespace ServicioJobs.Dal.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
+                    b.Property<int>("CodigoHttp")
+                        .HasColumnType("integer");
+
                     b.Property<string>("Nombre")
                         .IsRequired()
                         .HasMaxLength(200)
@@ -134,9 +137,6 @@ namespace ServicioJobs.Dal.Migrations
 
                     b.Property<Guid>("IdMetodo")
                         .HasColumnType("uuid");
-
-                    b.Property<int>("MetodoHttp")
-                        .HasColumnType("integer");
 
                     b.Property<string>("Nombre")
                         .IsRequired()
