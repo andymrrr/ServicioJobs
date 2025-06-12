@@ -38,19 +38,21 @@ export const PaginaAgregarJob = () => {
     ];
 
     const onSubmit = async (data: AgregarJobExtendido) => {
-        // Procesar los parámetros dinámicos para incluirlos en jobParametro
+        // Procesar parámetros dinámicos de forma más simple
         let parametrosFinales: any[] = [];
         
+        // Si hay parámetros dinámicos, procesarlos
         if (data.parametrosDinamicos) {
+            // Recorrer cada pestaña (Headers, Query Params, etc.)
             Object.entries(data.parametrosDinamicos).forEach(([tipoParametro, campos]) => {
+                // Si hay campos en esta pestaña
                 if (Array.isArray(campos)) {
+                    // Agregar cada campo que tenga nombre y valor
                     campos.forEach(campo => {
                         if (campo.nombre && campo.valor) {
                             parametrosFinales.push({
                                 nombre: campo.nombre,
-                                valor: campo.valor,
-                                tipo: tipoParametro, // Headers, Query Params, Body Params
-                                tipoValor: campo.tipo // input, textarea, json, etc.
+                                valor: campo.valor
                             });
                         }
                     });
@@ -90,8 +92,7 @@ export const PaginaAgregarJob = () => {
                                 tamaño="grande"
                                 color="primary"
                                 separador={true}
-                                tipoSeparador="linea"
-                                colorSeparador="primary"
+                                tipoSeparador="gradiente-azul"
                                 espacioInferior="grande"
                                 icono="📋"
                             >
@@ -136,8 +137,7 @@ export const PaginaAgregarJob = () => {
                                 tamaño="grande"
                                 color="success"
                                 separador={true}
-                                tipoSeparador="linea"
-                                colorSeparador="secondary"
+                                tipoSeparador="gradiente-verde"
                                 espacioInferior="grande"
                                 icono="🌐"
                             >
@@ -174,8 +174,7 @@ export const PaginaAgregarJob = () => {
                                 tamaño="grande"
                                 color="warning"
                                 separador={true}
-                                tipoSeparador="degradado"
-                                colorSeparador="secondary"
+                                tipoSeparador="multicolor"
                                 espacioInferior="grande"
                                 icono="⏰"
                             >
@@ -252,23 +251,9 @@ export const PaginaAgregarJob = () => {
                         />
                     </div>
 
-                    {/* Parámetros Dinámicos - Headers, Query Params, Body */}
+                                    
                     <div className="mb-8">
-                        <div className="mb-6">
-                            <Titulo 
-                                level="h3" 
-                                tamaño="grande"
-                                color="primary"
-                                separador={true}
-                                tipoSeparador="linea"
-                                colorSeparador="primary"
-                                espacioInferior="grande"
-                                icono="🔧"
-                                subtitulo="Configura headers, query parameters y body parameters para personalizar las peticiones HTTP"
-                            >
-                                Parámetros y Configuración HTTP
-                            </Titulo>
-                        </div>
+                       
                         
                         <HookFormDinamico
                             name="parametrosDinamicos"

@@ -8,7 +8,7 @@ interface PropiedadTitulo {
   peso?: 'light' | 'normal' | 'medium' | 'semibold' | 'bold';
   alineacion?: 'left' | 'center' | 'right';
   separador?: boolean;
-  tipoSeparador?: 'linea' | 'puntos' | 'degradado';
+  tipoSeparador?: 'linea' | 'puntos' | 'degradado' | 'multicolor' | 'arcoiris' | 'gradiente-azul' | 'gradiente-verde' | 'gradiente-rojo';
   colorSeparador?: 'primary' | 'secondary' | 'gray';
   espacioInferior?: 'pequeño' | 'mediano' | 'grande' | 'extra-grande';
   icono?: React.ReactNode;
@@ -123,7 +123,12 @@ const Titulo = ({
       secondary: 'border-gray-200 dark:border-gray-700 border-dotted',
       gray: 'border-gray-200 dark:border-strokedark border-dotted'
     },
-    degradado: 'bg-gradient-to-r from-transparent via-gray-300 to-transparent dark:via-gray-600'
+    degradado: 'bg-gradient-to-r from-transparent via-gray-300 to-transparent dark:via-gray-600',
+    multicolor: 'bg-gradient-to-r from-blue-500 via-purple-500 via-pink-500 to-red-500',
+    arcoiris: 'bg-gradient-to-r from-red-500 via-yellow-500 via-green-500 via-blue-500 via-indigo-500 to-purple-500',
+    'gradiente-azul': 'bg-gradient-to-r from-blue-400 via-blue-500 to-blue-600',
+    'gradiente-verde': 'bg-gradient-to-r from-green-400 via-green-500 to-green-600',
+    'gradiente-rojo': 'bg-gradient-to-r from-red-400 via-red-500 to-red-600'
   };
 
   // Construir clases CSS
@@ -145,14 +150,17 @@ const Titulo = ({
   const renderSeparador = () => {
     if (!separador) return null;
 
-    if (tipoSeparador === 'degradado') {
+    // Separadores con gradientes (no usan colorSeparador)
+    if (['degradado', 'multicolor', 'arcoiris', 'gradiente-azul', 'gradiente-verde', 'gradiente-rojo'].includes(tipoSeparador)) {
       return (
-        <div className={`h-px mt-2 ${configuracionSeparadores.degradado}`} />
+        <div className={`h-1 mt-2 rounded-full ${configuracionSeparadores[tipoSeparador]}`} />
       );
     }
 
+    // Separadores tradicionales (usan colorSeparador)
+    const separadorConfig = configuracionSeparadores[tipoSeparador] as { primary: string; secondary: string; gray: string; };
     return (
-      <div className={`border-b mt-2 ${configuracionSeparadores[tipoSeparador][colorSeparador]}`} />
+      <div className={`border-b mt-2 ${separadorConfig[colorSeparador]}`} />
     );
   };
 
