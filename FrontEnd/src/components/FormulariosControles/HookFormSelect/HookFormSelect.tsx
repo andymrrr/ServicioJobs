@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { FieldValues } from 'react-hook-form';
 import { HookFormSelectProps } from './types';
 import { getColSpanClass } from './utils';
@@ -6,10 +6,7 @@ import SelectLabel from './SelectLabel';
 import SelectField from './SelectField';
 import ErrorMessage from './ErrorMessage';
 
-/**
- * Componente principal HookFormSelect con estructura modular y funcionalidades avanzadas
- */
-const HookFormSelect = <T extends FieldValues>({
+export  const HookFormSelect = <T extends FieldValues>({
   label,
   name,
   options = [],
@@ -104,5 +101,3 @@ const HookFormSelect = <T extends FieldValues>({
     </div>
   );
 };
-
-export default HookFormSelect;

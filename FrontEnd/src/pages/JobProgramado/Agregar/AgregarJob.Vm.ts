@@ -2,14 +2,12 @@ import { useForm } from "react-hook-form";
 import { useState, useEffect } from "react";
 import { useAgregarJob } from "../../../hooks/JobProgramado/useAgregarJob";
 import { AgregarJobProgramadoComand } from "../../../Nucleo/Dominio/Model";
-import { JobParametro } from "../../../Nucleo/Dominio/Model/JobProgramado/JobParametro";
 import { MetodoHttp } from "../../../Nucleo/Dominio/Model/enum/MethodoHTTP";
 import { 
     FormularioTabData,
-    procesarConfiguracionAPI,
-    obtenerEstadisticasConfiguracion,
     PLANTILLA_BASICA
 } from "../../../components/FormulariosControles/HookFormDinamico";
+import { convertirConfiguracionAJobParametros } from "../../../utils/jobParametrosUtils";
 import { 
     OPCIONES_METODO_HTTP,
     REGLAS_VALIDACION_JOB
@@ -66,42 +64,15 @@ export function useAgregarJobVM() {
 
     // Función para procesar y transformar los datos del formulario
     const procesarDatosFormulario = (data: FormularioAgregarJob): AgregarJobProgramadoComand => {
-        // Procesar configuración de API usando el helper genérico
-        const configuracionProcesada = procesarConfiguracionAPI(
+        // Usar el utilitario genérico tipado para procesar la configuración
+        const { headers, queryParams, parametros: jobParametros } = convertirConfiguracionAJobParametros(
             data.configuracionAPI, 
             ['Headers', 'Query Params']
         );
 
-        // Obtener estadísticas de la configuración
-        const estadisticas = obtenerEstadisticasConfiguracion(data.configuracionAPI);
-
-        // Convertir headers y query params a JobParametro[]
-        const jobParametros: JobParametro[] = [];
-        
-        // Agregar headers
-        configuracionProcesada.headers.forEach(header => {
-            if (header.nombre && header.valor) {
-                jobParametros.push({
-                    nombre: `header:${header.nombre}`,
-                    valor: header.valor
-                });
-            }
-        });
-        
-        // Agregar query params
-        configuracionProcesada.queryParams.forEach(param => {
-            if (param.nombre && param.valor) {
-                jobParametros.push({
-                    nombre: `query:${param.nombre}`,
-                    valor: param.valor
-                });
-            }
-        });
-
         // Logs informativos para debugging
-        console.log('🌐 Headers configurados:', configuracionProcesada.headers);
-        console.log('🔍 Query Params:', configuracionProcesada.queryParams);
-        console.log('📊 Estadísticas:', estadisticas);
+        console.log('🌐 Headers configurados:', headers);
+        console.log('🔍 Query Params:', queryParams);
         console.log('📦 JobParametros generados:', jobParametros);
 
         // Crear el comando final

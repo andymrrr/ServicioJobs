@@ -36,13 +36,18 @@ export const SelectField: React.FC<SelectFieldProps> = ({
   // Manejar cambio de valor
   const handleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     const value = event.target.value;
-    onChange(value);
+    if (registerProps && registerProps.onChange) {
+      registerProps.onChange(event); // Mantener RHF funcionando
+    }
+    if (onChange) {
+      onChange(value);
+    }
     setIsSelected(!!value);
   };
 
   // Manejar limpiar selección
   const handleClear = () => {
-    onChange('');
+    if (onChange) onChange('');
     setIsSelected(false);
   };
 
@@ -111,6 +116,23 @@ export const SelectField: React.FC<SelectFieldProps> = ({
     ));
   };
 
+  // --- LÓGICA CLAVE: Si el usuario NO pasa onChange, solo usar registerProps (como RHF clásico) ---
+  const selectProps = typeof onChange === 'function'
+    ? {
+        ...registerProps,
+        value: selectedValue,
+        onChange: handleChange,
+        disabled,
+        className: selectClasses,
+        'aria-label': placeholder
+      }
+    : {
+        ...registerProps,
+        disabled,
+        className: selectClasses,
+        'aria-label': placeholder
+      };
+
   return (
     <div className={containerClasses}>
       {/* Icono izquierdo */}
@@ -121,14 +143,7 @@ export const SelectField: React.FC<SelectFieldProps> = ({
       )}
       
       {/* Select element */}
-      <select
-        {...registerProps}
-        value={selectedValue}
-        onChange={handleChange}
-        disabled={disabled}
-        className={selectClasses}
-        aria-label={placeholder}
-      >
+      <select {...selectProps}>
         {/* Opción placeholder */}
         <option value="" disabled className="text-gray-500 dark:text-gray-400">
           {placeholder}

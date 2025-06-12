@@ -3,23 +3,13 @@ import Tarjeta from "../../../components/UI/Tarjeta";
 import BotonPrimario from "../../../components/UI/Botones/BotonPrimario";
 import { useAgregarJobVM } from "./AgregarJob.Vm";
 import { useParametrosDinamicosVM } from "./ParametrosDinamico.vm";
-import HookFormInput from "../../../components/FormulariosControles/HookFormInput/HookFormInput";
-import SelectFormHook from "../../../components/FormulariosControles/HookFormSelect/HookFormSelect";
-import { Alert } from 'antd';
-
-import HookFormDinamico from "../../../components/FormulariosControles/HookFormDinamico";
 import Collapsible from "../../../components/UI/Collapsible";
+import { HookFormInput } from "../../../components/FormulariosControles/HookFormInput";
+import { HookFormSelect } from "../../../components/FormulariosControles/HookFormSelect";
+import HookFormDinamico from "../../../components/FormulariosControles/HookFormDinamico";
 
 export const PaginaAgregarJob = () => {
-    // ViewModels
-    const viewModel = useAgregarJobVM();
-    const parametrosVM = useParametrosDinamicosVM();
-    
-    const {
-        isPending,
-        isSuccess,
-        isError,
-        error,
+    const { isPending,
         metodoHttpSeleccionado,
         setMetodoHttpSeleccionado,
         mostrarConfigAvanzada,
@@ -33,13 +23,9 @@ export const PaginaAgregarJob = () => {
         setValue,
         getValues,
         onSubmit,
-        resetearFormulario
-    } = viewModel;
-
-    const {
-        configuracionCamposAPI,
-        pestanasDisponibles
-    } = parametrosVM;
+        resetearFormulario} = useAgregarJobVM();
+    const {configuracionCamposAPI, pestanasDisponibles} = useParametrosDinamicosVM();
+ 
 
     return (
         <Contenedor>
@@ -89,13 +75,13 @@ export const PaginaAgregarJob = () => {
                                 colSpan="9"
                             />
 
-                            <SelectFormHook
-                                etiqueta="Método HTTP"
+                            <HookFormSelect
+                                label="Método HTTP"
                                 name="metodoHttp"
-                                opciones={opcionesMetodoHttp}
+                                options={opcionesMetodoHttp}
                                 register={register}
                                 errors={errors}
-                                valorSeleccionado={metodoHttpSeleccionado}
+                                selectedValue={metodoHttpSeleccionado}
                                 onChange={setMetodoHttpSeleccionado}
                                 colSpan="3"
                             />
@@ -204,25 +190,6 @@ export const PaginaAgregarJob = () => {
                             />
                         </div>
                     </Collapsible>
-
-                    {/* MENSAJES DE ESTADO */}
-                    {isError && error && (
-                        <Alert
-                            message="Error al crear el job"
-                            description={error.message || 'Ha ocurrido un error inesperado'}
-                            type="error"
-                            showIcon
-                        />
-                    )}
-
-                    {isSuccess && (
-                        <Alert
-                            message="¡Job creado exitosamente!"
-                            description="El job programado ha sido configurado correctamente"
-                            type="success"
-                            showIcon
-                        />
-                    )}
 
                     {/* BOTONES DE ACCIÓN */}
                     <div className="flex justify-end gap-3 pt-4">

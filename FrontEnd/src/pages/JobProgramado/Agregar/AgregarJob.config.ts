@@ -32,10 +32,10 @@ export const CONFIGURACION_JOB = {
  * Opciones para el selector de método HTTP específicas del job
  */
 export const OPCIONES_METODO_HTTP = [
-    { valor: MetodoHttp.GET.toString(), etiqueta: "GET" },
-    { valor: MetodoHttp.POST.toString(), etiqueta: "POST" },
-    { valor: MetodoHttp.PUT.toString(), etiqueta: "PUT" },
-    { valor: MetodoHttp.DELETE.toString(), etiqueta: "DELETE" }
+    { value: MetodoHttp.GET.toString(), label: "GET" },
+    { value: MetodoHttp.POST.toString(), label: "POST" },
+    { value: MetodoHttp.PUT.toString(), label: "PUT" },
+    { value: MetodoHttp.DELETE.toString(), label: "DELETE" }
 ];
 export const REGLAS_VALIDACION_JOB = crearValidacionesDominio({
     NOMBRE: VALIDACIONES.texto(3, 100),

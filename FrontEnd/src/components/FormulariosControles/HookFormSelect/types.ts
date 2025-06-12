@@ -64,7 +64,7 @@ export interface ErrorMessageProps<T extends FieldValues> {
   errors: FieldErrors<T>;
 }
 
-export interface SelectFieldProps {
+export interface SelectFieldProps<T extends FieldValues = FieldValues> {
   name: string;
   options: SelectOption[];
   groups?: SelectGroup[];
@@ -81,7 +81,7 @@ export interface SelectFieldProps {
   emptyMessage?: string;
   loadingMessage?: string;
   hasError?: boolean;
-  registerProps: any;
+  registerProps: ReturnType<UseFormRegister<T>>;
 }
 
 export interface LoadingSpinnerProps {
