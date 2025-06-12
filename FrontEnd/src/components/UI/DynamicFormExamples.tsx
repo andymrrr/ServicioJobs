@@ -1,11 +1,32 @@
 import React, { useState } from 'react';
-import DynamicFieldFormHookImproved, { 
-  ConfiguracionCampoHook, 
-  FormularioTabData 
-} from './DynamicFieldFormHookImproved';
+import { useForm } from 'react-hook-form';
+import HookFormDinamico, { ConfiguracionCampoHook, FormularioTabData } from '../FormulariosControles/React-Hook-Form/HookFormDinamico/HookFormDinamico';
+
+// Estructura de datos para React Hook Form
+interface FormData {
+  tabs: {
+    [key: string]: any[];
+  };
+}
+
 
 const DynamicFormExamples: React.FC = () => {
   const [ejemploActivo, setEjemploActivo] = useState('api');
+
+  // Configurar React Hook Form
+  const {
+    control,
+    register,
+    handleSubmit,
+    formState: { errors },
+    watch,
+    setValue,
+    getValues,
+    reset
+  } = useForm<FormData>({
+    defaultValues: { tabs: {} },
+    mode: 'onChange'
+  });
 
   // 🌐 EJEMPLO 1: CONFIGURADOR DE APIs
   const configuracionAPI: ConfiguracionCampoHook[] = [
@@ -247,10 +268,10 @@ const DynamicFormExamples: React.FC = () => {
     formulario: {
       title: '📝 Constructor de Formularios',
       description: 'Crea formularios dinámicos definiendo campos personalizados, tipos de input y validaciones.',
-      pestañas: ['Campos Básicos', 'Campos Avanzados', 'Validaciones'],
+      pestañas: ['Campos Basicos', 'Campos Avanzados', 'Validaciones'],
       config: configuracionFormulario,
       valoresIniciales: {
-        'Campos Básicos': [
+        'Campos Basicos': [
           { nombre: 'Nombre Completo', valor: 'text', tipo: 'input' as const },
           { nombre: 'Email', valor: 'email', tipo: 'input' as const }
         ]
@@ -259,10 +280,10 @@ const DynamicFormExamples: React.FC = () => {
     producto: {
       title: '🛍️ Configurador de Productos',
       description: 'Define características físicas, especificaciones técnicas y atributos comerciales de productos.',
-      pestañas: ['Características Físicas', 'Especificaciones Técnicas', 'Info Comercial'],
+      pestañas: ['Caracteristicas Fisicas', 'Especificaciones Tecnicas', 'Info Comercial'],
       config: configuracionProducto,
       valoresIniciales: {
-        'Características Físicas': [
+        'Caracteristicas Fisicas': [
           { nombre: 'Color', valor: 'Azul, Rojo, Verde', tipo: 'input' as const },
           { nombre: 'Peso', valor: '1.5', tipo: 'input' as const }
         ]
@@ -271,10 +292,10 @@ const DynamicFormExamples: React.FC = () => {
     encuesta: {
       title: '📊 Generador de Encuestas',
       description: 'Construye encuestas y cuestionarios con diferentes tipos de preguntas y opciones de respuesta.',
-      pestañas: ['Preguntas Básicas', 'Preguntas de Opción Múltiple', 'Escalas de Valoración'],
+      pestañas: ['Preguntas Basicas', 'Preguntas Multiple', 'Escalas Valoracion'],
       config: configuracionEncuesta,
       valoresIniciales: {
-        'Preguntas Básicas': [
+        'Preguntas Basicas': [
           { nombre: '¿Cómo calificarías nuestro servicio?', valor: 'escala_1_5', tipo: 'textarea' as const }
         ]
       }
@@ -282,10 +303,10 @@ const DynamicFormExamples: React.FC = () => {
     filtros: {
       title: '🔍 Configurador de Filtros de Búsqueda',
       description: 'Define filtros dinámicos para bases de datos con operadores y tipos de control personalizables.',
-      pestañas: ['Filtros Básicos', 'Filtros Avanzados', 'Filtros de Fecha'],
+      pestañas: ['Filtros Basicos', 'Filtros Avanzados', 'Filtros de Fecha'],
       config: configuracionFiltros,
       valoresIniciales: {
-        'Filtros Básicos': [
+        'Filtros Basicos': [
           { nombre: 'precio', valor: 'Precio', tipo: 'input' as const }
         ]
       }
@@ -293,10 +314,10 @@ const DynamicFormExamples: React.FC = () => {
     configuracion: {
       title: '⚙️ Panel de Configuración de Sistema',
       description: 'Gestiona variables de entorno, configuraciones de aplicación y parámetros del sistema.',
-      pestañas: ['Variables de Entorno', 'Configuración de BD', 'APIs Externas'],
+      pestañas: ['Variables Entorno', 'Configuracion BD', 'APIs Externas'],
       config: configuracionPanel,
       valoresIniciales: {
-        'Variables de Entorno': [
+        'Variables Entorno': [
           { nombre: 'DATABASE_URL', valor: 'postgresql://localhost:5432/mydb', tipo: 'input' as const }
         ]
       }
@@ -305,21 +326,17 @@ const DynamicFormExamples: React.FC = () => {
 
   const ejemploSeleccionado = ejemplos[ejemploActivo as keyof typeof ejemplos];
 
-  const manejarEnvio = (datos: FormularioTabData) => {
-    console.log(`📋 Datos de ${ejemploSeleccionado.title}:`, datos);
-    
+  const manejarEnvio = handleSubmit((data) => {
     // Procesar datos según el tipo de ejemplo
-    const datosProcesados = Object.entries(datos).reduce((acc, [pestaña, campos]) => {
+    const datosProcesados = Object.entries(data.tabs).reduce((acc, [pestaña, campos]) => {
       acc[pestaña] = campos.map(campo => ({
         ...campo // Incluir todas las propiedades del campo
       }));
       return acc;
     }, {} as any);
-
-    console.log(`🔄 Datos procesados para ${ejemploSeleccionado.title}:`, datosProcesados);
     
-    alert(`¡${ejemploSeleccionado.title} procesado correctamente! 🎉\n\nRevisa la consola del navegador para ver los datos estructurados.`);
-  };
+    alert(`¡${ejemploSeleccionado.title} procesado correctamente! 🎉\n\nLos datos han sido procesados exitosamente.`);
+  });
 
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900 p-4">
@@ -403,16 +420,33 @@ const DynamicFormExamples: React.FC = () => {
           </div>
 
           <div className="p-6">
-            <DynamicFieldFormHookImproved
-              pestañas={ejemploSeleccionado.pestañas}
-              tiposCamposPermitidos={ejemploSeleccionado.config}
-              cantidadMaximaCampos={25}
-              onSubmit={manejarEnvio}
-              valoresIniciales={ejemploSeleccionado.valoresIniciales}
-              className="border border-gray-200 dark:border-gray-600 rounded-lg p-6"
-              textoBotonEnvio={`💾 Procesar ${ejemploSeleccionado.title.split(' ')[1]}`}
-              mostrarBotonEnvio={true}
-            />
+            <form onSubmit={manejarEnvio}>
+              <HookFormDinamico
+                pestañas={ejemploSeleccionado.pestañas}
+                tiposCamposPermitidos={ejemploSeleccionado.config}
+                cantidadMaximaCampos={25}
+                valoresIniciales={ejemploSeleccionado.valoresIniciales}
+                className="border border-gray-200 dark:border-gray-600 rounded-lg p-6"
+                // Props de React Hook Form
+                control={control}
+                register={register}
+                errors={errors}
+                watch={watch}
+                setValue={setValue}
+                getValues={getValues}
+              />
+              
+              {/* Botón de envío */}
+              <div className="mt-6 flex justify-center">
+                <button
+                  type="submit"
+                  className="inline-flex items-center gap-2 rounded-lg bg-gradient-to-r from-blue-500 to-purple-600 px-8 py-3 text-lg font-medium text-white hover:from-blue-600 hover:to-purple-700 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1"
+                  disabled={Object.keys(errors).length > 0}
+                >
+                  🚀 Procesar {ejemploSeleccionado.title}
+                </button>
+              </div>
+            </form>
           </div>
         </div>
 

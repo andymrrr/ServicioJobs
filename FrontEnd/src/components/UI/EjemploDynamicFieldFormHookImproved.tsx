@@ -1,8 +1,13 @@
 import React from 'react';
-import DynamicFieldFormHookImproved, { 
-  ConfiguracionCampoHook, 
-  FormularioTabData 
-} from './DynamicFieldFormHookImproved';
+import { useForm } from 'react-hook-form';
+import HookFormDinamico, { ConfiguracionCampoHook, FormularioTabData } from '../FormulariosControles/React-Hook-Form/HookFormDinamico/HookFormDinamico';
+
+// Estructura de datos para React Hook Form
+interface FormData {
+  tabs: {
+    [key: string]: any[];
+  };
+}
 
 const EjemploDynamicFieldFormHookImproved: React.FC = () => {
   // Configuración de tipos de campos permitidos
@@ -53,41 +58,57 @@ const EjemploDynamicFieldFormHookImproved: React.FC = () => {
     }
   ];
 
-  // Valores iniciales (opcional)
-  const valoresIniciales: FormularioTabData = {
-    'Query Params': [
-      {
-        nombre: 'limit',
-        valor: '10',
-        tipo: 'input'
-      },
-      {
-        nombre: 'offset',
-        valor: '0',
-        tipo: 'input'
-      }
-    ],
-    'Headers': [
-      {
-        nombre: 'Authorization',
-        valor: 'bearer',
-        tipo: 'select'
-      },
-      {
-        nombre: 'Content-Type',
-        valor: 'application/json',
-        tipo: 'input'
-      }
-    ],
-    'Body': []
+  // Valores iniciales para React Hook Form
+  const valoresInicialesPorDefecto: FormData = {
+    tabs: {
+      'Query Params': [
+        {
+          nombre: 'limit',
+          valor: '10',
+          tipo: 'input'
+        },
+        {
+          nombre: 'offset',
+          valor: '0',
+          tipo: 'input'
+        }
+      ],
+      'Headers': [
+        {
+          nombre: 'Authorization',
+          valor: 'bearer',
+          tipo: 'select'
+        },
+        {
+          nombre: 'Content-Type',
+          valor: 'application/json',
+          tipo: 'input'
+        }
+      ],
+      'Body': []
+    }
   };
 
+  // Configurar React Hook Form
+  const {
+    control,
+    register,
+    handleSubmit,
+    formState: { errors },
+    watch,
+    setValue,
+    getValues
+  } = useForm<FormData>({
+    defaultValues: valoresInicialesPorDefecto,
+    mode: 'onChange'
+  });
+
   // Manejar envío del formulario
-  const manejarEnvio = (datos: FormularioTabData) => {
-    console.log('📋 Datos del formulario:', datos);
+  const manejarEnvio = handleSubmit((data) => {
+    console.log('📋 Datos del formulario:', data.tabs);
     
     // Procesar los datos para cada pestaña
-    Object.entries(datos).forEach(([pestaña, campos]) => {
+    Object.entries(data.tabs).forEach(([pestaña, campos]) => {
       console.log(`🔖 ${pestaña}:`, campos);
       
       // Ejemplo: convertir a formato clave-valor para APIs
@@ -103,7 +124,7 @@ const EjemploDynamicFieldFormHookImproved: React.FC = () => {
 
     // Aquí podrías enviar los datos a una API
     alert('¡Formulario enviado! Revisa la consola para ver los datos.');
-  };
+  });
 
   // Manejar cambios en tiempo real (opcional)
   const manejarCambios = (datos: FormularioTabData) => {
@@ -139,17 +160,34 @@ const EjemploDynamicFieldFormHookImproved: React.FC = () => {
             </ul>
           </div>
 
-          <DynamicFieldFormHookImproved
-            pestañas={['Query Params', 'Headers', 'Body']}
-            tiposCamposPermitidos={tiposCamposPermitidos}
-            cantidadMaximaCampos={15}
-            onSubmit={manejarEnvio}
-            onChange={manejarCambios}
-            valoresIniciales={valoresIniciales}
-            className="border border-gray-200 dark:border-gray-700 rounded-lg p-6"
-            textoBotonEnvio="🚀 Enviar Formulario"
-            mostrarBotonEnvio={true}
-          />
+          <form onSubmit={manejarEnvio}>
+            <HookFormDinamico
+              pestañas={['Query Params', 'Headers', 'Body']}
+              tiposCamposPermitidos={tiposCamposPermitidos}
+              cantidadMaximaCampos={15}
+              onChange={manejarCambios}
+              valoresIniciales={valoresInicialesPorDefecto.tabs}
+              className="border border-gray-200 dark:border-gray-700 rounded-lg p-6"
+              // Props de React Hook Form
+              control={control}
+              register={register}
+              errors={errors}
+              watch={watch}
+              setValue={setValue}
+              getValues={getValues}
+            />
+            
+            {/* Botón de envío */}
+            <div className="mt-6 flex justify-end">
+              <button
+                type="submit"
+                className="inline-flex items-center gap-2 rounded bg-green-600 px-6 py-3 text-sm font-medium text-white hover:bg-green-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                disabled={Object.keys(errors).length > 0}
+              >
+                🚀 Enviar Formulario
+              </button>
+            </div>
+          </form>
 
           <div className="mt-8 p-4 bg-blue-50 dark:bg-blue-900/20 rounded-lg border border-blue-200 dark:border-blue-800">
             <h3 className="text-lg font-semibold text-blue-800 dark:text-blue-200 mb-2">

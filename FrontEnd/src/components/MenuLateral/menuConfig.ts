@@ -57,13 +57,7 @@ export const menuConfig: MenuSection[] = [
         label: "JobProgramado",
         type: "link",
       },
-      {
-        id: "calendar",
-        to: "/calendar",
-        icon: FaCalendarAlt,
-        label: "Calendar",
-        type: "link",
-      },
+
       {
         id: "profile",
         to: "/profile",
@@ -80,8 +74,7 @@ export const menuConfig: MenuSection[] = [
           { to: "/forms/form-elements", label: "Form Elements", icon: FaEdit },
           { to: "/forms/form-layout", label: "Form Layout", icon: FaLayerGroup },
           { to: "/forms/form-step-by-step", label: "Step by Step", icon: FaStepForward },
-          { to: "/forms/dynamic-form", label: "Dynamic Fields", icon: FaPlus },
-          { to: "/forms/dynamic-form-hook", label: "Dynamic Hook Form", icon: FaCode },
+
           { to: "/forms/dynamic-form-hook-improved", label: "Form Hook Mejorado", icon: FaCode },
           { to: "/forms/dynamic-form-examples", label: "Dynamic Examples", icon: FaLayerGroup },
         ],

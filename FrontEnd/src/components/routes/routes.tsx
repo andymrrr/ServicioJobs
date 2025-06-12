@@ -1,13 +1,10 @@
 
 import SignIn from "../../pages/Authentication/SignIn";
 import SignUp from "../../pages/Authentication/SignUp";
-import Calendar from "../../pages/Calendar";
 import ECommerce from "../../pages/Dashboard/ECommerce";
 import FormElements from "../../pages/Form/FormElements";
 import FormLayout from "../../pages/Form/FormLayout";
 import FormStepByStep from "../../pages/Form/FormStepByStep";
-import DynamicFormExample from "../../pages/Form/DynamicFormExample";
-import DynamicFormHookExample from "../../pages/Form/DynamicFormHookExample";
 import EjemploDynamicFieldFormHookImproved from "../../components/UI/EjemploDynamicFieldFormHookImproved";
 import DynamicFormExamples from "../../components/UI/DynamicFormExamples";
 import Graficas from "../../pages/Graficas/Graficas";
@@ -56,16 +53,7 @@ export const routes: RouteConfig[] = [
     title: 'Formulario Step by Step | TailAdmin - Tailwind CSS Admin Dashboard Template',
     element: <FormStepByStep />,
   },
-  {
-    path: '/forms/dynamic-form',
-    title: 'Formularios Dinámicos | TailAdmin - Tailwind CSS Admin Dashboard Template',
-    element: <DynamicFormExample />,
-  },
-  {
-    path: '/forms/dynamic-form-hook',
-    title: 'Formularios Dinámicos Hook Form | TailAdmin - Tailwind CSS Admin Dashboard Template',
-    element: <DynamicFormHookExample />,
-  },
+
   {
     path: '/forms/dynamic-form-hook-improved',
     title: 'Formulario Dinámico Mejorado | TailAdmin - Tailwind CSS Admin Dashboard Template',
