@@ -37,13 +37,6 @@ export const OPCIONES_METODO_HTTP = [
     { valor: MetodoHttp.PUT.toString(), etiqueta: "PUT" },
     { valor: MetodoHttp.DELETE.toString(), etiqueta: "DELETE" }
 ];
-
-
-
-/**
- * Reglas de validación específicas para el formulario de jobs
- * Utilizando las validaciones genéricas centralizadas
- */
 export const REGLAS_VALIDACION_JOB = crearValidacionesDominio({
     NOMBRE: VALIDACIONES.texto(3, 100),
     ID_METODO: VALIDACIONES.codigoMayuscula(),

@@ -1,7 +1,7 @@
 import { FieldValues, Controller } from 'react-hook-form';
 
 /**
- * Wrapper simplificado para el Controller de react-hook-form
+    * Wrapper simplificado para el Controller de react-hook-form
  */
 export const SelectController = <T extends FieldValues>({
   control,

@@ -4,7 +4,7 @@ import BotonPrimario from "../../../components/UI/Botones/BotonPrimario";
 import { useAgregarJobVM } from "./AgregarJob.Vm";
 import { useParametrosDinamicosVM } from "./ParametrosDinamico.vm";
 import HookFormInput from "../../../components/FormulariosControles/HookFormInput/HookFormInput";
-import SelectFormHook from "../../../components/FormulariosControles/React-Hook-Form/SelectFormHook";
+import SelectFormHook from "../../../components/FormulariosControles/HookFormSelect/HookFormSelect";
 import { Alert } from 'antd';
 
 import HookFormDinamico from "../../../components/FormulariosControles/HookFormDinamico";

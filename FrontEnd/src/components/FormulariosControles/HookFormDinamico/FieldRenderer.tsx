@@ -4,7 +4,7 @@ import { FieldRendererProps } from './types';
 import HookFormInput from '../HookFormInput/HookFormInput';
 import HookFormCheckbox from '../HookFormCheckbox/HookFormCheckbox';
 import HookFormTextarea from '../HookFormTextTarea/HookFormTextarea';
-import SelectFormHook from '../React-Hook-Form/SelectFormHook';
+import SelectFormHook from '../HookFormSelect/HookFormSelect';
 
 const FieldRenderer: React.FC<FieldRendererProps> = ({
   campo,
