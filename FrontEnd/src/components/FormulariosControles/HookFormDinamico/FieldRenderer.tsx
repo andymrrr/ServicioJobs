@@ -3,7 +3,7 @@ import { FaTrash } from 'react-icons/fa';
 import { FieldRendererProps } from './types';
 import HookFormInput from '../HookFormInput/HookFormInput';
 import HookFormCheckbox from '../HookFormCheckbox/HookFormCheckbox';
-import HookFormTextarea from '../React-Hook-Form/HookFormTextarea';
+import HookFormTextarea from '../HookFormTextTarea/HookFormTextarea';
 import SelectFormHook from '../React-Hook-Form/SelectFormHook';
 
 const FieldRenderer: React.FC<FieldRendererProps> = ({

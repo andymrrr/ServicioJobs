@@ -3,7 +3,7 @@ import Breadcrumb from '../components/Breadcrumbs/Breadcrumb';
 import { Contenedor } from '../components/UI/Contenedor';
 import Tarjeta from '../components/UI/Tarjeta';
 import HookFormInput from '../components/FormulariosControles/HookFormInput/HookFormInput';
-import HookFormTextarea from '../components/FormulariosControles/React-Hook-Form/HookFormTextarea';
+import HookFormTextarea from '../components/FormulariosControles/HookFormTextTarea/HookFormTextarea';
 import HookFormCheckbox from '../components/FormulariosControles/HookFormCheckbox/HookFormCheckbox';
 import HookFormFile from '../components/FormulariosControles/HookFormFile/HookFormFile';
 import EtiquetaEstado from '../components/UI/Etiqueta-Estado';
