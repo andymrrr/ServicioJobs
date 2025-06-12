@@ -2,159 +2,44 @@ import { Contenedor } from "../../../components/UI/Contenedor"
 import Tarjeta from "../../../components/UI/Tarjeta";
 import BotonPrimario from "../../../components/UI/Botones/BotonPrimario";
 import { useAgregarJobVM } from "./AgregarJob.Vm";
-import { useForm } from "react-hook-form";
-import { AgregarJobProgramadoComand } from "../../../Nucleo/Dominio/Model";
-import { JobParametro } from "../../../Nucleo/Dominio/Model/JobProgramado/JobParametro";
-import HookFormInput from "../../../components/FormulariosControles/React-Hook-Form/HookFormInput";
+import { useParametrosDinamicosVM } from "./ParametrosDinamico.vm";
+import HookFormInput from "../../../components/FormulariosControles/HookFormInput/HookFormInput";
 import SelectFormHook from "../../../components/FormulariosControles/React-Hook-Form/SelectFormHook";
-import { MetodoHttp } from "../../../Nucleo/Dominio/Model/enum/MethodoHTTP";
-import { useState, useEffect } from "react";
 import { Alert } from 'antd';
 
-import HookFormDinamico, { 
-    ConfiguracionCampoHook, 
-    FormularioTabData,
-    procesarConfiguracionAPI,
-    obtenerEstadisticasConfiguracion
-} from "../../../components/FormulariosControles/React-Hook-Form/HookFormDinamico";
+import HookFormDinamico from "../../../components/FormulariosControles/HookFormDinamico";
 import Collapsible from "../../../components/UI/Collapsible";
 
-// Interfaz limpia para el formulario (sin extender el comando del dominio)
-interface FormularioAgregarJob {
-    // Campos básicos del job
-    idMetodo: string;
-    nombre: string;
-    descripcion: string;
-    url: string;
-    crontab: string;
-    correoNotificar: string;
-    reintentosPermitidos?: number;
-    periodoReintento?: number;
-    timeout?: number;
-    metodoHttp: string;
-    
-    // Configuración temporal del formulario
-    configuracionAPI: FormularioTabData;
-}
-
 export const PaginaAgregarJob = () => {
-    const { handleAgregarJob, isPending, isSuccess, isError, error } = useAgregarJobVM();
+    // ViewModels
+    const viewModel = useAgregarJobVM();
+    const parametrosVM = useParametrosDinamicosVM();
     
-    const [metodoHttpSeleccionado, setMetodoHttpSeleccionado] = useState<string>("");
-    const [mostrarConfigAvanzada, setMostrarConfigAvanzada] = useState(false);
-
-    // Configuración del formulario principal
     const {
+        isPending,
+        isSuccess,
+        isError,
+        error,
+        metodoHttpSeleccionado,
+        setMetodoHttpSeleccionado,
+        mostrarConfigAvanzada,
+        setMostrarConfigAvanzada,
+        opcionesMetodoHttp,
+        validacionesFormulario,
         register,
-        handleSubmit,
-        formState: { errors },
-        reset,
+        errors,
         control,
         watch,
         setValue,
-        getValues
-    } = useForm<FormularioAgregarJob>({
-        defaultValues: {
-            configuracionAPI: {
-                'Headers': [],
-                'Query Params': []
-            }
-        }
-    });
+        getValues,
+        onSubmit,
+        resetearFormulario
+    } = viewModel;
 
-    // Configuración para el componente dinámico de API - Nombre y Valor
-    const configuracionCamposAPI: ConfiguracionCampoHook[] = [
-        {
-            tipo: 'input',
-            label: 'Par Clave-Valor',
-            tamaño: '12',
-            placeholder: 'Authorization, Content-Type, api-key...',
-            required: true,
-            requiredMessage: 'La clave es requerida',
-            minLength: { value: 2, message: 'Mínimo 2 caracteres' }
-        }
-    ];
-
- 
-
-    // 🚀 Establecer valores por defecto al montar el componente
-    useEffect(() => {
-        const valoresDefecto: FormularioTabData = {
-            'Headers': [
-                { nombre: 'Content-Type', valor: 'application/json', tipo: 'input' as const },
-                { nombre: 'Authorization', valor: 'Bearer token', tipo: 'input' as const }
-            ],
-            'Query Params': []
-        };
-        
-        setValue('configuracionAPI', valoresDefecto);
-    }, [setValue]);
-
-    // Función para manejar el envío del formulario
-    const onSubmit = (data: FormularioAgregarJob) => {
-        // 🚀 Procesar configuración de API usando el helper genérico
-        const configuracionProcesada = procesarConfiguracionAPI(
-            data.configuracionAPI, 
-            ['Headers', 'Query Params']
-        );
-
-        // 📊 Obtener estadísticas de la configuración
-        const estadisticas = obtenerEstadisticasConfiguracion(data.configuracionAPI);
-
-        // 🔄 Convertir headers y query params a JobParametro[]
-        const jobParametros: JobParametro[] = [];
-        
-        // Agregar headers
-        configuracionProcesada.headers.forEach(header => {
-            if (header.nombre && header.valor) {
-                jobParametros.push({
-                    nombre: `header:${header.nombre}`,
-                    valor: header.valor
-                });
-            }
-        });
-        
-        // Agregar query params
-        configuracionProcesada.queryParams.forEach(param => {
-            if (param.nombre && param.valor) {
-                jobParametros.push({
-                    nombre: `query:${param.nombre}`,
-                    valor: param.valor
-                });
-            }
-        });
-
-        // 🔍 Logs informativos:
-        console.log('🌐 Headers configurados:', configuracionProcesada.headers);
-        console.log('🔍 Query Params:', configuracionProcesada.queryParams);
-        console.log('📊 Estadísticas:', estadisticas);
-        console.log('📦 JobParametros generados:', jobParametros);
-
-        // Crear el comando final
-        const comandoFinal: AgregarJobProgramadoComand = {
-            idMetodo: data.idMetodo,
-            nombre: data.nombre,
-            descripcion: data.descripcion,
-            url: data.url,
-            crontab: data.crontab,
-            correoNotificar: data.correoNotificar,
-            reintentosPermitidos: data.reintentosPermitidos,
-            periodoReintento: data.periodoReintento,
-            timeout: data.timeout,
-            metodoHttp: parseInt(data.metodoHttp) as MetodoHttp,
-            jobParametro: jobParametros
-        };
-        
-        console.log('📋 Comando final:', comandoFinal);
-        handleAgregarJob(comandoFinal);
-    };
-   
-    const opcionesMetodoHttp = [
-        { valor: MetodoHttp.GET.toString(), etiqueta: "GET" },
-        { valor: MetodoHttp.POST.toString(), etiqueta: "POST" },
-        { valor: MetodoHttp.PUT.toString(), etiqueta: "PUT" },
-        { valor: MetodoHttp.DELETE.toString(), etiqueta: "DELETE" }
-    ];
+    const {
+        configuracionCamposAPI,
+        pestanasDisponibles
+    } = parametrosVM;
 
     return (
         <Contenedor>
@@ -164,9 +49,9 @@ export const PaginaAgregarJob = () => {
                 lineaHeader={{ mostrar: true, color: "blue", grosor: "2px" }}
                 tamano={12}
             >
-                <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
+                <form onSubmit={onSubmit} className="space-y-6">
                     
-                   
+                    {/* INFORMACIÓN DEL JOB */}
                     <div className="bg-white dark:bg-gray-800 rounded-lg p-6 border border-gray-200 dark:border-gray-600">
                         <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">
                             Información del Job
@@ -179,7 +64,7 @@ export const PaginaAgregarJob = () => {
                                 register={register}
                                 errors={errors}
                                 placeholder="Ej: Sincronizar usuarios diariamente"
-                                required="El nombre es requerido"
+                                required={validacionesFormulario.NOMBRE.required}
                                 colSpan="6"
                             />
 
@@ -189,7 +74,7 @@ export const PaginaAgregarJob = () => {
                                 register={register}
                                 errors={errors}
                                 placeholder="Ej: SYNC_USERS"
-                                required="El ID del método es requerido"
+                                required={validacionesFormulario.ID_METODO.required}
                                 colSpan="6"
                             />
 
@@ -200,7 +85,7 @@ export const PaginaAgregarJob = () => {
                                 errors={errors}
                                 type="url"
                                 placeholder="https://api.ejemplo.com/v1/usuarios"
-                                required="La URL es requerida"
+                                required={validacionesFormulario.URL.required}
                                 colSpan="9"
                             />
 
@@ -221,7 +106,7 @@ export const PaginaAgregarJob = () => {
                                 register={register}
                                 errors={errors}
                                 placeholder="Describe qué hace este job y cuándo se ejecuta"
-                                required="La descripción es requerida"
+                                required={validacionesFormulario.DESCRIPCION.required}
                                 colSpan="12"
                             />
                         </div>
@@ -240,7 +125,7 @@ export const PaginaAgregarJob = () => {
                                 register={register}
                                 errors={errors}
                                 placeholder="0 0 * * * (Diario a medianoche)"
-                                required="La expresión cron es requerida"
+                                required={validacionesFormulario.CRON.required}
                                 tooltipMessage="Formato: minuto hora día mes día-semana"
                                 colSpan="8"
                             />
@@ -252,7 +137,7 @@ export const PaginaAgregarJob = () => {
                                 errors={errors}
                                 type="email"
                                 placeholder="admin@empresa.com"
-                                required="El correo de notificación es requerido"
+                                required={validacionesFormulario.EMAIL.required}
                                 colSpan="4"
                             />
                         </div>
@@ -265,7 +150,7 @@ export const PaginaAgregarJob = () => {
                         </h3>
 
                         <HookFormDinamico
-                            pestañas={['Headers', 'Query Params']}
+                            pestañas={pestanasDisponibles}
                             tiposCamposPermitidos={configuracionCamposAPI}
                             cantidadMaximaCampos={20}
                             basePath="configuracionAPI"
@@ -339,18 +224,14 @@ export const PaginaAgregarJob = () => {
                         />
                     )}
 
-                  
+                    {/* BOTONES DE ACCIÓN */}
                     <div className="flex justify-end gap-3 pt-4">
                         <BotonPrimario
                             texto="Cancelar"
                             color="gray"
                             variante="outline"
                             tamaño="mediano"
-                            onClick={() => {
-                                reset();
-                                setMetodoHttpSeleccionado("");
-                                setMostrarConfigAvanzada(false);
-                            }}
+                            onClick={resetearFormulario}
                             deshabilitar={isPending}
                         />
                         

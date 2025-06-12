@@ -7,6 +7,9 @@ export * from './types';
 // Exportar helpers
 export * from './helpers';
 
+// Exportar configuraciones predefinidas
+export * from './config';
+
 // Exportar componentes individuales (por si se necesitan usar por separado)
 export { default as TabNavigation } from './TabNavigation';
 export { default as FieldRenderer } from './FieldRenderer';

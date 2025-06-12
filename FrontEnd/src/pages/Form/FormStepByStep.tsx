@@ -5,9 +5,9 @@ import Breadcrumb from '../../components/Breadcrumbs/Breadcrumb';
 import { Contenedor } from '../../components/UI/Contenedor';
 import Tarjeta from '../../components/UI/Tarjeta';
 import StepByStep from '../../components/UI/StepByStep';
-import HookFormInput from '../../components/FormulariosControles/React-Hook-Form/HookFormInput';
+import HookFormInput from '../../components/FormulariosControles/HookFormInput/HookFormInput';
 import HookFormTextarea from '../../components/FormulariosControles/React-Hook-Form/HookFormTextarea';
-import HookFormCheckbox from '../../components/FormulariosControles/React-Hook-Form/HookFormCheckbox';
+import HookFormCheckbox from '../../components/FormulariosControles/HookFormCheckbox/HookFormCheckbox';
 import EtiquetaEstado from '../../components/UI/Etiqueta-Estado';
 
 interface FormularioData {
