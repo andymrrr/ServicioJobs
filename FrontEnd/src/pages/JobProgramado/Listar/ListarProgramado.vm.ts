@@ -1,4 +1,4 @@
-import { JobProgramado } from "../../../Nucleo/Dominio/Model";
+import { JobProgramado } from "../../../Core/Dominio/Model";
 
 export function useListarProgramadoVM() {
     const handleEditar = (job: JobProgramado) => {

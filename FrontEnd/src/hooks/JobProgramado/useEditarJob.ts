@@ -1,6 +1,6 @@
 import { useMutation } from "@tanstack/react-query";
-import { AgregarJobProgramadoComand, Respuesta } from "../../Nucleo/Dominio/Model";
-import { JobProgramadoImplementacion } from "../../Nucleo/api/Implementacion/JobProgramadoImplementacion";
+import { AgregarJobProgramadoComand, Respuesta } from "../../Core/Dominio/Model";
+import { JobProgramadoImplementacion } from "../../Core/api/Implementacion/JobProgramadoImplementacion";
 
 // Extendemos el comando base para incluir el ID
 export interface EditarJobProgramadoComand extends AgregarJobProgramadoComand {

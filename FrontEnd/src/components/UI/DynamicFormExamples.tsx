@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import HookFormDinamico, { ConfiguracionCampoHook, FormularioTabData } from '../FormulariosControles/HookFormDinamico/HookFormDinamico';
+import HookFormDinamico, { ConfiguracionCampoHook, FormularioTabData } from '../FormulariosControles/HookFormDinamico';
 
 // Estructura de datos para React Hook Form
 interface FormData {

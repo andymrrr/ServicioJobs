@@ -4,10 +4,10 @@ import { FieldRendererProps } from './types';
 import HookFormInput from '../HookFormInput/HookFormInput';
 import HookFormCheckbox from '../HookFormCheckbox/HookFormCheckbox';
 import HookFormTextarea from '../HookFormTextTarea/HookFormTextarea';
-import SelectFormHook from '../HookFormSelect/HookFormSelect';
+import { HookFormSelect as SelectFormHook } from '../HookFormSelect/HookFormSelect';
 
 const FieldRenderer: React.FC<FieldRendererProps> = ({
-  campo,
+  // campo,
   configuracion,
   index,
   basePath,
@@ -103,12 +103,15 @@ const FieldRenderer: React.FC<FieldRendererProps> = ({
             </div>
             <div className="col-span-6">
               <SelectFormHook
-                etiqueta="Valor"
+                label="Valor"
                 name={valorFieldName}
-                opciones={configuracion.opciones || []}
+                options={configuracion.opciones?.map(opcion => ({ 
+                  value: opcion.valor, 
+                  label: opcion.etiqueta 
+                })) || []}
                 register={register}
                 errors={errors}
-                valorSeleccionado={watch(valorFieldName) || ''}
+                selectedValue={watch(valorFieldName) || ''}
                 onChange={(valor) => setValue(valorFieldName, valor)}
                 colSpan="12"
               />

@@ -238,4 +238,45 @@ export const defaultCustomFilter = (option: any, inputValue: string): boolean =>
     option.value.toLowerCase().includes(searchValue) ||
     (option.description && option.description.toLowerCase().includes(searchValue))
   );
+};
+
+/**
+ * Formatea opciones para react-select
+ */
+export const formatOptionsForReactSelect = (options: SelectOption[]): SelectOption[] => {
+  return options.map(option => ({
+    value: option.value,
+    label: option.label,
+    isDisabled: option.isDisabled,
+    color: option.color,
+    description: option.description
+  }));
+};
+
+/**
+ * Formatea grupos para react-select
+ */
+export const formatGroupsForReactSelect = (groups: SelectGroup[]): SelectGroup[] => {
+  return groups.map(group => ({
+    label: group.label,
+    options: formatOptionsForReactSelect(group.options)
+  }));
+};
+
+/**
+ * Busca una opción por valor
+ */
+export const findOptionByValue = (options: SelectOption[], value: string): SelectOption | undefined => {
+  return options.find(option => option.value === value);
+};
+
+/**
+ * Busca una opción en grupos
+ */
+export const findOptionInGroups = (groups: SelectGroup[], value: string): SelectOption | undefined => {
+  for (const group of groups) {
+    const option = findOptionByValue(group.options, value);
+    if (option) return option;
+  }
+  return undefined;
 }; 

@@ -105,7 +105,7 @@ const TablaPaginada = <T extends object>({
   claveFila,
   acciones,
   botones = [],
-  botonesAccion,
+  // botonesAccion,
   mostrarHeader = false,
   tituloTabla,
   subtituloTabla,

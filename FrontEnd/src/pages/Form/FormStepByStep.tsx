@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { FaUser, FaEnvelope, FaMapMarkerAlt, FaCheck, FaArrowLeft, FaArrowRight } from 'react-icons/fa';
 import Breadcrumb from '../../components/Breadcrumbs/Breadcrumb';
@@ -40,7 +40,7 @@ const FormStepByStep = () => {
     formState: { errors },
     trigger,
     getValues,
-    setValue
+    // setValue
   } = useForm<FormularioData>({
     defaultValues: {
       terminosCondiciones: false,

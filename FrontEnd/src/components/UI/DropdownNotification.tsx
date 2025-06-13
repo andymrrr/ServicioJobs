@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { FaBell, FaCheckDouble, FaEnvelope, FaExclamationTriangle, FaInfoCircle } from 'react-icons/fa';
+import { FaBell, FaCheckDouble, FaExclamationTriangle, FaInfoCircle } from 'react-icons/fa';
 import EtiquetaEstado from './Etiqueta-Estado';
 
 interface Notificacion {

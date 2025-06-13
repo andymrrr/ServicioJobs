@@ -1,7 +1,7 @@
 import { ColumnsType } from 'antd/es/table';
 import { Tag, Button, Space, Tooltip } from 'antd';
 import { EditOutlined, DeleteOutlined, PlayCircleOutlined } from '@ant-design/icons';
-import { JobProgramado } from '../../../../Nucleo/Dominio/Model';
+import { JobProgramado } from '../../../../Core/Dominio/Model';
 
 interface AccionesProgramadosProps {
   onEditar: (job: JobProgramado) => void;

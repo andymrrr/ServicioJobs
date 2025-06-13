@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
-import { JobProgramado, RespuestaPaginada, PaginacionProgramadosQuery } from "../../Nucleo/Dominio/Model";
-import { JobProgramadoPaginadoCasoUso } from "../../Nucleo/Dominio/CasoUso";
+import { JobProgramado, RespuestaPaginada, PaginacionProgramadosQuery } from "../../Core/Dominio/Model";
+import { JobProgramadoPaginadoCasoUso } from "../../Core/Dominio/CasoUso";
 
 export interface ParametrosBusquedaPaginada {
   pagina?: number;

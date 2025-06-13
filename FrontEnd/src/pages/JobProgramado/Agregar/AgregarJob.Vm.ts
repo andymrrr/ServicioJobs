@@ -1,14 +1,14 @@
 import { useForm } from "react-hook-form";
 import { useState, useEffect } from "react";
 import { useAgregarJob } from "../../../hooks/JobProgramado/useAgregarJob";
-import { AgregarJobProgramadoComand } from "../../../Nucleo/Dominio/Model";
-import { MetodoHttp } from "../../../Nucleo/Dominio/Model/enum/MethodoHTTP";
+import { AgregarJobProgramadoComand } from "../../../Core/Dominio/Model";
+import { MetodoHttp } from "../../../Core/Dominio/Model/enum/MethodoHTTP";
 import { 
     FormularioTabData,
     PLANTILLA_BASICA
 } from "../../../components/FormulariosControles/HookFormDinamico";
 import { convertirConfiguracionAParametros } from "../../../utils/jobParametrosUtils";
-import { JobParametro } from "../../../Nucleo/Dominio/Model/JobProgramado/JobParametro";
+import { JobParametro } from "../../../Core/Dominio/Model/JobProgramado/JobParametro";
 import { 
     OPCIONES_METODO_HTTP,
     REGLAS_VALIDACION_JOB
@@ -33,7 +33,7 @@ export interface FormularioAgregarJob {
 }
 
 export function useAgregarJobVM() {
-    const { ejecutarAsync, isPending, isSuccess, isError, error, data } = useAgregarJob();
+    const { /*ejecutarAsync,*/ isPending, isSuccess, isError, error, data } = useAgregarJob();
     
     // Estados del formulario
     const [metodoHttpSeleccionado, setMetodoHttpSeleccionado] = useState<string>("");
@@ -98,6 +98,7 @@ export function useAgregarJobVM() {
 
     const handleAgregarJob = async (data: FormularioAgregarJob) => {
         const comandoFinal = procesarDatosFormulario(data);
+        console.log('Comando final:', comandoFinal);
         //await ejecutarAsync(comandoFinal);
     };
 

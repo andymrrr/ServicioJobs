@@ -1,11 +1,7 @@
-// ==================== ARCHIVO PRINCIPAL API ====================
-
 import { AxiosInstance } from 'axios';
-import { ApiConfig, TokenData } from './types';
+import { ApiConfig } from './types';
 import { ApiFactory } from './ApiFactory';
 import { TokenManager } from './TokenManager';
-
-// ==================== INSTANCIAS PREDEFINIDAS ====================
 
 export const Api = ApiFactory.createInstance({ 
   contentType: "application/json", 
@@ -21,8 +17,6 @@ export const ApiSinAuth = ApiFactory.createInstance({
   contentType: "application/json", 
   withAuth: false 
 });
-
-// ==================== FUNCIONES PÚBLICAS ====================
 
 export const configurarTokens = (accessToken: string, refreshToken?: string): void => {
   TokenManager.setTokens({ access_token: accessToken, refresh_token: refreshToken });
@@ -40,7 +34,6 @@ export const crearApiPersonalizada = (config: ApiConfig): AxiosInstance => {
   return ApiFactory.createInstance(config);
 };
 
-// ==================== EXPORTACIONES ====================
 
 export { ApiFactory } from './ApiFactory';
 export { TokenManager } from './TokenManager';

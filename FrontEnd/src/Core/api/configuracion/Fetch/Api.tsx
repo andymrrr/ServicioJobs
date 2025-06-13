@@ -1,6 +1,6 @@
 // ==================== ARCHIVO PRINCIPAL FETCH API ====================
 
-import { FetchConfig, TokenData } from './types';
+import { FetchConfig } from './types';
 import { FetchApi } from './FetchApi';
 import { FetchTokenManager } from './TokenManager';
 

@@ -11,7 +11,7 @@ import {
   FaEdit,
   FaLayerGroup,
   FaStepForward,
-  FaPlus,
+  // FaPlus,
   FaCode,
   FaExclamationTriangle,
   FaPlay,

@@ -5,3 +5,5 @@ export * from './JobProgramado/AgregarJobProgramadoComand';
 export * from './JobProgramado/JobParametro';
 export * from './JobProgramado/PaginacionProgramadosQuery';
 export * from './enum/MethodoHTTP';
+export * from './JobMetodo/JobMetodo';
+export * from './JobMetodo/PaginacionMetodoQuery';

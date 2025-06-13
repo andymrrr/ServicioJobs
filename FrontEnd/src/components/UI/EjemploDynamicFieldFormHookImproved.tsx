@@ -1,6 +1,6 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
-import HookFormDinamico, { ConfiguracionCampoHook, FormularioTabData } from '../FormulariosControles/HookFormDinamico/HookFormDinamico';
+import HookFormDinamico, { ConfiguracionCampoHook, FormularioTabData } from '../FormulariosControles/HookFormDinamico';
 
 // Estructura de datos para React Hook Form
 interface FormData {
@@ -127,7 +127,7 @@ const EjemploDynamicFieldFormHookImproved: React.FC = () => {
   });
 
   // Manejar cambios en tiempo real (opcional)
-  const manejarCambios = (datos: FormularioTabData) => {
+  const manejarCambios = (_datos: FormularioTabData) => {
     // console.log('🔄 Cambios en tiempo real:', datos);
     // Aquí puedes hacer validaciones en tiempo real, guardar en localStorage, etc.
   };

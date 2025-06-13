@@ -4,7 +4,7 @@ import { FetchTokenManager } from './TokenManager';
 // ==================== MANEJO DE ERRORES FETCH ====================
 
 export class FetchErrorHandler {
-  static async createFetchError(response: Response, url: string): Promise<FetchError> {
+  static async createFetchError(response: Response, _url: string): Promise<FetchError> {
     let data: any = null;
     let message = `HTTP ${response.status}: ${response.statusText}`;
     

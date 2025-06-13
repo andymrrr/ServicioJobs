@@ -1,5 +1,5 @@
 import { JobProgramado, Respuesta, RespuestaPaginada, PaginacionProgramadosQuery } from "../../Dominio/Model";
-import { ApiSinAuth } from "../configuracion/Api";
+import { ApiSinAuth } from "../configuracion/Axio/Api";
 import { IJobProgramadoImplementacion } from "../Interfaz/IJobProgramadoImplementacion";
 import { Utilitarios } from "../Utilitario";
 

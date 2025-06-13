@@ -1,4 +1,4 @@
-import React from 'react';
+// import React from 'react';
 
 interface Propiedad {
   size?: 1 | 2 | 4 | 8; 

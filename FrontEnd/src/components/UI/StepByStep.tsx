@@ -1,5 +1,5 @@
 import React from 'react';
-import { FaCheck, FaChevronRight } from 'react-icons/fa';
+import { FaCheck } from 'react-icons/fa';
 
 interface Paso {
   id: number;

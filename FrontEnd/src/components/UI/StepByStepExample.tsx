@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { FaUser, FaEnvelope, FaMapMarkerAlt, FaCheck, FaCog } from 'react-icons/fa';
 import StepByStep from './StepByStep';
 import Tarjeta from './Tarjeta';

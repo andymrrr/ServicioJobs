@@ -1,14 +1,14 @@
 ﻿using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using ServicioJobs.Aplicacion.Feature.JobMetodo.Dtos;
 using ServicioJobs.Aplicacion.Feature.JobMetodo.Query.PaginacionMetodos;
-using ServicioJobs.Aplicacion.Feature.Programados.Dtos;
-using ServicioJobs.Aplicacion.Feature.Programados.Query.PaginacionProgramados;
 using ServicioJobs.Dal.Nucleo.Paginacion.Modelos;
 using System.Net;
 
 namespace ServicioJobs.Controllers
 {
+    [AllowAnonymous]
     [Route("api/[controller]")]
     [ApiController]
     public class MetodosController : ControllerBase

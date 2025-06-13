@@ -1,7 +1,7 @@
 // Reutilizamos la función de colSpan del HookFormInput
 export { getColSpanClass } from '../HookFormInput/utils';
 
-import { ColSpanType } from './types';
+// import { ColSpanType } from './types';
 
 /**
  * Genera las clases CSS para el checkbox personalizado

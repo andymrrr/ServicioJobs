@@ -1,4 +1,4 @@
-import { MetodoHttp } from "../../../Nucleo/Dominio/Model/enum/MethodoHTTP";
+import { MetodoHttp } from "../../../Core/Dominio/Model/enum/MethodoHTTP";
 import { VALIDACIONES, crearValidacionesDominio } from "../../../utils/validaciones";
 
 
