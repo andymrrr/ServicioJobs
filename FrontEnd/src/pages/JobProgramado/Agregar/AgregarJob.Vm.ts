@@ -7,15 +7,16 @@ import {
     FormularioTabData,
     PLANTILLA_BASICA
 } from "../../../components/FormulariosControles/HookFormDinamico";
-import { convertirConfiguracionAJobParametros } from "../../../utils/jobParametrosUtils";
+import { convertirConfiguracionAParametros } from "../../../utils/jobParametrosUtils";
+import { JobParametro } from "../../../Nucleo/Dominio/Model/JobProgramado/JobParametro";
 import { 
     OPCIONES_METODO_HTTP,
     REGLAS_VALIDACION_JOB
 } from "./AgregarJob.config";
 
-// Interfaz limpia para el formulario (sin extender el comando del dominio)
+
 export interface FormularioAgregarJob {
-    // Campos básicos del job
+   
     idMetodo: string;
     nombre: string;
     descripcion: string;
@@ -57,25 +58,26 @@ export function useAgregarJobVM() {
         }
     });
 
-    // Establecer valores por defecto al montar el componente
     useEffect(() => {
         setValue('configuracionAPI', PLANTILLA_BASICA);
     }, [setValue]);
 
-    // Función para procesar y transformar los datos del formulario
     const procesarDatosFormulario = (data: FormularioAgregarJob): AgregarJobProgramadoComand => {
-        // Usar el utilitario genérico tipado para procesar la configuración
-        const { headers, queryParams, parametros: jobParametros } = convertirConfiguracionAJobParametros(
+        
+        const { headers, queryParams, parametros: jobParametros } = convertirConfiguracionAParametros<JobParametro>(
             data.configuracionAPI, 
-            ['Headers', 'Query Params']
+            ['Headers', 'Query Params'],
+            (tipo, nombre, valor) => ({
+                nombre: `${tipo}:${nombre}`,
+                valor: valor
+            })
         );
 
-        // Logs informativos para debugging
         console.log('🌐 Headers configurados:', headers);
         console.log('🔍 Query Params:', queryParams);
         console.log('📦 JobParametros generados:', jobParametros);
 
-        // Crear el comando final
+        
         const comandoFinal: AgregarJobProgramadoComand = {
             idMetodo: data.idMetodo,
             nombre: data.nombre,
@@ -94,16 +96,13 @@ export function useAgregarJobVM() {
         return comandoFinal;
     };
 
-    // Función para manejar el envío del formulario
     const handleAgregarJob = async (data: FormularioAgregarJob) => {
         const comandoFinal = procesarDatosFormulario(data);
-        await ejecutarAsync(comandoFinal);
+        //await ejecutarAsync(comandoFinal);
     };
 
-    // Función para manejar el envío del formulario con react-hook-form
     const onSubmit = handleSubmit(handleAgregarJob);
 
-    // Función para resetear el formulario
     const resetearFormulario = () => {
         reset();
         setMetodoHttpSeleccionado("");
@@ -111,24 +110,20 @@ export function useAgregarJobVM() {
     };
 
     return {
-        // Estados del API
         isPending,
         isSuccess,
         isError,
         error,
         data,
         
-        // Estados del formulario
         metodoHttpSeleccionado,
         setMetodoHttpSeleccionado,
         mostrarConfigAvanzada,
         setMostrarConfigAvanzada,
         
-        // Configuraciones
         opcionesMetodoHttp: OPCIONES_METODO_HTTP,
         validacionesFormulario: REGLAS_VALIDACION_JOB,
         
-        // Formulario
         register,
         errors,
         control,
