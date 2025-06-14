@@ -1,48 +1,45 @@
-import { useState, useCallback } from 'react';
-import { useBusquedaPaginada, ParametrosBusquedaPaginada } from "../../../hooks";
 
-// Valores por defecto para los parámetros
-const PARAMETROS_INICIALES: ParametrosBusquedaPaginada = {
+import { useCallback } from 'react';
+import { PaginacionProgramadosQuery } from '../../../Core/Dominio/Model';
+import { usePaginacionJob } from '../../../hooks/JobProgramado/usePaginacionJob';
+import { useEstadoPaginacion } from '../../../hooks/Paginacion/useEstadoPaginacion';
+
+// Parámetros iniciales
+const PARAMETROS_INICIALES: PaginacionProgramadosQuery = {
   pagina: 1,
-  cantidadPorPagina: 10,
+  cantidadRegistroPorPagina: 10,
   busqueda: '',
   nombre: '',
   ordenar: 'nombre',
 };
 
 export function usePaginacionProgramadoVM() {
-  const [parametros, setParametros] = useState<ParametrosBusquedaPaginada>(PARAMETROS_INICIALES);
-  const busquedaQuery = useBusquedaPaginada(parametros);
+  // Hook genérico para manejar el estado (reutilizable para cualquier entidad)
+  const estado = useEstadoPaginacion(PARAMETROS_INICIALES);
+  
+  // Hook específico de consulta para JobProgramado
+  const paginacionQuery = usePaginacionJob(estado.parametros);
 
-  const actualizarFiltros = useCallback((nuevosParametros: Partial<ParametrosBusquedaPaginada>) => {
-    setParametros(prev => ({
-      ...prev,
-      ...nuevosParametros,
-      pagina: nuevosParametros.pagina ?? 1,
-    }));
-  }, []);
+  
+  const filtrarPorNombre = useCallback((nombre: string) => {
+    estado.actualizarFiltros({ nombre });
+  }, [estado.actualizarFiltros]);
 
-  const cambiarPagina = useCallback((pagina: number, cantidadPorPagina?: number) => {
-    setParametros(prev => ({
-      ...prev,
-      pagina,
-      ...(cantidadPorPagina && { cantidadPorPagina })
-    }));
-  }, []);
+  const filtrarPorMetodoHttp = useCallback((metodoHttps: number | undefined) => {
+    estado.actualizarFiltros({ metodoHttps });
+  }, [estado.actualizarFiltros]);
 
-  const limpiarFiltros = useCallback(() => {
-    setParametros(PARAMETROS_INICIALES);
-  }, []);
+  const filtrarPorEstadoEjecucion = useCallback((estadoEjecucion: number | undefined) => {
+    estado.actualizarFiltros({ estadoEjecucion });
+  }, [estado.actualizarFiltros]);
 
   return {
-    ...busquedaQuery,
-    parametros,
-    actualizarFiltros,
-    cambiarPagina,
-    limpiarFiltros,    
-    buscar: useCallback((busqueda: string) => actualizarFiltros({ busqueda }), [actualizarFiltros]),
-    filtrarPorNombre: useCallback((nombre: string) => actualizarFiltros({ nombre }), [actualizarFiltros]),
-    filtrarPorMetodoHttp: useCallback((metodoHttps: number | undefined) => actualizarFiltros({ metodoHttps }), [actualizarFiltros]),
-    filtrarPorEstadoEjecucion: useCallback((estadoEjecucion: number | undefined) => actualizarFiltros({ estadoEjecucion }), [actualizarFiltros]),
+    ...paginacionQuery,
+    
+    ...estado,
+  
+    filtrarPorNombre,
+    filtrarPorMetodoHttp,
+    filtrarPorEstadoEjecucion,
   };
 }

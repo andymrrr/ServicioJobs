@@ -5,5 +5,5 @@ export interface PaginacionProgramadosQuery extends PaginacionQuery {
   idMetodo?: string; 
   estadoEjecucion?: number;
   nombre?: string;
-  // Nota: cantidadPorPagina viene de PaginacionQuery base
+  
 } 

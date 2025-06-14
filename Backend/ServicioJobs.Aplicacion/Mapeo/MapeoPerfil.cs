@@ -11,7 +11,9 @@ namespace ServicioJobs.Aplicacion.Mapeo
     {
         public MapeoPerfil()
         {
-            CreateMap<Programado, ProgramadoPaginado>().ReverseMap();
+            CreateMap<Programado, ProgramadoPaginado>()
+            .ForMember(dest => dest.MetodoHttp, opt => opt.MapFrom(src => src.Metodo.Nombre))
+                .ReverseMap();
             CreateMap<Metodo, MetodosDto>().ReverseMap();
         }
     }
