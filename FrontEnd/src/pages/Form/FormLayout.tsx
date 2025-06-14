@@ -1,4 +1,4 @@
-import Breadcrumb from '../../components/Breadcrumbs/Breadcrumb';
+import Breadcrumb from '../../components/UI/Breadcrumbs/Breadcrumb';
 import { useForm } from 'react-hook-form';
 import { Contenedor } from '../../components/UI/Contenedor';
 import Tarjeta from '../../components/UI/Tarjeta';

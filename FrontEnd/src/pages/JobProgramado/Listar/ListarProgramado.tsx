@@ -6,7 +6,7 @@ import FiltrosProgramados from './components/FiltrosProgramados';
 import { crearColumnasProgramados } from './components/ColumnasProgramados';
 import { crearBotonesProgramados } from './components/BotonesProgramados';
 import { usePaginacionProgramadoVM } from './PaginacionProgramado.vm';
-import { useListarProgramadoVM } from './ListarProgramado.Vm';
+import { useListarProgramadoVM } from './ListarProgramado.vm';
 
 export const PaginaListarProgramado = () => {
   const vm = usePaginacionProgramadoVM();

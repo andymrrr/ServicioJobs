@@ -1,4 +1,4 @@
-import Breadcrumb from '../components/Breadcrumbs/Breadcrumb';
+import Breadcrumb from '../components/UI/Breadcrumbs/Breadcrumb';
 import TablaPaginada from '../components/Tables/TablaPaginada';
 import { useState } from 'react';
 import { generarColumnas } from '../components/Tables/generarColumnas';

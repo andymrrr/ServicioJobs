@@ -1,4 +1,4 @@
-import Breadcrumb from "../../components/Breadcrumbs/Breadcrumb";
+import Breadcrumb from "../../components/UI/Breadcrumbs/Breadcrumb";
 import { useForm } from "react-hook-form";
 import HookFormInput from "../../components/FormulariosControles/HookFormInput/HookFormInput";
 import HookFormTextarea from "../../components/FormulariosControles/HookFormTextTarea/HookFormTextarea";

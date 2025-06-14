@@ -1,5 +1,5 @@
 import { useForm } from 'react-hook-form';
-import Breadcrumb from '../components/Breadcrumbs/Breadcrumb';
+import Breadcrumb from '../components/UI/Breadcrumbs/Breadcrumb';
 import { Contenedor } from '../components/UI/Contenedor';
 import Tarjeta from '../components/UI/Tarjeta';
 import HookFormInput from '../components/FormulariosControles/HookFormInput/HookFormInput';

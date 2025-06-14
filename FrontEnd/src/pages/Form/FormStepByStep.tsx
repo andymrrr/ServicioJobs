@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { FaUser, FaEnvelope, FaMapMarkerAlt, FaCheck, FaArrowLeft, FaArrowRight } from 'react-icons/fa';
-import Breadcrumb from '../../components/Breadcrumbs/Breadcrumb';
+import Breadcrumb from '../../components/UI/Breadcrumbs/Breadcrumb';
 import { Contenedor } from '../../components/UI/Contenedor';
 import Tarjeta from '../../components/UI/Tarjeta';
 import StepByStep from '../../components/UI/StepByStep';
