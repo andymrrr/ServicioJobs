@@ -1,3 +1,4 @@
+import React from 'react';
 import { Contenedor } from "../../../components/UI/Contenedor"
 import Tarjeta from "../../../components/UI/Tarjeta";
 import BotonPrimario from "../../../components/UI/Botones/BotonPrimario";
@@ -7,6 +8,8 @@ import Collapsible from "../../../components/UI/Collapsible";
 import { HookFormInput } from "../../../components/FormulariosControles/HookFormInput";
 import { HookFormSelect } from "../../../components/FormulariosControles/HookFormSelect";
 import HookFormDinamico from "../../../components/FormulariosControles/HookFormDinamico";
+import { HookFormCronExpression } from "../../../components/FormulariosControles";
+import Titulo from '../../../components/UI/Titulo/Titulo';
 
 export const PaginaAgregarJob = () => {
     const { isPending,
@@ -39,9 +42,17 @@ export const PaginaAgregarJob = () => {
                     
                     {/* INFORMACIÓN DEL JOB */}
                     <div className="bg-white dark:bg-gray-800 rounded-lg p-6 border border-gray-200 dark:border-gray-600">
-                        <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">
-                            Información del Job
-                        </h3>
+                        <Titulo
+                         colorSeparador='primary'
+                         color='primary'
+                         tipoSeparador='linea'
+                         peso='bold'
+                         tamaño='extra-grande'
+                         alineacion='left'
+                         separador={true}
+                        > 
+                         📋 Información del Job
+                        </Titulo>
 
                         <div className="grid grid-cols-12 gap-4">
                             <HookFormInput
@@ -51,17 +62,18 @@ export const PaginaAgregarJob = () => {
                                 errors={errors}
                                 placeholder="Ej: Sincronizar usuarios diariamente"
                                 required={validacionesFormulario.NOMBRE.required}
-                                colSpan="6"
+                                colSpan="8"
                             />
 
                             <HookFormInput
-                                label="ID Método"
-                                name="idMetodo"
+                                label="Correo de Notificación"
+                                name="correoNotificar"
                                 register={register}
                                 errors={errors}
-                                placeholder="Ej: SYNC_USERS"
-                                required={validacionesFormulario.ID_METODO.required}
-                                colSpan="6"
+                                type="email"
+                                placeholder="admin@empresa.com"
+                                required={validacionesFormulario.EMAIL.required}
+                                colSpan="4"
                             />
 
                             <HookFormInput
@@ -70,7 +82,7 @@ export const PaginaAgregarJob = () => {
                                 register={register}
                                 errors={errors}
                                 type="url"
-                                placeholder="https://api.ejemplo.com/v1/usuarios"
+                                placeholder="https://api.com/v1/klk"
                                 required={validacionesFormulario.URL.required}
                                 colSpan="9"
                             />
@@ -98,42 +110,46 @@ export const PaginaAgregarJob = () => {
                         </div>
                     </div>
 
-                    {/* PROGRAMACIÓN */}
+                    
                     <div className="bg-white dark:bg-gray-800 rounded-lg p-6 border border-gray-200 dark:border-gray-600">
-                        <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">
-                            Programación
-                        </h3>
+                        <Titulo
+                         colorSeparador='secondary'
+                         color='secondary'
+                         tipoSeparador='puntos'
+                         peso='semibold'
+                         tamaño='grande'
+                         alineacion='left'
+                         separador={true}
+                        > 
+                         ⏰ Programación
+                        </Titulo>
 
                         <div className="grid grid-cols-12 gap-4">
-                            <HookFormInput
-                                label="Expresión Cron"
+                            <HookFormCronExpression
+                                label="Programación del Job"
                                 name="crontab"
                                 register={register}
                                 errors={errors}
-                                placeholder="0 0 * * * (Diario a medianoche)"
                                 required={validacionesFormulario.CRON.required}
-                                tooltipMessage="Formato: minuto hora día mes día-semana"
-                                colSpan="8"
-                            />
-
-                            <HookFormInput
-                                label="Correo de Notificación"
-                                name="correoNotificar"
-                                register={register}
-                                errors={errors}
-                                type="email"
-                                placeholder="admin@empresa.com"
-                                required={validacionesFormulario.EMAIL.required}
-                                colSpan="4"
+                                tooltipMessage="Define cuándo se ejecutará el job usando expresiones cron"
+                                colSpan="12"
                             />
                         </div>
                     </div>
 
                     {/* CONFIGURACIÓN DE API */}
                     <div className="bg-white dark:bg-gray-800 rounded-lg p-6 border border-gray-200 dark:border-gray-600">
-                        <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">
-                            Configuración de API
-                        </h3>
+                        <Titulo
+                         colorSeparador='primary'
+                         color='primary'
+                         tipoSeparador='gradiente-verde'
+                         peso='bold'
+                         tamaño='mediano'
+                         alineacion='left'
+                         separador={true}
+                        > 
+                         🔧 Configuración de API
+                        </Titulo>
 
                         <HookFormDinamico
                             pestañas={pestanasDisponibles}
