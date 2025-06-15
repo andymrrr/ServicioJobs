@@ -1,12 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using ServicioJobs.Modelos;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
-
 namespace ServicioJobs.Dal.Contexto
 {
     public class ContextServicioJobs : DbContext
@@ -14,7 +8,6 @@ namespace ServicioJobs.Dal.Contexto
         public ContextServicioJobs(DbContextOptions<ContextServicioJobs> options) : base(options) { }
 
         public DbSet<Historico> Historico { get; set; }
-        public DbSet<Metodo> Metodo { get; set; }
         public DbSet<Parametro> Parametro { get; set; }
         public DbSet<Programado> Programado { get; set; }
 
@@ -27,12 +20,10 @@ namespace ServicioJobs.Dal.Contexto
             ConfigurarDateTimeParaPostgreSQL(modelBuilder);
         }
 
-        /// <summary>
-        /// Configura las propiedades DateTime para PostgreSQL
-        /// </summary>
+        
         private void ConfigurarDateTimeParaPostgreSQL(ModelBuilder modelBuilder)
         {
-            // Configurar todas las propiedades DateTime para usar UTC
+            
             foreach (var entityType in modelBuilder.Model.GetEntityTypes())
             {
                 var dateTimeProperties = entityType.GetProperties()
@@ -40,7 +31,7 @@ namespace ServicioJobs.Dal.Contexto
 
                 foreach (var property in dateTimeProperties)
                 {
-                    // Configurar conversión de DateTime a UTC
+                   
                     if (property.ClrType == typeof(DateTime))
                     {
                         property.SetValueConverter(new Microsoft.EntityFrameworkCore.Storage.ValueConversion.ValueConverter<DateTime, DateTime>(

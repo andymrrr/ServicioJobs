@@ -13,7 +13,7 @@ namespace ServicioJobs.Aplicacion.Paginacion.Programados
         public PaginacionProgramadores(PaginacionProgramadoresParametro parametro) : base(parametro.ConstruirFiltro())
         {
             // Incluir relaciones necesarias
-            AgregarIncluir(c => c.Metodo!);
+           // AgregarIncluir(c => c.Metodo!);
 
             // Configurar paginación
             AplicarPaginacion(parametro.Pagina, parametro.CantidadRegistroPorPagina);

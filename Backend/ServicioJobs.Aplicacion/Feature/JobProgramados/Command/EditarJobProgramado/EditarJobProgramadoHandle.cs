@@ -31,7 +31,7 @@ namespace ServicioJobs.Aplicacion.Feature.Programados.Command.EditarJobProgramad
         {
             try
             {
-                // 1. Verificar que el job programado existe
+               
                 var programadoExistente = await _context.Programado
                     .Consultar(p => p.IdProgramado == request.IdProgramado)
                     .Include(p => p.Parametros)
@@ -41,17 +41,6 @@ namespace ServicioJobs.Aplicacion.Feature.Programados.Command.EditarJobProgramad
                 {
                     return RespuestaServicio<Unit>.NoEncontrado("El job programado especificado no existe");
                 }
-
-                // 2. Verificar que el método existe
-                var metodoExiste = await _context.Metodo.Consultar(m => m.IdMetodo == request.IdMetodo)
-                    .AnyAsync(cancellationToken);
-
-                if (!metodoExiste)
-                {
-                    return RespuestaServicio<Unit>.ErrorValidacion("El método especificado no existe");
-                }
-
-                // 3. Verificar que el nombre no esté duplicado (excluyendo el actual)
                 var nombreExiste = await _context.Programado
                     .Consultar(p => p.Nombre.ToLower() == request.Nombre.ToLower() && p.IdProgramado != request.IdProgramado)
                     .AnyAsync(cancellationToken);
@@ -61,7 +50,6 @@ namespace ServicioJobs.Aplicacion.Feature.Programados.Command.EditarJobProgramad
                     return RespuestaServicio<Unit>.Conflicto($"Ya existe otro job programado con el nombre '{request.Nombre}'");
                 }
 
-                // 4. Validar y calcular próxima ejecución
                 DateTime proximaEjecucion;
                 try
                 {
@@ -72,8 +60,7 @@ namespace ServicioJobs.Aplicacion.Feature.Programados.Command.EditarJobProgramad
                     return RespuestaServicio<Unit>.ErrorValidacion($"Error al procesar el crontab: {ex.Message}");
                 }
 
-                // 5. Actualizar el job programado
-                programadoExistente.IdMetodo = request.IdMetodo;
+               
                 programadoExistente.Nombre = request.Nombre.Trim();
                 programadoExistente.Descripcion = request.Descripcion?.Trim();
                 programadoExistente.Url = request.Url.Trim();
@@ -84,20 +71,20 @@ namespace ServicioJobs.Aplicacion.Feature.Programados.Command.EditarJobProgramad
                 programadoExistente.Timeout = request.Timeout;
                 programadoExistente.Habilitado = request.Habilitado;
                 
-                // Solo actualizar la próxima ejecución si cambió el crontab
+             
                 var crontabCambio = programadoExistente.Crontab != request.Crontab.Trim();
                 if (crontabCambio)
                 {
                     programadoExistente.FechaEjecucion = proximaEjecucion;
                 }
 
-                // 6. Eliminar parámetros existentes
+               
                 foreach (var parametroExistente in programadoExistente.Parametros.ToList())
                 {
                     await _context.Parametro.EliminarAsincrono(parametroExistente);
                 }
 
-                // 7. Crear los nuevos parámetros del job
+             
                 var parametros = new List<Parametro>();
                 foreach (var paramDto in request.JobParametro)
                 {

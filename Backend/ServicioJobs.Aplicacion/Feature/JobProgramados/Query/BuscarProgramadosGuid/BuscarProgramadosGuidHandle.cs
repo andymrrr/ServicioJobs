@@ -23,8 +23,7 @@ namespace ServicioJobs.Aplicacion.Feature.Programados.Query.BuscarProgramadosGui
         {
             try
             {
-                var programado = await _context.Programado.Consultar(d=> d.IdProgramado == request.Guid)
-                                        .Include(m=> m.Metodo).ToListAsync();
+                var programado = await _context.Programado.Consultar(d=> d.IdProgramado == request.Guid).ToListAsync();
 
                 if (programado is null)
                 {

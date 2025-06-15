@@ -9,9 +9,6 @@ namespace ServicioJobs.Aplicacion.Feature.Programados.Command.JobProgramados
     {
         public AgregarJobProgramadoValidator()
         {
-            RuleFor(x => x.IdMetodo)
-                .NotEmpty()
-                .WithMessage("El IdMetodo es obligatorio");
 
             RuleFor(x => x.Nombre)
                 .NotEmpty()

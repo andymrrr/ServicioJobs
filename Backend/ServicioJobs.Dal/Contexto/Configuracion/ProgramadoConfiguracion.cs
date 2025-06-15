@@ -49,14 +49,6 @@ namespace ServicioJobs.Dal.Contexto.Configuracion
 
             entity.Property(p => p.Habilitado)
                 .IsRequired();
-
-           
-
-          
-            entity.HasOne(p => p.Metodo)
-                .WithMany(m => m.Programados)
-                .HasForeignKey(p => p.IdMetodo)
-                .OnDelete(DeleteBehavior.Restrict); 
         }
     }
 

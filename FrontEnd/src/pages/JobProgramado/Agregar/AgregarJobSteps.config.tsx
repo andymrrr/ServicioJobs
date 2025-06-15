@@ -7,6 +7,7 @@ import { HookFormSelect } from "../../../components/FormulariosControles/HookFor
 import HookFormDinamico from "../../../components/FormulariosControles/HookFormDinamico";
 import { HookFormCronExpression } from "../../../components/FormulariosControles";
 import { FormularioAgregarJob } from './AgregarJob.Vm';
+import { HookFormTextarea } from '../../../components/FormulariosControles/HookFormTextTarea';
 
 interface CreateAgregarJobStepsProps {
     register: UseFormRegister<FormularioAgregarJob>;
@@ -70,13 +71,12 @@ export const createAgregarJobSteps = ({
                             colSpan="12"
                         />
 
-                        <HookFormInput
+                        <HookFormTextarea
                             label="Descripción"
                             name="descripcion"
                             register={register}
                             errors={errors}
                             placeholder="Describe qué hace este job y cuándo se ejecuta"
-                            required={validacionesFormulario.DESCRIPCION.required}
                             colSpan="12"
                         />
                     </div>

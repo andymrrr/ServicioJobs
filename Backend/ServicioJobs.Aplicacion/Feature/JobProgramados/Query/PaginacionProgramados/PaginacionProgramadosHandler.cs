@@ -30,7 +30,6 @@ namespace ServicioJobs.Aplicacion.Feature.Programados.Query.PaginacionProgramado
                 Busqueda = request.Busqueda,
                 Ordenar = request.Ordenar,
                 MetodoHttps = request.MetodoHttps,
-                IdMetodo = request.IdMetodo,
                 EstadoEjecucion = request.EstadoEjecucion,
                 Nombre = request.Nombre,
             };

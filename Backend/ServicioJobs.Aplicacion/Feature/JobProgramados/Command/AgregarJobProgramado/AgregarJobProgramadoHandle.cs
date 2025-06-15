@@ -23,16 +23,6 @@ namespace ServicioJobs.Aplicacion.Feature.Programados.Command.JobProgramados
         {
             try
             {
-                
-                var metodoExiste = await _context.Metodo.Consultar(m => m.IdMetodo == request.IdMetodo)
-                    .AnyAsync(cancellationToken);
-
-                if (!metodoExiste)
-                {
-                    return RespuestaServicio<Unit>.Fallo("El método especificado no existe");
-                }
-
-               
                 var nombreExiste = await _context.Programado.Consultar(p => p.Nombre.ToLower() == request.Nombre.ToLower())
                     .AnyAsync(cancellationToken);
 
@@ -54,7 +44,6 @@ namespace ServicioJobs.Aplicacion.Feature.Programados.Command.JobProgramados
                 var programado = new Programado
                 {
                     IdProgramado = Guid.NewGuid(),
-                    IdMetodo = request.IdMetodo,
                     Nombre = request.Nombre.Trim(),
                     Descripcion = request.Descripcion?.Trim(),
                     Url = request.Url.Trim(),
@@ -86,7 +75,6 @@ namespace ServicioJobs.Aplicacion.Feature.Programados.Command.JobProgramados
                     parametros.Add(parametro);
                 }
 
-                // 6. Guardar en la base de datos usando transacción
                 await _context.Programado.AgregarAsincrono(programado);
 
                 foreach (var parametro in parametros)

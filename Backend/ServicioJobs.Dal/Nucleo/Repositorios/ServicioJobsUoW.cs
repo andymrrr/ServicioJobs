@@ -15,14 +15,12 @@ namespace ServicioJobs.Dal.Nucleo.Repositorios
         private ContextServicioJobs _context { get; }
 
         public IRepositorioProgramado Programado { get; set; }
-        public IRepositorio<Metodo> Metodo { get; set; }
         public IRepositorio<Parametro> Parametro { get; set; }
 
         public ServicioJobsUoW(ContextServicioJobs context)
         {
             _context = context;
             Programado = new RepositorioProgramado(context);
-            Metodo = new Repositorio<Metodo>(context);
             Parametro = new Repositorio<Parametro>(context);
         }
 
