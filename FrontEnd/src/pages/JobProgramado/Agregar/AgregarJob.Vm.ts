@@ -48,7 +48,8 @@ export function useAgregarJobVM() {
         control,
         watch,
         setValue,
-        getValues
+        getValues,
+        trigger
     } = useForm<FormularioAgregarJob>({
         defaultValues: {
             configuracionAPI: {
@@ -132,6 +133,7 @@ export function useAgregarJobVM() {
         setValue,
         getValues,
         onSubmit,
-        resetearFormulario
+        resetearFormulario,
+        trigger
     };
 }

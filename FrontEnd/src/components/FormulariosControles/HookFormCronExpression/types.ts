@@ -1,4 +1,4 @@
-import { FieldValues, Path, FieldErrors, UseFormRegister } from 'react-hook-form';
+import { FieldValues, Path, FieldErrors, UseFormRegister, Control } from 'react-hook-form';
 
 export interface CronPreset {
   name: string;
@@ -12,6 +12,7 @@ export interface HookFormCronExpressionProps<T extends FieldValues> {
   name: Path<T>;
   register: UseFormRegister<T>;
   errors: FieldErrors<T>;
+  control: Control<T>;
   required?: string | boolean;
   colSpan?: string;
   disabled?: boolean;

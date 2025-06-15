@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { FieldValues } from 'react-hook-form';
+import React, { useState, useEffect } from 'react';
+import { FieldValues, useController } from 'react-hook-form';
 import { getColSpanClass } from './utils';
 import { HookFormCronExpressionProps, CronPreset } from './types';
 import CronPresets from './CronPresets';
@@ -16,17 +16,27 @@ const HookFormCronExpression = <T extends FieldValues>({
   colSpan = '12',
   disabled = false,
   tooltipMessage,
+  control,
 }: HookFormCronExpressionProps<T>) => {
   const [selectedPreset, setSelectedPreset] = useState<string>('');
-  const [customValue, setCustomValue] = useState<string>('');
   const [showBuilder, setShowBuilder] = useState<boolean>(false);
+
+  // Usar useController para mejor control del valor
+  const {
+    field: { value, onChange },
+  } = useController({
+    name,
+    control,
+    rules: { required },
+    defaultValue: '' as any,
+  });
 
   const error = errors[name];
   const spanClass = getColSpanClass(colSpan);
 
   const handlePresetChange = (preset: CronPreset) => {
     setSelectedPreset(preset.value);
-    setCustomValue(preset.value);
+    onChange(preset.value); // Actualizar el valor del formulario
     
     if (preset.name === 'Personalizado') {
       setShowBuilder(true);
@@ -34,6 +44,21 @@ const HookFormCronExpression = <T extends FieldValues>({
       setShowBuilder(false);
     }
   };
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const newValue = e.target.value;
+    onChange(newValue); // Actualizar el valor del formulario
+    
+    // Actualizar preset seleccionado si coincide
+    setSelectedPreset(newValue);
+  };
+
+  // Sincronizar preset seleccionado cuando cambia el valor
+  useEffect(() => {
+    if (value && value !== selectedPreset) {
+      setSelectedPreset(value);
+    }
+  }, [value]);
 
   return (
     <div className={spanClass}>
@@ -55,10 +80,9 @@ const HookFormCronExpression = <T extends FieldValues>({
 
       <div className="space-y-3">
         <input
-          {...register(name, { required })}
           type="text"
-          value={customValue}
-          onChange={(e) => setCustomValue(e.target.value)}
+          value={value || ''}
+          onChange={handleInputChange}
           placeholder="0 0 * * * (Formato: minuto hora día mes día-semana)"
           disabled={disabled}
           className={`w-full rounded-lg border-[1.5px] px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:bg-form-input dark:text-white ${
@@ -68,7 +92,7 @@ const HookFormCronExpression = <T extends FieldValues>({
           }`}
         />
 
-        <CronDescription cronExpression={customValue} />
+        <CronDescription cronExpression={value || ''} />
         
         <CronBuilder showBuilder={showBuilder} />
         
