@@ -35,4 +35,6 @@ export {
 } from './utils';
 
 // Export por defecto del componente principal
-export { default } from './StepByStep'; 
+export { default } from './StepByStep';
+export { useFormSteps } from './useFormSteps';
+export type { StepConfig } from './useFormSteps'; 

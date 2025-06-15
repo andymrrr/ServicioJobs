@@ -2,10 +2,10 @@ import React from 'react';
 import { Contenedor } from "../../../components/UI/Contenedor"
 import Tarjeta from "../../../components/UI/Tarjeta";
 import BotonPrimario from "../../../components/UI/Botones/BotonPrimario";
-import StepByStep from "../../../components/UI/StepByStep";
+import StepByStep, { useFormSteps } from "../../../components/UI/StepByStep";
 import { useAgregarJobVM } from "./AgregarJob.Vm";
 import { useParametrosDinamicosVM } from "./ParametrosDinamico.vm";
-import { useAgregarJobSteps } from "./useAgregarJobSteps";
+import { createAgregarJobSteps } from "./AgregarJobSteps.config";
 
 export const PaginaAgregarJob = () => {
     const { 
@@ -27,29 +27,36 @@ export const PaginaAgregarJob = () => {
     
     const { configuracionCamposAPI, pestanasDisponibles } = useParametrosDinamicosVM();
 
-    const {
-        pasoActual,
-        pasos,
-        renderPaso,
-        siguientePaso,
-        pasoAnterior,
-        irAPaso,
-        esUltimoPaso,
-        esPrimerPaso,
-    } = useAgregarJobSteps({
+    // Crear la configuración de pasos
+    const steps = createAgregarJobSteps({
         register,
         errors,
         control,
         watch,
         setValue,
         getValues,
-        trigger,
         metodoHttpSeleccionado,
         setMetodoHttpSeleccionado,
         opcionesMetodoHttp,
         validacionesFormulario,
         configuracionCamposAPI,
         pestanasDisponibles,
+    });
+
+    // Usar el hook genérico
+    const {
+        currentStep,
+        pasos,
+        renderCurrentStep,
+        nextStep,
+        previousStep,
+        goToStep,
+        isFirstStep,
+        isLastStep,
+    } = useFormSteps({
+        steps,
+        trigger,
+        errors,
     });
 
     return (
@@ -64,8 +71,8 @@ export const PaginaAgregarJob = () => {
                     {/* Navegador de Pasos */}
                     <StepByStep
                         pasos={pasos}
-                        pasoActual={pasoActual}
-                        onPasoClick={irAPaso}
+                        pasoActual={currentStep}
+                        onPasoClick={goToStep}
                         mostrarDescripcion={true}
                         tema="horizontal"
                         tamano="medium"
@@ -75,8 +82,9 @@ export const PaginaAgregarJob = () => {
                         animaciones={true}
                     />
 
+                    {/* Contenido del Paso Actual */}
                     <div className="bg-white dark:bg-gray-800 rounded-lg p-6 border border-gray-200 dark:border-gray-600 min-h-[400px]">
-                        {renderPaso()}
+                        {renderCurrentStep()}
                     </div>
 
                     
@@ -86,8 +94,8 @@ export const PaginaAgregarJob = () => {
                             color="gray"
                             variante="outline"
                             tamaño="mediano"
-                            onClick={pasoAnterior}
-                            deshabilitar={esPrimerPaso || isPending}
+                            onClick={previousStep}
+                            deshabilitar={isFirstStep || isPending}
                         />
                         
                         <div className="flex gap-3">
@@ -100,7 +108,7 @@ export const PaginaAgregarJob = () => {
                                 deshabilitar={isPending}
                             />
                             
-                            {esUltimoPaso ? (
+                            {isLastStep ? (
                                 <BotonPrimario
                                     texto={isPending ? "Guardando..." : "Guardar Job"}
                                     color="primary"
@@ -114,7 +122,7 @@ export const PaginaAgregarJob = () => {
                                     texto="Siguiente"
                                     color="primary"
                                     tamaño="mediano"
-                                    onClick={siguientePaso}
+                                    onClick={nextStep}
                                     deshabilitar={isPending}
                                 />
                             )}
