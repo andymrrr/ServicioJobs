@@ -5,4 +5,5 @@ export interface IJobProgramadoImplementacion{
     ObtenerJobPorId(id: number): Promise<Respuesta>
     ActualizarJobProgramado(request: FormData): Promise<Respuesta>
     ObtenerPaginacion(request: PaginacionProgramadosQuery): Promise<RespuestaPaginada<JobProgramado>>
+    CrearJobProgramadoConJSON(request: any): Promise<any>
 }

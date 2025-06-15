@@ -15,6 +15,8 @@ import Alerts from "../../pages/UiElements/Alerts";
 import Buttons from "../../pages/UiElements/Buttons";
 import { RouteConfig } from "./RouteConfig";
 import { PaginaAgregarJob, PaginaListarProgramado } from "../../pages";
+import { DebugDashboard } from "../../pages/Dev/DebugDashboard";
+import { LogsPage } from "../../pages/Dev/Logs";
 
 export const routes: RouteConfig[] = [
   {
@@ -98,5 +100,16 @@ export const routes: RouteConfig[] = [
     path: '/auth/signup',
     title: 'Signup | TailAdmin - Tailwind CSS Admin Dashboard Template',
     element: <SignUp />,
+  },
+  // 🔧 Rutas de Desarrollo
+  {
+    path: '/dev/debug-dashboard',
+    title: 'Debug Dashboard | Sistema de Debug Centralizado',
+    element: <DebugDashboard />,
+  },
+  {
+    path: '/dev/logs',
+    title: 'Logs del Sistema | Vista en Tiempo Real',
+    element: <LogsPage />,
   },
 ];

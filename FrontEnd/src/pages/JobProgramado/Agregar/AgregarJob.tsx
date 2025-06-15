@@ -5,6 +5,9 @@ import StepByStep, { useFormSteps } from "../../../components/UI/StepByStep";
 import { useAgregarJobVM } from "./AgregarJob.Vm";
 import { useParametrosDinamicosVM } from "./ParametrosDinamico.vm";
 import { createAgregarJobSteps } from "./AgregarJobSteps.config";
+import { DebugPanel } from "../../../components/Dev/DebugPanel";
+import { DEBUG_CONFIG } from "../../../config/debug.config";
+import { ErrorNotification } from "../../../components/UI/ErrorNotification";
 
 export const PaginaAgregarJob = () => {
     const { 
@@ -111,6 +114,17 @@ export const PaginaAgregarJob = () => {
                     />
                 </form>
             </Tarjeta>
+
+            {/* 🔍 Panel de Debug (solo en desarrollo) */}
+            <DebugPanel 
+                mostrar={DEBUG_CONFIG.enabled}
+                categories={DEBUG_CONFIG.PANEL_FILTERS.MAIN_CATEGORIES}
+                levels={DEBUG_CONFIG.PANEL_FILTERS.LEVELS}
+                maxLogs={100}
+            />
+
+            {/* ❌ Notificación de Errores (solo en desarrollo) */}
+            <ErrorNotification show={DEBUG_CONFIG.enabled} />
         </Contenedor>
     )
 }

@@ -13,11 +13,9 @@ import {
     OPCIONES_METODO_HTTP,
     REGLAS_VALIDACION_JOB
 } from "./AgregarJob.config";
-
+import { DebugForm, Debug } from '../../../utils/debugSystem';
 
 export interface FormularioAgregarJob {
-   
-    idMetodo: string;
     nombre: string;
     descripcion: string;
     url: string;
@@ -39,7 +37,7 @@ export function useAgregarJobVM() {
     const [metodoHttpSeleccionado, setMetodoHttpSeleccionado] = useState<string>("");
     const [mostrarConfigAvanzada, setMostrarConfigAvanzada] = useState(false);
 
-    // Configuración del formulario
+    // 🔧 Configuración del formulario con debug
     const {
         register,
         handleSubmit,
@@ -61,55 +59,104 @@ export function useAgregarJobVM() {
 
     useEffect(() => {
         setValue('configuracionAPI', PLANTILLA_BASICA);
+        Debug.info('FORM_INIT', 'Formulario inicializado con plantilla básica', PLANTILLA_BASICA);
     }, [setValue]);
 
-    const procesarDatosFormulario =async (data: FormularioAgregarJob) => {
+    // 🧹 Procesamiento optimizado de datos con debug detallado
+    const procesarDatosFormulario = async (data: FormularioAgregarJob) => {
+        DebugForm.submit('Iniciando procesamiento de datos del formulario', data);
         
-        const { headers, queryParams, parametros: jobParametros } = convertirConfiguracionAParametros<JobParametro>(
-            data.configuracionAPI, 
-            ['Headers', 'Query Params'],
-            (tipo, nombre, valor) => ({
-                nombre: `${tipo}:${nombre}`,
-                valor: valor
-            })
-        );
+        try {
+            // 🎯 Convertir configuración API a parámetros
+            const { headers, queryParams, parametros: jobParametros } = convertirConfiguracionAParametros<JobParametro>(
+                data.configuracionAPI, 
+                ['Headers', 'Query Params'],
+                (tipo, nombre, valor) => ({
+                    nombre: `${tipo}:${nombre}`,
+                    valor: valor
+                })
+            );
 
-        console.log('🌐 Headers configurados:', headers);
-        console.log('🔍 Query Params:', queryParams);
-        console.log('📦 JobParametros generados:', jobParametros);
+            Debug.info('FORM_PROCESS', 'Parámetros procesados', {
+                headers,
+                queryParams,
+                jobParametros,
+                jobParametrosJSON: JSON.stringify(jobParametros, null, 2)
+            });
 
-        
-        const comandoFinal: AgregarJobProgramadoComand = {
-            nombre: data.nombre,
-            descripcion: data.descripcion,
-            url: data.url,
-            crontab: data.crontab,
-            correoNotificar: data.correoNotificar,
-            reintentosPermitidos: data.reintentosPermitidos,
-            periodoReintento: data.periodoReintento,
-            timeout: data.timeout,
-            metodoHttp: parseInt(data.metodoHttp) as MetodoHttp,
-            jobParametro: jobParametros
-        };
-        
-        console.log('📋 Comando final:', comandoFinal);
-       const resultado = await ejecutarAsync(comandoFinal);
-       console.log('🔍 Resultado:', resultado);
-        return comandoFinal;
+            // 🏗️ Construir comando final
+            const comandoFinal: AgregarJobProgramadoComand = {
+                nombre: data.nombre,
+                descripcion: data.descripcion,
+                url: data.url,
+                crontab: data.crontab,
+                correoNotificar: data.correoNotificar,
+                reintentosPermitidos: data.reintentosPermitidos,
+                periodoReintento: data.periodoReintento,
+                timeout: data.timeout,
+                metodoHttp: parseInt(data.metodoHttp) as MetodoHttp,
+                jobParametro: jobParametros
+            };
+            
+            // 🔍 Debug detallado del comando final
+            Debug.success('FORM_PROCESS', 'Comando final construido', {
+                comando: comandoFinal,
+                validaciones: {
+                    esArrayJobParametro: Array.isArray(comandoFinal.jobParametro),
+                    longitudJobParametro: comandoFinal.jobParametro?.length || 0,
+                    tipoMetodoHttp: typeof comandoFinal.metodoHttp,
+                    valorMetodoHttp: comandoFinal.metodoHttp
+                }
+            });
+            
+            // 🚀 Ejecutar comando
+            const resultado = await ejecutarAsync(comandoFinal);
+            Debug.success('FORM_SUBMIT', 'Comando ejecutado exitosamente', resultado);
+            
+            return resultado;
+            
+        } catch (error) {
+            DebugForm.error('Error en procesamiento de datos', error);
+            throw error;
+        }
     };
 
+    // 🎯 Manejador principal de envío
     const handleAgregarJob = async (data: FormularioAgregarJob) => {
-        const comandoFinal = procesarDatosFormulario(data);
-        console.log('Comando final:', comandoFinal);
-        //await ejecutarAsync(comandoFinal);
+        DebugForm.submit('Iniciando envío del formulario', {
+            datosFormulario: data,
+            validaciones: {
+                hasErrors: Object.keys(errors).length > 0,
+                errores: errors
+            }
+        });
+        
+        try {
+            const resultado = await procesarDatosFormulario(data);
+            DebugForm.submit('Formulario enviado exitosamente', resultado);
+            return resultado;
+        } catch (error) {
+            DebugForm.error('Error en envío del formulario', error);
+            throw error;
+        }
     };
 
     const onSubmit = handleSubmit(handleAgregarJob);
 
+    // 🧹 Resetear formulario con debug
     const resetearFormulario = () => {
+        Debug.info('FORM_RESET', 'Reseteando formulario', {
+            antesReset: {
+                metodoHttpSeleccionado,
+                mostrarConfigAvanzada
+            }
+        });
+        
         reset();
         setMetodoHttpSeleccionado("");
         setMostrarConfigAvanzada(false);
+        
+        Debug.success('FORM_RESET', 'Formulario reseteado exitosamente');
     };
 
     return {

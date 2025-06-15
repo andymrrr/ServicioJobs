@@ -17,12 +17,15 @@ import {
   FaPlay,
   FaKey,
   FaUserPlus,
+  FaBug,
+  FaTools,
+  FaSearch,
 } from "react-icons/fa";
 
 export interface MenuLink {
   to: string;
   label: string;
-  icon?: React.ElementType; // Icono opcional para links en accordions
+  icon?: React.ElementType; 
 }
 
 export interface MenuItem {
@@ -39,7 +42,8 @@ export interface MenuSection {
   items: MenuItem[];
 }
 
-export const menuConfig: MenuSection[] = [
+
+const baseMenuConfig: MenuSection[] = [
   {
     title: "MENU",
     items: [
@@ -127,4 +131,29 @@ export const menuConfig: MenuSection[] = [
       },
     ],
   },
+];
+
+
+const devMenuSection: MenuSection = {
+  title: "DESARROLLO",
+  items: [
+   
+    {
+      id: "dev-tools",
+      icon: FaTools,
+      label: "Herramientas Dev",
+      type: "accordion",
+      links: [
+        { to: "/dev/debug-dashboard", label: "Debug Dashboard", icon: FaSearch },
+        { to: "/dev/logs", label: "Logs del Sistema", icon: FaBug },
+      ],
+    },
+  ],
+};
+
+// 🎯 Configuración final del menú (condicional para desarrollo)
+export const menuConfig: MenuSection[] = [
+  ...baseMenuConfig,
+  // Solo agregar sección de desarrollo en modo desarrollo
+  ...(import.meta.env?.DEV ? [devMenuSection] : [])
 ]; 
