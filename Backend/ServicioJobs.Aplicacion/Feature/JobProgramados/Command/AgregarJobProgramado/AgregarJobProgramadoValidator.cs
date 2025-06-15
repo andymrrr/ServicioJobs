@@ -67,7 +67,7 @@ namespace ServicioJobs.Aplicacion.Feature.Programados.Command.JobProgramados
                 .WithMessage("La lista de parámetros no puede ser nula");
 
             RuleForEach(x => x.JobParametro)
-                .SetValidator(new ParametroDtoValidator());
+                .SetValidator(new JobParametroItemValidator());
 
             // Validación condicional: si hay reintentos, debe haber período
             RuleFor(x => x.PeriodoReintento)
@@ -104,9 +104,9 @@ namespace ServicioJobs.Aplicacion.Feature.Programados.Command.JobProgramados
         }
     }
 
-    public class ParametroDtoValidator : AbstractValidator<ServicioJobs.Aplicacion.Feature.Parametros.Dto.ParametroDto>
+    public class JobParametroItemValidator : AbstractValidator<JobParametroItem>
     {
-        public ParametroDtoValidator()
+        public JobParametroItemValidator()
         {
             RuleFor(x => x.Propiedad)
                 .NotEmpty()
@@ -125,4 +125,4 @@ namespace ServicioJobs.Aplicacion.Feature.Programados.Command.JobProgramados
                 .WithMessage("El tipo de parámetro debe ser válido (Query o Header)");
         }
     }
-} 
+}

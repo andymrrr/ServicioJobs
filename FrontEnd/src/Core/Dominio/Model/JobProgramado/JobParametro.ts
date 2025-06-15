@@ -1,4 +1,8 @@
+import { TipoParametro } from "../enum/TipoParametro";
+
 export interface JobParametro {
-    nombre: string;
+    propiedad: string;
     valor: string;
-  }
+    tipo: TipoParametro;
+}
+

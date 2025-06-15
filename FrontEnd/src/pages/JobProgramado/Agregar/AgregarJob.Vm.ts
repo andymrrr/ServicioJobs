@@ -1,187 +1,135 @@
-import { useForm } from "react-hook-form";
-import { useState, useEffect } from "react";
-import { useAgregarJob } from "../../../hooks/JobProgramado/useAgregarJob";
-import { AgregarJobProgramadoComand } from "../../../Core/Dominio/Model";
-import { MetodoHttp } from "../../../Core/Dominio/Model/enum/MethodoHTTP";
-import { 
-    FormularioTabData,
-    PLANTILLA_BASICA
-} from "../../../components/FormulariosControles/HookFormDinamico";
-import { convertirConfiguracionAParametros } from "../../../utils/jobParametrosUtils";
-import { JobParametro } from "../../../Core/Dominio/Model/JobProgramado/JobParametro";
+import { useCallback, useMemo } from "react";
 import { 
     OPCIONES_METODO_HTTP,
     REGLAS_VALIDACION_JOB
 } from "./AgregarJob.config";
 import { DebugForm, Debug } from '../../../utils/debugSystem';
+import { FormularioAgregarJob } from './types/FormularioAgregarJob';
+import { 
+    useJobFormLogic,
+    useJobDataTransform,
+    useJobFormUI,
+    useJobSubmission
+} from './hooks';
+import { isDevelopment } from './utils/environment';
 
-export interface FormularioAgregarJob {
-    nombre: string;
-    descripcion: string;
-    url: string;
-    crontab: string;
-    correoNotificar: string;
-    reintentosPermitidos?: number;
-    periodoReintento?: number;
-    timeout?: number;
-    metodoHttp: string;
-    
-    // Configuración temporal del formulario
-    configuracionAPI: FormularioTabData;
-}
-
+// 🎯 Hook principal orquestador
 export function useAgregarJobVM() {
-    const { ejecutarAsync,isPending, isSuccess, isError, error, data } = useAgregarJob();
-    
-    // Estados del formulario
-    const [metodoHttpSeleccionado, setMetodoHttpSeleccionado] = useState<string>("");
-    const [mostrarConfigAvanzada, setMostrarConfigAvanzada] = useState(false);
+    const formMethods = useJobFormLogic();
+    const { transformarDatos } = useJobDataTransform();
+    const uiState = useJobFormUI();
+    const { ejecutarConCleanup, isPending, isSuccess, isError, error, data } = useJobSubmission();
 
-    // 🔧 Configuración del formulario con debug
-    const {
-        register,
-        handleSubmit,
-        formState: { errors },
-        reset,
-        control,
-        watch,
-        setValue,
-        getValues,
-        trigger
-    } = useForm<FormularioAgregarJob>({
-        defaultValues: {
-            configuracionAPI: {
-                'Headers': [],
-                'Query Params': []
-            }
+    // 🧹 Procesamiento optimizado de datos
+    const procesarDatosFormulario = useCallback(async (data: FormularioAgregarJob) => {
+        if (isDevelopment) {
+            DebugForm.submit('Iniciando procesamiento de datos del formulario', data);
         }
-    });
-
-    useEffect(() => {
-        setValue('configuracionAPI', PLANTILLA_BASICA);
-        Debug.info('FORM_INIT', 'Formulario inicializado con plantilla básica', PLANTILLA_BASICA);
-    }, [setValue]);
-
-    // 🧹 Procesamiento optimizado de datos con debug detallado
-    const procesarDatosFormulario = async (data: FormularioAgregarJob) => {
-        DebugForm.submit('Iniciando procesamiento de datos del formulario', data);
         
         try {
-            // 🎯 Convertir configuración API a parámetros
-            const { headers, queryParams, parametros: jobParametros } = convertirConfiguracionAParametros<JobParametro>(
-                data.configuracionAPI, 
-                ['Headers', 'Query Params'],
-                (tipo, nombre, valor) => ({
-                    nombre: `${tipo}:${nombre}`,
-                    valor: valor
-                })
-            );
-
-            Debug.info('FORM_PROCESS', 'Parámetros procesados', {
-                headers,
-                queryParams,
-                jobParametros,
-                jobParametrosJSON: JSON.stringify(jobParametros, null, 2)
-            });
-
-            // 🏗️ Construir comando final
-            const comandoFinal: AgregarJobProgramadoComand = {
-                nombre: data.nombre,
-                descripcion: data.descripcion,
-                url: data.url,
-                crontab: data.crontab,
-                correoNotificar: data.correoNotificar,
-                reintentosPermitidos: data.reintentosPermitidos,
-                periodoReintento: data.periodoReintento,
-                timeout: data.timeout,
-                metodoHttp: parseInt(data.metodoHttp) as MetodoHttp,
-                jobParametro: jobParametros
-            };
+            const comando = transformarDatos(data);
+            const resultado = await ejecutarConCleanup(comando);
             
-            // 🔍 Debug detallado del comando final
-            Debug.success('FORM_PROCESS', 'Comando final construido', {
-                comando: comandoFinal,
-                validaciones: {
-                    esArrayJobParametro: Array.isArray(comandoFinal.jobParametro),
-                    longitudJobParametro: comandoFinal.jobParametro?.length || 0,
-                    tipoMetodoHttp: typeof comandoFinal.metodoHttp,
-                    valorMetodoHttp: comandoFinal.metodoHttp
-                }
-            });
-            
-            // 🚀 Ejecutar comando
-            const resultado = await ejecutarAsync(comandoFinal);
-            Debug.success('FORM_SUBMIT', 'Comando ejecutado exitosamente', resultado);
+            if (isDevelopment) {
+                DebugForm.submit('Formulario procesado exitosamente', resultado);
+            }
             
             return resultado;
-            
         } catch (error) {
-            DebugForm.error('Error en procesamiento de datos', error);
+            if (isDevelopment) {
+                DebugForm.error('Error en procesamiento de datos', error);
+            }
             throw error;
         }
-    };
+    }, [transformarDatos, ejecutarConCleanup]);
 
-    // 🎯 Manejador principal de envío
-    const handleAgregarJob = async (data: FormularioAgregarJob) => {
-        DebugForm.submit('Iniciando envío del formulario', {
-            datosFormulario: data,
-            validaciones: {
-                hasErrors: Object.keys(errors).length > 0,
-                errores: errors
-            }
-        });
+    // 🎯 Manejador principal de envío optimizado
+    const handleAgregarJob = useCallback(async (data: FormularioAgregarJob) => {
+        if (isDevelopment) {
+            DebugForm.submit('Iniciando envío del formulario', {
+                datosFormulario: data,
+                validaciones: {
+                    hasErrors: Object.keys(formMethods.formState.errors).length > 0,
+                    errores: formMethods.formState.errors
+                }
+            });
+        }
         
         try {
             const resultado = await procesarDatosFormulario(data);
-            DebugForm.submit('Formulario enviado exitosamente', resultado);
+            if (isDevelopment) {
+                DebugForm.submit('Formulario enviado exitosamente', resultado);
+            }
             return resultado;
         } catch (error) {
-            DebugForm.error('Error en envío del formulario', error);
+            if (isDevelopment) {
+                DebugForm.error('Error en envío del formulario', error);
+            }
             throw error;
         }
-    };
+    }, [procesarDatosFormulario, formMethods.formState.errors]);
 
-    const onSubmit = handleSubmit(handleAgregarJob);
+    // 🎯 OnSubmit memoizado
+    const onSubmit = useMemo(() => 
+        formMethods.handleSubmit(handleAgregarJob), 
+        [formMethods.handleSubmit, handleAgregarJob]
+    );
 
-    // 🧹 Resetear formulario con debug
-    const resetearFormulario = () => {
-        Debug.info('FORM_RESET', 'Reseteando formulario', {
-            antesReset: {
-                metodoHttpSeleccionado,
-                mostrarConfigAvanzada
-            }
-        });
+    // 🧹 Resetear formulario optimizado
+    const resetearFormulario = useCallback(() => {
+        if (isDevelopment) {
+            Debug.info('FORM_RESET', 'Reseteando formulario', {
+                antesReset: {
+                    metodoHttpSeleccionado: uiState.metodoHttpSeleccionado,
+                    mostrarConfigAvanzada: uiState.mostrarConfigAvanzada
+                }
+            });
+        }
         
-        reset();
-        setMetodoHttpSeleccionado("");
-        setMostrarConfigAvanzada(false);
+        formMethods.reset();
+        uiState.resetearUI();
         
-        Debug.success('FORM_RESET', 'Formulario reseteado exitosamente');
-    };
+        if (isDevelopment) {
+            Debug.success('FORM_RESET', 'Formulario reseteado exitosamente');
+        }
+    }, [formMethods.reset, uiState.resetearUI, uiState.metodoHttpSeleccionado, uiState.mostrarConfigAvanzada]);
+
+    // 📋 Configuraciones memoizadas
+    const configuraciones = useMemo(() => ({
+        opcionesMetodoHttp: OPCIONES_METODO_HTTP,
+        validacionesFormulario: REGLAS_VALIDACION_JOB
+    }), []);
 
     return {
+        // 🔄 Estado de carga
         isPending,
         isSuccess,
         isError,
         error,
         data,
         
-        metodoHttpSeleccionado,
-        setMetodoHttpSeleccionado,
-        mostrarConfigAvanzada,
-        setMostrarConfigAvanzada,
+        // 🎛️ Estado de UI
+        metodoHttpSeleccionado: uiState.metodoHttpSeleccionado,
+        setMetodoHttpSeleccionado: uiState.setMetodoHttpSeleccionado,
+        mostrarConfigAvanzada: uiState.mostrarConfigAvanzada,
+        setMostrarConfigAvanzada: uiState.setMostrarConfigAvanzada,
         
-        opcionesMetodoHttp: OPCIONES_METODO_HTTP,
-        validacionesFormulario: REGLAS_VALIDACION_JOB,
+        // 📋 Configuraciones
+        opcionesMetodoHttp: configuraciones.opcionesMetodoHttp,
+        validacionesFormulario: configuraciones.validacionesFormulario,
         
-        register,
-        errors,
-        control,
-        watch,
-        setValue,
-        getValues,
+        // 📝 Métodos de formulario
+        register: formMethods.register,
+        errors: formMethods.formState.errors,
+        control: formMethods.control,
+        watch: formMethods.watch,
+        setValue: formMethods.setValue,
+        getValues: formMethods.getValues,
+        trigger: formMethods.trigger,
         onSubmit,
-        resetearFormulario,
-        trigger
+        resetearFormulario
     };
 }
+
+// Re-exportar el tipo para compatibilidad
+export type { FormularioAgregarJob };

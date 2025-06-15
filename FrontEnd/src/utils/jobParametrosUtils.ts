@@ -2,20 +2,13 @@ import {
     FormularioTabData,
     procesarConfiguracionAPI 
 } from "../components/FormulariosControles/HookFormDinamico";
-
-
-export type TipoParametro = 'header' | 'query' | 'body' | 'path';
+import { TipoParametro } from "../Core/Dominio/Model/enum/TipoParametro";
+import { JobParametro } from "../Core/Dominio/Model/JobProgramado/JobParametro";
 
 export interface ParametroGenerico {
-    nombre: string;
+    propiedad: string;
     valor: string;
-}
-
-export interface MapeoTipoParametro {
-    headers: 'header';
-    queryParams: 'query';
-    bodyParams?: 'body';
-    pathParams?: 'path';
+    tipo: TipoParametro;
 }
 
 export interface ConfiguracionAPIProcessada<T = ParametroGenerico> {
@@ -24,10 +17,10 @@ export interface ConfiguracionAPIProcessada<T = ParametroGenerico> {
     parametros: T[];
 }
 
-export function convertirConfiguracionAParametros<T = ParametroGenerico>(
+export function convertirConfiguracionAParametros<T = JobParametro>(
     configuracionAPI: FormularioTabData,
     pestanasAProcesar: string[] = ['Headers', 'Query Params'],
-    crearParametroFn?: (tipo: TipoParametro, nombre: string, valor: string) => T
+    crearParametroFn?: (tipo: TipoParametro, propiedad: string, valor: string) => T
 ): ConfiguracionAPIProcessada<T> {
     
     const configuracionProcesada = procesarConfiguracionAPI(
@@ -37,14 +30,14 @@ export function convertirConfiguracionAParametros<T = ParametroGenerico>(
 
     const parametros: T[] = [];
     
-    const crearParametro = crearParametroFn || ((tipo: TipoParametro, nombre: string, valor: string): T => 
-        crearParametroGenerico(tipo, nombre, valor) as T
+    const crearParametro = crearParametroFn || ((tipo: TipoParametro, propiedad: string, valor: string): T => 
+        crearJobParametro(tipo, propiedad, valor) as T
     );
     
     configuracionProcesada.headers.forEach(header => {
         if (header.nombre && header.valor) {
             parametros.push(
-                crearParametro('header', header.nombre, header.valor)
+                crearParametro(TipoParametro.Header, header.nombre, header.valor)
             );
         }
     });
@@ -52,7 +45,7 @@ export function convertirConfiguracionAParametros<T = ParametroGenerico>(
     configuracionProcesada.queryParams.forEach(param => {
         if (param.nombre && param.valor) {
             parametros.push(
-                crearParametro('query', param.nombre, param.valor)
+                crearParametro(TipoParametro.Query, param.nombre, param.valor)
             );
         }
     });
@@ -64,18 +57,17 @@ export function convertirConfiguracionAParametros<T = ParametroGenerico>(
     };
 }
 
-
-export function crearParametroGenerico(
+export function crearJobParametro(
     tipo: TipoParametro,
-    nombre: string,
+    propiedad: string,
     valor: string
-): ParametroGenerico {
+): JobParametro {
     return {
-        nombre: `${tipo}:${nombre}`,
-        valor: valor
+        propiedad: propiedad,
+        valor: valor,
+        tipo: tipo
     };
 }
-
 
 export function validarConfiguracionAPI(
     configuracionAPI: FormularioTabData
@@ -110,16 +102,13 @@ export function validarConfiguracionAPI(
     };
 }
 
-
-export function obtenerEstadisticasParametros<T extends ParametroGenerico>(parametros: T[]) {
-    const headers = parametros.filter(p => p.nombre.startsWith('header:')).length;
-    const queryParams = parametros.filter(p => p.nombre.startsWith('query:')).length;
-    const otros = parametros.filter(p => !p.nombre.startsWith('header:') && !p.nombre.startsWith('query:')).length;
+export function obtenerEstadisticasParametros<T extends JobParametro>(parametros: T[]) {
+    const headers = parametros.filter(p => p.tipo === TipoParametro.Header).length;
+    const queryParams = parametros.filter(p => p.tipo === TipoParametro.Query).length;
 
     return {
         totalParametros: parametros.length,
         headers,
-        queryParams,
-        otros
+        queryParams
     };
 }
