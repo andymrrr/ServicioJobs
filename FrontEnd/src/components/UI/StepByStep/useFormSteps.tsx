@@ -102,6 +102,30 @@ export const useFormSteps = <T extends FieldValues>({
         return Object.keys(stepErrors).length > 0;
     };
 
+    // Nueva función para manejar submit controlado
+    const createStepAwareSubmitHandler = (originalSubmitHandler: (e?: React.FormEvent) => void) => {
+        return (e?: React.FormEvent) => {
+            if (e) {
+                e.preventDefault();
+            }
+            
+            const isLastStep = currentStep === steps.length - 1;
+            
+            if (isLastStep) {
+                // Estamos en el último paso, ejecutar el submit original
+                originalSubmitHandler(e);
+            } else {
+                // No estamos en el último paso, ir al siguiente paso
+                nextStep();
+            }
+        };
+    };
+
+    // Nueva función para resetear al primer paso
+    const resetToFirstStep = () => {
+        setCurrentStep(0);
+    };
+
     return {
         // Estado actual
         currentStep,
@@ -112,6 +136,7 @@ export const useFormSteps = <T extends FieldValues>({
         previousStep,
         goToStep,
         setCurrentStep,
+        resetToFirstStep,
         
         // Rendering
         renderCurrentStep,
@@ -128,5 +153,8 @@ export const useFormSteps = <T extends FieldValues>({
         
         // Información del paso actual
         currentStepInfo: steps[currentStep],
+        
+        // Nueva función para manejar submit controlado
+        createStepAwareSubmitHandler,
     };
 }; 

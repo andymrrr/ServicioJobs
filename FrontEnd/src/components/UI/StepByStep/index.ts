@@ -1,40 +1,35 @@
 // Componente principal
 export { default as StepByStep } from './StepByStep';
 
-// Componentes individuales (por si se necesitan usar por separado)
+// Hooks
+export { useFormSteps } from './useFormSteps';
+
+// Componentes auxiliares
 export { default as PasoItem } from './PasoItem';
 export { default as CirculoPaso } from './CirculoPaso';
 export { default as LineaConectora } from './LineaConectora';
+export { default as NavigationButtons } from './NavigationButtons';
+
+// Utilidades
+export * from './utils';
 
 // Tipos
-export type {
+export type { 
+  StepByStepProps, 
+  PasoItemProps, 
+  LineaConectoraProps, 
+  CirculoPasoProps, 
+  EstilosPersonalizados,
   Paso,
   EstadoPaso,
   TemaStepByStep,
   TamanoStepByStep,
   VarianteStepByStep,
-  EstilosPersonalizados,
-  StepByStepProps,
-  PasoItemProps,
-  CirculoPasoProps,
-  LineaConectoraProps
+  PosicionBotones
 } from './types';
 
-// Utilidades (por si se necesitan usar externamente)
-export {
-  obtenerEstadoPaso,
-  obtenerClasesCirculo,
-  obtenerClasesTextoTitulo,
-  obtenerClasesTextoDescripcion,
-  obtenerClasesLinea,
-  puedeNavegarAPaso,
-  obtenerTamanoIcono,
-  combinarClasesPersonalizadas,
-  COLORES_VARIANTES,
-  TAMANOS_CIRCULO
-} from './utils';
+// Configuraciones de pasos
+export type { StepConfig } from './useFormSteps';
 
 // Export por defecto del componente principal
-export { default } from './StepByStep';
-export { useFormSteps } from './useFormSteps';
-export type { StepConfig } from './useFormSteps'; 
+export { default } from './StepByStep'; 

@@ -1,7 +1,6 @@
 import React from 'react';
 import { Contenedor } from "../../../components/UI/Contenedor"
 import Tarjeta from "../../../components/UI/Tarjeta";
-import BotonPrimario from "../../../components/UI/Botones/BotonPrimario";
 import StepByStep, { useFormSteps } from "../../../components/UI/StepByStep";
 import { useAgregarJobVM } from "./AgregarJob.Vm";
 import { useParametrosDinamicosVM } from "./ParametrosDinamico.vm";
@@ -50,13 +49,22 @@ export const PaginaAgregarJob = () => {
         nextStep,
         previousStep,
         goToStep,
-        isFirstStep,
-        isLastStep,
+        resetToFirstStep,
+        createStepAwareSubmitHandler,
     } = useFormSteps({
         steps,
         trigger,
         errors,
     });
+
+    // Crear el manejador de submit controlado por pasos
+    const handleSubmit = createStepAwareSubmitHandler(onSubmit);
+
+    // Función combinada para cancelar: resetea formulario y vuelve al primer paso
+    const handleCancelar = () => {
+        resetearFormulario(); // Resetear formulario
+        resetToFirstStep();   // Volver al primer paso
+    };
 
     return (
         <Contenedor>
@@ -66,8 +74,8 @@ export const PaginaAgregarJob = () => {
                 lineaHeader={{ mostrar: true, color: "blue", grosor: "2px" }}
                 tamano={12}
             >
-                <form onSubmit={onSubmit} className="space-y-8">
-                    {/* Navegador de Pasos */}
+                <form onSubmit={handleSubmit} className="space-y-8">
+                    {/* StepByStep con botones integrados y contenido del formulario */}
                     <StepByStep
                         pasos={pasos}
                         pasoActual={currentStep}
@@ -79,54 +87,28 @@ export const PaginaAgregarJob = () => {
                         permitirRetroceso={true}
                         mostrarNumeros={false}
                         animaciones={true}
-                    />
-
-                    {/* Contenido del Paso Actual */}
-                    <div className="bg-white dark:bg-gray-800 rounded-lg p-6 border border-gray-200 dark:border-gray-600 min-h-[400px]">
-                        {renderCurrentStep()}
-                    </div>
-
-                    
-                    <div className="flex justify-between items-center pt-4">
-                        <BotonPrimario
-                            texto="Anterior"
-                            color="gray"
-                            variante="outline"
-                            tamaño="mediano"
-                            onClick={previousStep}
-                            deshabilitar={isFirstStep || isPending}
-                        />
+                        mostrarBotones={true}
+                        posicionBotones="abajo"
+                        onAnterior={previousStep}
+                        onSiguiente={nextStep}
+                        onCancelar={handleCancelar}
+                        onSubmit={() => handleSubmit()}
+                        cargando={isPending}
+                        textosBotones={{
+                            anterior: 'Anterior',
+                            siguiente: 'Siguiente',
+                            cancelar: 'Cancelar',
+                            finalizar: 'Guardar Job'
+                        }}
+                        deshabilitarBotones={isPending}
                         
-                        <div className="flex gap-3">
-                            <BotonPrimario
-                                texto="Cancelar"
-                                color="gray"
-                                variante="outline"
-                                tamaño="mediano"
-                                onClick={resetearFormulario}
-                                deshabilitar={isPending}
-                            />
-                            
-                            {isLastStep ? (
-                                <BotonPrimario
-                                    texto={isPending ? "Guardando..." : "Guardar Job"}
-                                    color="primary"
-                                    tipo="submit"
-                                    tamaño="mediano"
-                                    deshabilitar={isPending}
-                                    cargando={isPending}
-                                />
-                            ) : (
-                                <BotonPrimario
-                                    texto="Siguiente"
-                                    color="primary"
-                                    tamaño="mediano"
-                                    onClick={nextStep}
-                                    deshabilitar={isPending}
-                                />
-                            )}
-                        </div>
-                    </div>
+                        // 🆕 Contenido del formulario que se renderizará dentro del layout
+                        contenidoFormulario={
+                            <div className="bg-white dark:bg-gray-800 rounded-lg p-6 border border-gray-200 dark:border-gray-600 min-h-[400px]">
+                                {renderCurrentStep()}
+                            </div>
+                        }
+                    />
                 </form>
             </Tarjeta>
         </Contenedor>

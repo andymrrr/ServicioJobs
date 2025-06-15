@@ -12,6 +12,9 @@ export type TamanoStepByStep = 'small' | 'medium' | 'large';
 // Variante de color
 export type VarianteStepByStep = 'primary' | 'success' | 'warning' | 'danger' | 'info';
 
+// 🆕 Posición de los botones de navegación
+export type PosicionBotones = 'arriba' | 'abajo' | 'izquierda' | 'derecha';
+
 // Interfaz para un paso individual
 export interface Paso {
   /** Identificador único del paso */
@@ -70,6 +73,33 @@ export interface StepByStepProps {
   animaciones?: boolean;
   /** Callback cuando cambia el paso actual */
   onCambioPaso?: (pasoAnterior: number, pasoNuevo: number) => void;
+  
+  // 🆕 Props para botones de navegación integrados
+  /** Si mostrar botones de navegación */
+  mostrarBotones?: boolean;
+  /** Posición de los botones de navegación */
+  posicionBotones?: PosicionBotones;
+  /** Contenido adicional a renderizar (como el contenido del formulario) */
+  contenidoFormulario?: React.ReactNode;
+  /** Función para ir al paso anterior */
+  onAnterior?: () => void;
+  /** Función para ir al siguiente paso */
+  onSiguiente?: () => void;
+  /** Función para cancelar/resetear */
+  onCancelar?: () => void;
+  /** Función para submit final */
+  onSubmit?: () => void;
+  /** Si está cargando/procesando */
+  cargando?: boolean;
+  /** Texto personalizado para botones */
+  textosBotones?: {
+    anterior?: string;
+    siguiente?: string;
+    cancelar?: string;
+    finalizar?: string;
+  };
+  /** Si deshabilitar botones */
+  deshabilitarBotones?: boolean;
 }
 
 // Props para el componente de paso individual
