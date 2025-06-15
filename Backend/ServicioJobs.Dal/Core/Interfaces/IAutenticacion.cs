@@ -1,7 +1,7 @@
 ﻿using ServicioJobs.Modelos;
 
 
-namespace ServicioJobs.Dal.Nucleo.Interfaces
+namespace ServicioJobs.Dal.Core.Interfaces
 {
     public interface IAutenticacion
     {

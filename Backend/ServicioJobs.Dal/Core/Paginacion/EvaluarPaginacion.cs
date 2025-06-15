@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using ServicioJobs.Dal.Nucleo.Paginacion.Interfaces;
+using ServicioJobs.Dal.Core.Paginacion.Interfaces;
 
-namespace ServicioJobs.Dal.Nucleo.Paginacion
+namespace ServicioJobs.Dal.Core.Paginacion
 {
     public class EvaluarPaginacion<T> where T : class
     {

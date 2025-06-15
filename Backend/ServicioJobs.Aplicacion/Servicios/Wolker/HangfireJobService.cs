@@ -1,6 +1,6 @@
 using Hangfire;
 using Microsoft.EntityFrameworkCore;
-using ServicioJobs.Dal.Nucleo.Interfaces;
+using ServicioJobs.Dal.Core.Interfaces;
 using ServicioJobs.Modelos.Dto;
 
 namespace ServicioJobs.Aplicacion.Servicios.Wolker

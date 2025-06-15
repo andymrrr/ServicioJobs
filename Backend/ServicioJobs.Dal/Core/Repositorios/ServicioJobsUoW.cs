@@ -1,14 +1,8 @@
-﻿using Azure;
-using ServicioJobs.Dal.Contexto;
-using ServicioJobs.Dal.Nucleo.Interfaces;
+﻿using ServicioJobs.Dal.Contexto;
+using ServicioJobs.Dal.Core.Interfaces;
 using ServicioJobs.Modelos;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace ServicioJobs.Dal.Nucleo.Repositorios
+namespace ServicioJobs.Dal.Core.Repositorios
 {
     public class ServicioJobsUoW : IServicioJobsUoW
     {

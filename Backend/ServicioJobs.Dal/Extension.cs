@@ -6,8 +6,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
 using ServicioJobs.Dal.Contexto;
-using ServicioJobs.Dal.Nucleo.Interfaces;
-using ServicioJobs.Dal.Nucleo.Repositorios;
+using ServicioJobs.Dal.Core.Interfaces;
+using ServicioJobs.Dal.Core.Repositorios;
 using ServicioJobs.Modelos.Configuracion;
 using System.Text;
 

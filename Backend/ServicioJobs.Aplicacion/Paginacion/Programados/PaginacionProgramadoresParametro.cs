@@ -1,4 +1,4 @@
-﻿using ServicioJobs.Dal.Nucleo.Paginacion;
+﻿using ServicioJobs.Dal.Core.Paginacion;
 using ServicioJobs.Modelos;
 using ServicioJobs.Modelos.Enums;
 using System.Linq.Expressions;

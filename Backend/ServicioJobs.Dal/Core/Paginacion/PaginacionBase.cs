@@ -1,7 +1,7 @@
-﻿using ServicioJobs.Dal.Nucleo.Paginacion.Interfaces;
+﻿using ServicioJobs.Dal.Core.Paginacion.Interfaces;
 using System.Linq.Expressions;
 
-namespace ServicioJobs.Dal.Nucleo.Paginacion
+namespace ServicioJobs.Dal.Core.Paginacion
 {
     public class PaginacionBase<T> : IPaginacion<T>
     {

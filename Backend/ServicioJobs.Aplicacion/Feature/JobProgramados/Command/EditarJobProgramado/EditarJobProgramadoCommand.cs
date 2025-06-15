@@ -2,14 +2,12 @@ using MediatR;
 using ServicioJobs.Aplicacion.Feature.Parametros.Dto;
 using ServicioJobs.Modelos.Enums;
 using ServicioJobs.Modelos.Utilitarios;
-using System.ComponentModel.DataAnnotations;
 
 namespace ServicioJobs.Aplicacion.Feature.Programados.Command.EditarJobProgramado
 {
     public class EditarJobProgramadoCommand : IRequest<RespuestaServicio<Unit>>
     {
         public Guid IdProgramado { get; set; }
-        public Guid IdMetodo { get; set; }
         public string Nombre { get; set; }
         public string Descripcion { get; set; }
         public string Url { get; set; }

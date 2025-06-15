@@ -1,9 +1,6 @@
-﻿using Cronos;
-using Microsoft.Extensions.Configuration;
-using ServicioJobs.Aplicacion.Helper;
-using ServicioJobs.Dal.Nucleo.Interfaces;
+﻿
+using ServicioJobs.Dal.Core.Interfaces;
 using ServicioJobs.Modelos.Dto;
-using ServicioJobs.Modelos.Enums;
 
 namespace ServicioJobs.Aplicacion.Servicios.Wolker
 {

@@ -1,5 +1,5 @@
 ﻿
-using ServicioJobs.Dal.Nucleo.Paginacion;
+using ServicioJobs.Dal.Core.Paginacion;
 using ServicioJobs.Modelos;
 
 namespace ServicioJobs.Aplicacion.Paginacion.Programados

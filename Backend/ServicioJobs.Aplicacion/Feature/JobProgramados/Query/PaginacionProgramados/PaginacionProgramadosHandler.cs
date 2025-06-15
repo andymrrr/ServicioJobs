@@ -3,8 +3,8 @@ using MediatR;
 using Microsoft.Extensions.Logging;
 using ServicioJobs.Aplicacion.Feature.Programados.Dtos;
 using ServicioJobs.Aplicacion.Paginacion.Programados;
-using ServicioJobs.Dal.Nucleo.Interfaces;
-using ServicioJobs.Dal.Nucleo.Paginacion.Modelos;
+using ServicioJobs.Dal.Core.Interfaces;
+using ServicioJobs.Dal.Core.Paginacion.Modelos;
 
 namespace ServicioJobs.Aplicacion.Feature.Programados.Query.PaginacionProgramados
 {

@@ -2,7 +2,7 @@ using AutoMapper;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using ServicioJobs.Aplicacion.Servicios.Wolker;
-using ServicioJobs.Dal.Nucleo.Interfaces;
+using ServicioJobs.Dal.Core.Interfaces;
 using ServicioJobs.Modelos.Utilitarios;
 
 namespace ServicioJobs.Aplicacion.Feature.Programados.Command.EjecutarJobProgramado

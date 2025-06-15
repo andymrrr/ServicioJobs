@@ -1,12 +1,12 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using ServicioJobs.Dal.Contexto;
 using ServicioJobs.Dal.Helpers;
-using ServicioJobs.Dal.Nucleo.Interfaces;
+using ServicioJobs.Dal.Core.Interfaces;
 using ServicioJobs.Modelos;
 using ServicioJobs.Modelos.Dto;
 using ServicioJobs.Modelos.Utilitarios;
 
-namespace ServicioJobs.Dal.Nucleo.Repositorios
+namespace ServicioJobs.Dal.Core.Repositorios
 {
     public class RepositorioProgramado : Repositorio<Programado>, IRepositorioProgramado
     {

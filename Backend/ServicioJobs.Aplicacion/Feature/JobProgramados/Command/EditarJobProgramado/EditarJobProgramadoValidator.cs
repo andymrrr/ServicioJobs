@@ -13,10 +13,6 @@ namespace ServicioJobs.Aplicacion.Feature.Programados.Command.EditarJobProgramad
                 .NotEmpty()
                 .WithMessage("El IdProgramado es obligatorio");
 
-            RuleFor(x => x.IdMetodo)
-                .NotEmpty()
-                .WithMessage("El IdMetodo es obligatorio");
-
             RuleFor(x => x.Nombre)
                 .NotEmpty()
                 .WithMessage("El nombre es obligatorio")

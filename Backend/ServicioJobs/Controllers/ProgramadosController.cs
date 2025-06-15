@@ -6,7 +6,7 @@ using ServicioJobs.Aplicacion.Feature.Programados.Command.EjecutarJobProgramado;
 using ServicioJobs.Aplicacion.Feature.Programados.Dtos;
 using ServicioJobs.Aplicacion.Feature.Programados.Query.BuscarProgramadosGuid;
 using ServicioJobs.Aplicacion.Feature.Programados.Query.PaginacionProgramados;
-using ServicioJobs.Dal.Nucleo.Paginacion.Modelos;
+using ServicioJobs.Dal.Core.Paginacion.Modelos;
 using ServicioJobs.Modelos.Utilitarios;
 using ServicioJobs.Extensions;
 using System.Net;
@@ -27,11 +27,7 @@ namespace ServicioJobs.Controllers
         {
             _mediador = mediador ?? throw new ArgumentNullException(nameof(mediador));
         }
-        /// <summary>
-        /// Obtiene una lista paginada de jobs programados
-        /// </summary>
-        /// <param name="consulta">Parámetros de paginación y filtros</param>
-        /// <returns>Lista paginada de jobs programados</returns>
+     
         [HttpGet("paginacion")]
         [ProducesResponseType(typeof(PaginacionVm<ProgramadoPaginado>), (int)HttpStatusCode.OK)]
         [ProducesResponseType((int)HttpStatusCode.BadRequest)]
@@ -41,14 +37,7 @@ namespace ServicioJobs.Controllers
             return Ok(paginacion);
         }
 
-        /// <summary>
-        /// Obtiene un job programado específico por su ID
-        /// </summary>
-        /// <param name="id">ID único del job programado</param>
-        /// <returns>Información detallada del job programado</returns>
-        /// <response code="200">Job programado encontrado exitosamente</response>
-        /// <response code="400">Parámetros inválidos o job no encontrado</response>
-        /// <response code="404">Job programado no encontrado</response>
+        
         [HttpGet("{id:guid}")]
         [ProducesResponseType(typeof(RespuestaServicio<ProgramadoDto>), (int)HttpStatusCode.OK)]
         [ProducesResponseType(typeof(RespuestaServicio<Unit>), (int)HttpStatusCode.BadRequest)]

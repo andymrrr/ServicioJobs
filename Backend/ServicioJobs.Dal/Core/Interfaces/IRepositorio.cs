@@ -1,7 +1,7 @@
-﻿using ServicioJobs.Dal.Nucleo.Paginacion.Interfaces;
+﻿using ServicioJobs.Dal.Core.Paginacion.Interfaces;
 using System.Linq.Expressions;
 
-namespace ServicioJobs.Dal.Nucleo.Interfaces
+namespace ServicioJobs.Dal.Core.Interfaces
 {
     public interface IRepositorio<T> where T : class
     {

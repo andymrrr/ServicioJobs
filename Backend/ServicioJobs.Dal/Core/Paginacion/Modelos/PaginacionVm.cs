@@ -1,6 +1,6 @@
 ﻿
 
-namespace ServicioJobs.Dal.Nucleo.Paginacion.Modelos
+namespace ServicioJobs.Dal.Core.Paginacion.Modelos
 {
     public class PaginacionVm<T> where T : class
     {

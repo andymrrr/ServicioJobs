@@ -4,7 +4,7 @@ using Bogus;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using ServicioJobs.Aplicacion.Feature.Programados.Dtos;
-using ServicioJobs.Dal.Nucleo.Interfaces;
+using ServicioJobs.Dal.Core.Interfaces;
 using ServicioJobs.Modelos.Utilitarios;
 
 namespace ServicioJobs.Aplicacion.Feature.Programados.Query.BuscarProgramadosGuid

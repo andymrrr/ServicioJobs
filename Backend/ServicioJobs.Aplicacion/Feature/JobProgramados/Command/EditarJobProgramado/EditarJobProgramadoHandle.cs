@@ -1,18 +1,10 @@
 using AutoMapper;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
-using ServicioJobs.Aplicacion.Feature.Programados.Dtos;
 using ServicioJobs.Aplicacion.Servicios.Wolker;
-using ServicioJobs.Dal.Nucleo.Interfaces;
+using ServicioJobs.Dal.Core.Interfaces;
 using ServicioJobs.Modelos;
-using ServicioJobs.Modelos.Enums;
 using ServicioJobs.Modelos.Utilitarios;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ServicioJobs.Aplicacion.Feature.Programados.Command.EditarJobProgramado
 {

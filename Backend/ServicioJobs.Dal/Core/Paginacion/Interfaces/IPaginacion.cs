@@ -2,7 +2,7 @@
 
 using System.Linq.Expressions;
 
-namespace ServicioJobs.Dal.Nucleo.Paginacion.Interfaces
+namespace ServicioJobs.Dal.Core.Paginacion.Interfaces
 {
     public interface IPaginacion<T>
     {

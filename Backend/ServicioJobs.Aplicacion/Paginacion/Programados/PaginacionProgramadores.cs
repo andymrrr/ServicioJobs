@@ -1,10 +1,6 @@
-﻿using ServicioJobs.Dal.Nucleo.Paginacion;
+﻿using ServicioJobs.Dal.Core.Paginacion;
 using ServicioJobs.Modelos;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace ServicioJobs.Aplicacion.Paginacion.Programados
 {

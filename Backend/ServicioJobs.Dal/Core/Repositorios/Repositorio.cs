@@ -1,11 +1,11 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using ServicioJobs.Dal.Nucleo.Interfaces;
-using ServicioJobs.Dal.Nucleo.Paginacion.Interfaces;
-using ServicioJobs.Dal.Nucleo.Paginacion;
+using ServicioJobs.Dal.Core.Interfaces;
+using ServicioJobs.Dal.Core.Paginacion.Interfaces;
+using ServicioJobs.Dal.Core.Paginacion;
 using System.Linq.Expressions;
 using ServicioJobs.Dal.Contexto;
 
-namespace ServicioJobs.Dal.Nucleo.Repositorios
+namespace ServicioJobs.Dal.Core.Repositorios
 {
     public class Repositorio<T> : IRepositorio<T> where T : class
     {
