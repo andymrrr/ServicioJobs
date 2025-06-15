@@ -43,7 +43,6 @@ export const PaginaAgregarJob = () => {
         pestanasDisponibles,
     });
 
-    // Usar el hook genérico
     const {
         currentStep,
         pasos,

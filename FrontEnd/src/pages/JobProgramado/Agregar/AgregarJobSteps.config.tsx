@@ -46,7 +46,7 @@ export const createAgregarJobSteps = ({
             titulo: 'Información Básica',
             descripcion: 'Datos principales del job',
             icono: <FaInfoCircle size={16} />,
-            campos: ['nombre', 'descripcion', 'correoNotificar'],
+            campos: ['nombre', 'correoNotificar'],
             renderContent: () => (
                 <div className="space-y-6">
                     <div className="grid grid-cols-12 gap-4">

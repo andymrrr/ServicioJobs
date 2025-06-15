@@ -33,7 +33,7 @@ export interface FormularioAgregarJob {
 }
 
 export function useAgregarJobVM() {
-    const { /*ejecutarAsync,*/ isPending, isSuccess, isError, error, data } = useAgregarJob();
+    const { ejecutarAsync,isPending, isSuccess, isError, error, data } = useAgregarJob();
     
     // Estados del formulario
     const [metodoHttpSeleccionado, setMetodoHttpSeleccionado] = useState<string>("");
@@ -63,7 +63,7 @@ export function useAgregarJobVM() {
         setValue('configuracionAPI', PLANTILLA_BASICA);
     }, [setValue]);
 
-    const procesarDatosFormulario = (data: FormularioAgregarJob): AgregarJobProgramadoComand => {
+    const procesarDatosFormulario =async (data: FormularioAgregarJob) => {
         
         const { headers, queryParams, parametros: jobParametros } = convertirConfiguracionAParametros<JobParametro>(
             data.configuracionAPI, 
@@ -80,7 +80,6 @@ export function useAgregarJobVM() {
 
         
         const comandoFinal: AgregarJobProgramadoComand = {
-            idMetodo: data.idMetodo,
             nombre: data.nombre,
             descripcion: data.descripcion,
             url: data.url,
@@ -94,6 +93,8 @@ export function useAgregarJobVM() {
         };
         
         console.log('📋 Comando final:', comandoFinal);
+       const resultado = await ejecutarAsync(comandoFinal);
+       console.log('🔍 Resultado:', resultado);
         return comandoFinal;
     };
 
